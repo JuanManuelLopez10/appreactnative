@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, FlatList, Pressable} from 'react-native';
 import Titulo from './components/Titulo';
 import Modaleliminar from './components/Modal';
+import Formulario from './components/Formulario';
 
 export default function App() {
   const [itemText, setItemText] = useState('')
@@ -35,24 +36,13 @@ export default function App() {
     setItemlleva('')
     console.log(items);
   }
+
+
   return(
     <View style={styles.screen}>
       <Titulo/>
-      <View>
-      <TextInput
-      placeholder='Agregar participante aqui'
-      style={styles.input}
-      onChangeText={onchangeText}
-      value={itemText}
-      />
-            <TextInput
-      placeholder='¿Qué lleva?'
-      style={styles.input}
-      onChangeText={onchangelleva}
-      value={itemlleva}
-      />
-      <Button title='Agregar' onPress={agregar}/>
-      </View>
+      <Formulario onchangeText={onchangeText} itemText={itemText} onchangelleva={onchangelleva} itemlleva={itemlleva} agregar={agregar}/>
+      
         <FlatList
         data={items}
         renderItem={(itemData) => {
