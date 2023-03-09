@@ -69,13 +69,24 @@ export default function App() {
       console.log(items);
     }
   }
+    const [OpenMenu, setOpenMenu] = useState(false)
+  const openmenu = () => {
+    console.log("abrir menu");
+    setOpenMenu(true)
+  }
+  const closemenu = () => {
+    setOpenMenu(false)
+  }
+
+  
   if(!loaded){
     return null;
   }
 
+
   return(
     <View style={styles.screen} onLayout={onLayoutRootView}>
-      <Header cerrarsesion={cerrarsesion} />
+      <Header openmenu={openmenu} closemenu={closemenu} OpenMenu={OpenMenu} cerrarsesion={cerrarsesion} />
       {
         nombreusuario && contraseñausuario
         ?         <>

@@ -4,21 +4,17 @@ import COLORS from '../../constants/Colors'
 
 const Header = (props) => {
 
-  const [OpenMenu, setOpenMenu] = useState(false)
-  const openmenu = () => {
-    console.log("abrir menu");
-    setOpenMenu(true)
-  }
-  const closemenu = () => {
-    setOpenMenu(false)
-  }
+  const onbotoncerrarmenu = () => {
+    props.cerrarsesion()
+    props.closemenu()
+  } 
 
 
-  if (OpenMenu===false) {
+  if (props.OpenMenu===false) {
     return (
       <View style={styles.header}>
         <Text style={styles.titulo}>Hagamo un asado</Text>
-        <Pressable style={styles.botonmenu} onPress={()=>{openmenu()}}>
+        <Pressable style={styles.botonmenu} onPress={()=>{props.openmenu()}}>
           <Text>Menu</Text>
         </Pressable>
       </View>  
@@ -28,12 +24,12 @@ const Header = (props) => {
       <>
       <View style={styles.header}>
         <Text style={styles.titulo}>Hagamo un asado</Text>
-        <Button style={styles.botonmenu} onPress={()=>{closemenu()}} title='X'/>
+        <Button style={styles.botonmenu} onPress={()=>{props.closemenu()}} title='X'/>
       </View>
       <Modal>
-      <Button style={styles.botonmenu} onPress={()=>{closemenu()}} title='X'/>
+      <Button style={styles.botonmenu} onPress={()=>{props.closemenu()}} title='X'/>
         <Text>AAA</Text>
-        <Button title='cerrar sesion' onPress={() => {props.cerrarsesion()}}/>
+        <Button title='cerrar sesion' onPress={() => {onbotoncerrarmenu()}}/>
         <FlatList
         data={[
           {key: 'Crear asado'}, 
