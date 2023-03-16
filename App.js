@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
 import React ,{ useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Pressable, TouchableWithoutFeedback} from 'react-native';
-import Modaleliminar from './src/components/Modal';
-import Formulario from './src/components/Formulario';
-import ListaItems from './src/components/ListaItems';
+import { StyleSheet, View, Dimensions} from 'react-native';
 import Header from './src/components/header/Header';
-import Card from './src/components/Card';
-import Input from './src/components/Input';
-import Registrarse from './src/components/screens/Registrarse';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen'
+import Navigate from './src/navigation/Navigate';
 
 SplashScreen.preventAutoHideAsync()
 
 export default function App() {
-
+  const [idPortrait, setidPortrait] = useState(true)
+  const onPortrait = () => {
+    const dim = Dimensions.get('screen')
+    return dim.height >= dim.width
+  }
+  const statePortrait = () => setidPortrait(onPortrait())
+  useEffect(()=>{
+    Dimensions.addEventListener('change', statePortrait)
+    return () => {
+      Dimensions.addEventListener('change', statePortrait)
+    }
+  })
   const [loaded] = useFonts({
     "open-sans-bold" : require('./assets/fonts/OpenSans-Bold.ttf'),
     "open-sans-regular" : require('./assets/fonts/OpenSans-Regular.ttf'),
@@ -28,7 +33,7 @@ export default function App() {
 
   const [nombreusuario, setnombreusuario] = useState()
   const [contraseñausuario, setcontraseñausuario] = useState()
-
+  const [TipoNuevoAsado, setTipoNuevoAsado] = useState(undefined)
   const [itemText, setItemText] = useState('')
   const [itemlleva, setItemlleva] = useState('')
   const [items, setItems] = useState([
@@ -42,33 +47,6 @@ export default function App() {
     setnombreusuario()
     setcontraseñausuario()
   }
-
-  const [modalVisible, setModalVisible] = useState(false)
-  const [selectedItem, setselectedItem] = useState(null)
-  const eliminaritem = (id) => {
-    setItems((antes) => antes.filter((item) => item.id !== id))
-    setModalVisible(false)
-    setselectedItem(null)
-  } 
-  const selectItem = (item) => {
-    setselectedItem(item)
-    setModalVisible(true)
-  }
-
-  const onchangeText = (text) => {
-    setItemText(text)
-  }
-  const onchangelleva = (text) => {
-    setItemlleva(text)
-  }
-  const agregar = () => {
-    if (itemText!='' && itemlleva!='') {
-      setItems(items => [...items, {id: Date.now(), nombre: itemText, lleva: itemlleva}])
-      setItemText('')
-      setItemlleva('')
-      console.log(items);
-    }
-  }
     const [OpenMenu, setOpenMenu] = useState(false)
   const openmenu = () => {
     console.log("abrir menu");
@@ -78,34 +56,51 @@ export default function App() {
     setOpenMenu(false)
   }
 
-  
+  const [TipoDeAsado, setTipoDeAsado] = React.useState("");
+
+  const SeleccionarTipoDeAsado = (val) => {
+    setTipoDeAsado(val)
+    console.log(TipoDeAsado);
+  }
+  const EmpezarAsado = () => {
+    setTipoNuevoAsado(TipoDeAsado)
+    console.log("astr");
+    console.log(TipoNuevoAsado);
+
+  }
   if(!loaded){
     return null;
   }
-
-
-  return(
+  return(<>
     <View style={styles.screen} onLayout={onLayoutRootView}>
-      <Header openmenu={openmenu} closemenu={closemenu} OpenMenu={OpenMenu} cerrarsesion={cerrarsesion} />
-      {
-        nombreusuario && contraseñausuario
-        ?         <>
-              <Text style={styles.saludo}>Hola,  {nombreusuario}</Text>
-            <Input />
-            <Formulario onchangeText={onchangeText} itemText={itemText} onchangelleva={onchangelleva} itemlleva={itemlleva} agregar={agregar} />
-            <ListaItems items={items} selectItem={selectItem} />
-            <Modaleliminar modalVisible={modalVisible} eliminaritem={eliminaritem} selectedItem={selectedItem} setModalVisible={setModalVisible} setselectedItem={setselectedItem} />
-    </>
-        : <Registrarse registrarse={registrarse}/>
-
-      }
+    <Header openmenu={openmenu} closemenu={closemenu} OpenMenu={OpenMenu} cerrarsesion={cerrarsesion} />
+    <Navigate/>
     </View>
+    </>
+    // 
+    //   <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={30}>
+    
+    //   <Header openmenu={openmenu} closemenu={closemenu} OpenMenu={OpenMenu} cerrarsesion={cerrarsesion} />
+    //     <TextInput placeholder='No se que hace'/>
+    //   {
+    //     nombreusuario && contraseñausuario
+    //     ?         <>
+    //         <Index SeleccionarTipoDeAsado={SeleccionarTipoDeAsado} EmpezarAsado={EmpezarAsado} TipoNuevoAsado={TipoNuevoAsado}/>
+    // </>
+    //     : <Registrarse registrarse={registrarse}/>
+
+    //   }
+    //   </KeyboardAvoidingView>
+
+    // </View>
   )
 
 }
 
 const styles = StyleSheet.create({
-
+  screen:{
+    height: '100%'
+  },
   saludo: {
     textAlign: 'center',
     fontFamily: 'open-sans-regular',

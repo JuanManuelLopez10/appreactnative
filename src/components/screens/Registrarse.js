@@ -1,7 +1,20 @@
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useState } from 'react'
+import { Button, StyleSheet, Text, TextInput, View, Dimensions } from 'react-native'
+import React, { useEffect, useState } from 'react'
 
-const Registrarse = (props) => {
+const Registrarse = ({ navigation } ) => {
+    const [isPortrait, setisPortrait] = useState(true)
+    const onPortrait = () => {
+      const dim = Dimensions.get('screen')
+      return dim.height >= dim.width
+    }
+    const statePortrait = () => setisPortrait(onPortrait())
+    useEffect(()=>{
+      Dimensions.addEventListener('change', statePortrait)
+      return () => {
+        Dimensions.addEventListener('change', statePortrait)
+      }
+    })
+
     const [NombreUsuario, setNombreUsuario] = useState()
     const [ContraseñaUsuario, setContraseñaUsuario] = useState()
 
@@ -14,10 +27,13 @@ const Registrarse = (props) => {
     return (
         <View style={styles.pantalla}>
             <View style={styles.formulario}>
+
                 <Text>Registrate acá</Text>
                 <TextInput placeholder='Agrega tu nombre' onChangeText={onchangenombre} />
                 <TextInput placeholder='Contraseña' textContentType='password' secureTextEntry={true} onChangeText={onchangecontraseña} />
-                <Button onPress={() => { props.registrarse(NombreUsuario, ContraseñaUsuario) }} title='Registrarse' />
+                <Button title='Registrarse' onPress={()=> {
+                    navigation.navigate('index')
+                }}/>
             </View>
         </View>
   )
@@ -34,7 +50,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     formulario: {
-        width: '80%',
+        width: Dimensions.get('window').width / 4 * 3,
         backgroundColor: 'white',
         margin: 50,
         elevation: 20,
