@@ -1,10 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Index from '../components/screens/Index'
-import Registrarse from '../components/screens/Registrarse'
-import CrearAsado from '../components/screens/CrearAsado'
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Registrarse from '../screens/Registrarse';
+import CrearAsado from '../screens/CrearAsado';
+import Index from '../screens/Index';
 
 const Stack = createNativeStackNavigator()
 
@@ -22,5 +21,3 @@ const Navigate = () => {
 }
 
 export default Navigate
-
-const styles = StyleSheet.create({})

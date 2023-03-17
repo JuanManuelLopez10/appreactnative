@@ -1,19 +1,7 @@
-import { Button, StyleSheet, Text, TextInput, View, Dimensions } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react';
+import { Button, StyleSheet, Text, TextInput, View, Dimensions } from 'react-native';
 
-const Registrarse = ({ navigation } ) => {
-    const [isPortrait, setisPortrait] = useState(true)
-    const onPortrait = () => {
-      const dim = Dimensions.get('screen')
-      return dim.height >= dim.width
-    }
-    const statePortrait = () => setisPortrait(onPortrait())
-    useEffect(()=>{
-      Dimensions.addEventListener('change', statePortrait)
-      return () => {
-        Dimensions.addEventListener('change', statePortrait)
-      }
-    })
+const Registrarse = ({ navigation }) => {
 
     const [NombreUsuario, setNombreUsuario] = useState()
     const [ContraseñaUsuario, setContraseñaUsuario] = useState()
@@ -27,16 +15,20 @@ const Registrarse = ({ navigation } ) => {
     return (
         <View style={styles.pantalla}>
             <View style={styles.formulario}>
-
                 <Text>Registrate acá</Text>
                 <TextInput placeholder='Agrega tu nombre' onChangeText={onchangenombre} />
-                <TextInput placeholder='Contraseña' textContentType='password' secureTextEntry={true} onChangeText={onchangecontraseña} />
-                <Button title='Registrarse' onPress={()=> {
+                <TextInput
+                    placeholder='Contraseña'
+                    textContentType='password'
+                    secureTextEntry={true}
+                    onChangeText={onchangecontraseña}
+                />
+                <Button title='Registrarse' onPress={() => {
                     navigation.navigate('index')
-                }}/>
+                }} />
             </View>
         </View>
-  )
+    )
 }
 
 export default Registrarse
