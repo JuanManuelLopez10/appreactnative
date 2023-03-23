@@ -1,11 +1,27 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { DATOS } from '../../../data/datos'
+import ProductItem from '../ProductItem'
 
-const CrearAsado = () => {
+
+const CrearAsado = ({ navigation, route }) => {
+
+  const productos = DATOS.filter(producto => producto.category === route.params.CategoryId)
+
+  const handleSelected = (item) => {
+    navigation.navigate('Product', {
+      productId: item.id,
+      productName: item.nombre,
+      productPrice: item.precio
+    })
+  }
+
+  const renderItem = ({ item }) => (
+    <ProductItem item={item} onSelected={handleSelected}/>
+  )
+
   return (
-    <View>
-      <Text>Felicitaciones, ya empezaste a crear tu asado</Text>
-    </View>
+    <FlatList data={productos} keyExtractor={item=>item.id} renderItem={renderItem}/>
   )
 }
 

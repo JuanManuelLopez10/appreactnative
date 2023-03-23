@@ -1,9 +1,8 @@
 import React ,{ useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View, Dimensions} from 'react-native';
-import Header from './src/components/header/Header';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen'
-import Navigate from './src/navigation/Navigate';
+import MainNavigator from './src/navigation/MainNavigator';
 
 SplashScreen.preventAutoHideAsync()
 
@@ -72,9 +71,9 @@ export default function App() {
     return null;
   }
   return(<>
+    
     <View style={styles.screen} onLayout={onLayoutRootView}>
-    <Header openmenu={openmenu} closemenu={closemenu} OpenMenu={OpenMenu} cerrarsesion={cerrarsesion} />
-    <Navigate/>
+    <MainNavigator/>
     </View>
     </>
     // 

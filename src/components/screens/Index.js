@@ -1,27 +1,20 @@
-import { StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, Text, View, Button, FlatList } from 'react-native'
 import React from 'react'
 import { SelectList } from 'react-native-dropdown-select-list';
+import GridItem from '../GridItem';
+import { CATEGORY } from '../../../data/category';
 
 const Index = ( { navigation }) => {
-    console.log("index");
-    const tipodeasado = [
-        {key:'1', value:'Con invitación'},
-        {key:'2', value:'Privado'},
-        {key:'3', value:'Público'},
-    ]
+  const handleSelectedCategory = (item) => {
+    navigation.navigate('Productos', {
+      CategoryId: item.id,
+      CategoryName: item.titulo
+    })
+  }
+  const renderGridItem = ({ item }) => (<GridItem item={item} onSelected={handleSelectedCategory}/>)
+
     return (
-      <View>
-          <View>
-            <Text style={styles.titulo}> Crear asado </Text>
-            <SelectList 
-          boxStyles={styles.opciones}
-            data={tipodeasado} 
-            placeholder="Tipo de asado"
-            save="value"
-          />
-          <Button title='Empezar' onPress={()=>{navigation.navigate('creado')}}/>
-          </View>
-      </View>
+      <FlatList style={styles.screen} data={CATEGORY} keyExtractor={item => item.id} renderItem={renderGridItem} numColumns={2} />
     )
   
   }
@@ -32,5 +25,9 @@ const styles = StyleSheet.create({
     titulo:{
         fontSize: 30,
         margin: 10
+    },  
+    screen: {
+      height: '70%',
     }
+
 })
