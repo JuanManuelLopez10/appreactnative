@@ -4,17 +4,23 @@ import Navigate from './Navigate'
 import CartNavigate from './CartNavigate'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons'
+import OrderScreen from '../components/screens/OrderScreen'
 
 const BottomTabs = createBottomTabNavigator()
 const TabsNavigator = () => {
   return (
-    <BottomTabs.Navigator screenOptions={{headerShown: false}}>
+    <BottomTabs.Navigator>
         <BottomTabs.Screen name='Shop' component={Navigate} options={{tabBarIcon: ({ focused }) => (
           <View>
             <Ionicons name='md-home' size={24} color={focused ? 'blue' : 'black'}/>
           </View>
         )}}/>
         <BottomTabs.Screen name='Cart-tab' component={CartNavigate} options={{tabBarIcon: ({ focused }) => (
+          <View>
+            <Ionicons name='md-cart' size={24} color={focused ? 'blue' : 'black'}/>
+          </View>
+        )}}/>
+                <BottomTabs.Screen name='Orders' component={OrderScreen} options={{tabBarIcon: ({ focused }) => (
           <View>
             <Ionicons name='md-cart' size={24} color={focused ? 'blue' : 'black'}/>
           </View>

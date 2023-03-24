@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import CartItem from './CartItem'
-import { DATOS } from '../../data/datos'
+import CartItem from '../CartItem'
+import { DATOS } from '../../../data/datos'
 
 const CartScreen = () => {
   const datos = DATOS

@@ -2,7 +2,7 @@ import { Platform, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Colors from '../constants/Colors'
-import CartScreen from '../components/CartScreen'
+import CartScreen from '../components/screens/CartScreen'
 
 const Stack = createNativeStackNavigator()
 const CartNavigate = () => {
