@@ -5,24 +5,30 @@ import CartNavigate from './CartNavigate'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons'
 import OrderScreen from '../components/screens/OrderScreen'
+import Colors from '../constants/Colors'
 
 const BottomTabs = createBottomTabNavigator()
 const TabsNavigator = () => {
   return (
     <BottomTabs.Navigator>
-        <BottomTabs.Screen name='Shop' component={Navigate} options={{tabBarIcon: ({ focused }) => (
+        <BottomTabs.Screen name='Tienda' component={Navigate} options={{
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
           <View>
-            <Ionicons name='md-home' size={24} color={focused ? 'blue' : 'black'}/>
+            <Ionicons name='md-home' size={24} color={focused ? Colors.accent : 'black'}/>
           </View>
         )}}/>
-        <BottomTabs.Screen name='Cart-tab' component={CartNavigate} options={{tabBarIcon: ({ focused }) => (
+        <BottomTabs.Screen name='Carrito' component={CartNavigate} options={{          tabBarShowLabel: false,
+tabBarIcon: ({ focused }) => (
           <View>
-            <Ionicons name='md-cart' size={24} color={focused ? 'blue' : 'black'}/>
+            <Ionicons name='md-cart' size={24} color={focused ? Colors.accent : 'black'}/>
           </View>
         )}}/>
-                <BottomTabs.Screen name='Orders' component={OrderScreen} options={{tabBarIcon: ({ focused }) => (
+                <BottomTabs.Screen name='Orders' component={OrderScreen} options={{          tabBarShowLabel: false,
+tabBarIcon: ({ focused }) => (
           <View>
-            <Ionicons name='md-cart' size={24} color={focused ? 'blue' : 'black'}/>
+            <Ionicons name='md-list' size={24} color={focused ? Colors.accent : 'black'}/>
           </View>
         )}}/>
     </BottomTabs.Navigator>

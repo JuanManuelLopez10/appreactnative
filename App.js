@@ -3,6 +3,8 @@ import { StyleSheet, View, Dimensions} from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen'
 import MainNavigator from './src/navigation/MainNavigator';
+import { Provider } from 'react-redux';
+import store from './src/store';
 
 SplashScreen.preventAutoHideAsync()
 
@@ -70,11 +72,13 @@ export default function App() {
   if(!loaded){
     return null;
   }
-  return(<>
-    
+  return(
+  <>
+    <Provider store={store}>
     <View style={styles.screen} onLayout={onLayoutRootView}>
-    <MainNavigator/>
+      <MainNavigator/>
     </View>
+    </Provider>
     </>
     // 
     //   <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={30}>

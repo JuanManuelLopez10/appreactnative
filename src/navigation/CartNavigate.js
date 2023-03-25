@@ -12,7 +12,7 @@ const CartNavigate = () => {
             backgroundColor: Platform.OS === 'android' ? Colors.primary : Colors.accent
         }
     }}>
-        <Stack.Screen name='Cart' component={CartScreen} options={{title: 'Carrito'}}/>
+        <Stack.Screen name='Cart' component={CartScreen} options={{headerShown: false}}/>
     </Stack.Navigator>
   )
 }

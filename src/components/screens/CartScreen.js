@@ -1,20 +1,19 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import CartItem from '../CartItem'
-import { DATOS } from '../../../data/datos'
+import { PRODUCTS } from '../../../data/products'
 
 const CartScreen = () => {
-  const datos = DATOS
+  const datos = PRODUCTS
   const onDelete = () => {
     console.log('delete');
   }
   const renderItems = ({ item }) => <CartItem item={item} />
  
   return (
-    <View>
-      <Text>CartScreen</Text>
+    <View style={styles.screen}>
       <FlatList
-      data={DATOS}
+      data={PRODUCTS}
       renderItem={renderItems}
       keyExtractor={item => item.id}
       />
@@ -24,4 +23,8 @@ const CartScreen = () => {
 
 export default CartScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  screen: {
+    padding: 10
+  }
+})

@@ -1,4 +1,4 @@
-export const CATEGORY = [
+export const CATEGORIES = [
     {
         id: '1',
         titulo: 'Carnes',

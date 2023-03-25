@@ -1,20 +1,26 @@
 import { StyleSheet, Text, View, Button, FlatList } from 'react-native'
 import React from 'react'
-import { SelectList } from 'react-native-dropdown-select-list';
 import GridItem from '../GridItem';
-import { CATEGORY } from '../../../data/category';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCategory } from '../../store/actions/category.action';
 
 const Index = ( { navigation }) => {
+  const categories = useSelector(state => state.categories.categories)
+  const dispatch = useDispatch()
+  
   const handleSelectedCategory = (item) => {
-    navigation.navigate('Productos', {
-      CategoryId: item.id,
-      CategoryName: item.titulo
+    dispatch(selectCategory(item.id))
+    navigation.push('Productos', {
+      CategoryName: item.titulo,
+      CategoryId: item.id
     })
   }
   const renderGridItem = ({ item }) => (<GridItem item={item} onSelected={handleSelectedCategory}/>)
 
     return (
-      <FlatList style={styles.screen} data={CATEGORY} keyExtractor={item => item.id} renderItem={renderGridItem} numColumns={2} />
+      <View style={styles.screen}>
+      <FlatList style={styles.screen} data={categories} keyExtractor={item => item.id} renderItem={renderGridItem} numColumns={2} />        
+      </View>
     )
   
   }
@@ -27,7 +33,9 @@ const styles = StyleSheet.create({
         margin: 10
     },  
     screen: {
-      height: '70%',
+      height: '100%',
+      backgroundColor: 'white',
+      padding: '3%'
     }
 
 })
