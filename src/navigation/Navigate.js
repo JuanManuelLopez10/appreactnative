@@ -1,10 +1,10 @@
 import { Platform, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Index from '../components/screens/Index'
+import Index from '../screens/Index'
 import COLORS  from '../constants/Colors'
-import ProductDetail from '../components/screens/ProductDetail'
-import CategoryScreen from '../components/screens/CategoryScreen'
+import ProductDetail from '../screens/ProductDetail'
+import CategoryScreen from '../screens/CategoryScreen'
 
 const Stack = createNativeStackNavigator()
 

@@ -1,11 +1,20 @@
-import { createStore, combineReducers } from 'redux';
-
+import { createStore, combineReducers, applyMiddleware,  } from 'redux';
+import thunk from 'redux-thunk';
+import CartReducer from './reducers/cart.reducer';
 import categoryReducer from './reducers/category.reducer';
 import ProductsReducer from './reducers/products.reducer';
+import OrderReducer from './reducers/order.reducer';
+import authReducer from './reducers/auth.reducer';
+import placeReducer from './reducers/place.reducer';
+
 
 const RootReducer = combineReducers({
     categories: categoryReducer,
-    products: ProductsReducer
+    products: ProductsReducer,
+    cart: CartReducer,
+    orders: OrderReducer,
+    auth: authReducer,
+    places: placeReducer
 })
 
-export default createStore(RootReducer)
+export default createStore(RootReducer, applyMiddleware(thunk))

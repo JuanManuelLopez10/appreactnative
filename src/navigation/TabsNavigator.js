@@ -4,8 +4,10 @@ import Navigate from './Navigate'
 import CartNavigate from './CartNavigate'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons'
-import OrderScreen from '../components/screens/OrderScreen'
 import Colors from '../constants/Colors'
+import OrderScreen from '../screens/OrderScreen'
+import ImageSelector from '../components/ImageSelector'
+import NewPlaceScreen from '../screens/NewPlaceScreen'
 
 const BottomTabs = createBottomTabNavigator()
 const TabsNavigator = () => {
@@ -19,6 +21,7 @@ const TabsNavigator = () => {
             <Ionicons name='md-home' size={24} color={focused ? Colors.accent : 'black'}/>
           </View>
         )}}/>
+
         <BottomTabs.Screen name='Carrito' component={CartNavigate} options={{          tabBarShowLabel: false,
 tabBarIcon: ({ focused }) => (
           <View>
@@ -30,8 +33,18 @@ tabBarIcon: ({ focused }) => (
           <View>
             <Ionicons name='md-list' size={24} color={focused ? Colors.accent : 'black'}/>
           </View>
+          
+        )}}/>
+        <BottomTabs.Screen name='Camera' component={NewPlaceScreen} options={{
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+          <View>
+            <Ionicons name='md-camera' size={24} color={focused ? Colors.accent : 'black'}/>
+          </View>
         )}}/>
     </BottomTabs.Navigator>
+    
   )
 }
 

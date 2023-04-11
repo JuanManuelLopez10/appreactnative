@@ -1,8 +1,8 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
-import ProductItem from '../ProductItem'
+import ProductItem from '../components/ProductItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { filteredProduct, selectProduct } from '../../store/actions/products.action'
+import { filteredProduct, selectProduct } from '../store/actions/products.action'
 
 
 const CategoryScreen = ({ navigation }) => {

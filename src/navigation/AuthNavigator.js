@@ -1,22 +1,23 @@
-import { Platform, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import AuthScreen from '../screens/AuthScreen'
 import Colors from '../constants/Colors'
-import CartScreen from '../screens/CartScreen'
 
 const Stack = createNativeStackNavigator()
-const CartNavigate = () => {
-  return (
+
+const AuthNavigator = () => {
+    return(
     <Stack.Navigator screenOptions={{
         headerStyle:{
             backgroundColor: Platform.OS === 'android' ? Colors.primary : Colors.accent
         }
     }}>
-        <Stack.Screen name='Cart' component={CartScreen} options={{headerShown: false}}/>
+        <Stack.Screen name='Cart' component={AuthScreen} options={{headerShown: false}}/>
     </Stack.Navigator>
-  )
+)
+
+
 }
 
-export default CartNavigate
+export default AuthNavigator
 
-const styles = StyleSheet.create({})

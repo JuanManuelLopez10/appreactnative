@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Button, FlatList } from 'react-native'
 import React from 'react'
-import GridItem from '../GridItem';
+import GridItem from '../components/GridItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCategory } from '../../store/actions/category.action';
+import { selectCategory } from '../store/actions/category.action';
 
 const Index = ( { navigation }) => {
   const categories = useSelector(state => state.categories.categories)
