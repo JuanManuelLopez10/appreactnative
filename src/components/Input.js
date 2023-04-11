@@ -36,14 +36,17 @@ const Input = props => {
     }, [inputState, onInputChange])
 
     const textChangeHandler = text => {
-        console.log(text);
         const emailRegex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/ 
         let isValid = true
         if (props.required && text.trim().length === 0) {
             isValid = false
         }
+        if (props.email && emailRegex.test(text.toLowerCase())){
 
+            isValid = false
+        }
         if (props.min != null & +text < props.min){
+
             isValid = false
         }
         if (props.max != null & +text > props.min){
@@ -52,6 +55,7 @@ const Input = props => {
         }
         if (props.minLength != null & +text.length < props.minLength){
             isValid = false
+            
         }
         dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid})
     }

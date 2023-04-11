@@ -2,7 +2,7 @@ import { URL_AUTH_SIGN } from "../../constants/database";
 
 export const SIGNUP = 'SIGNUP'
 
-export const signup = (email, password) => {
+export const signup = ( email, password ) => {
     return async dispatch => {
         try {
             
@@ -12,8 +12,8 @@ export const signup = (email, password) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    email,
-                    password,
+                    email: email,
+                    password: password,
                     returnSecureToken: true
                 }),
                 
