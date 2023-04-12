@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import MapViewimport, { Marker } from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 import { useState } from 'react'
 import { useLayoutEffect } from 'react'
 
@@ -19,8 +19,8 @@ const MapScreen = ({ navigation }) => {
         })
     }
     const handsave = () => {
-        if(selectLocation){
-            navigation.navigate('Nuevo', {mapLocation:selectLocation})
+        if(selectedLoc){
+            navigation.navigate('Nuevo', {mapLocation:selectedLoc})
         }
     }
     useLayoutEffect(()=>{
@@ -31,12 +31,17 @@ const MapScreen = ({ navigation }) => {
         })
     }, [navigation, handsave])
   return (
-    <MapView initialRegion={initialRegion} provider='google'>
-        {selectLocation && <Marker title='Ubicacion' coordinate={{latitude: selectLocation.lat, longitude: selectLocation.lng}}/>}
+    <MapView style={styles.mapa} initialRegion={initialRegion} onPress={selectLocation}>
+        {selectedLoc && <Marker title='Ubicacion' coordinate={{latitude: selectedLoc.lat, longitude: selectedLoc.lng}}/>}
     </MapView>
   )
 }
 
 export default MapScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    mapa: {
+        height: 100,
+        width: 100
+    }
+})

@@ -22,7 +22,7 @@ const NewPlaceScreen = ({ navigation }) => {
             <Text>Titulo</Text>
             <TextInput value={titleValue} onChangeText={setTitleValue}/>
             <ImageSelector onImage={image => setSelectImage(image)}/>
-            <LocationService onLocation={location=>setlocationValue(location)} />
+            <LocationService onLocation={(lat, lng)=>setlocationValue({lat, lng})} />
             <Button title='Guardar' onPress={handleSave} />
         </View>
     </ScrollView>
