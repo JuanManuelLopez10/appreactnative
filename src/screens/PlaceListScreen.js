@@ -8,7 +8,7 @@ const PlaceListScreen = ({navigation}) => {
     const renderPlaceItem = (data) => {
       console.log('image ' + data.item.image);
       return(
-      <PlaceItem title={data.item.title} image={data.item.image} onSelect={() => navigation.navigate('Detalle')}/>
+      <PlaceItem title={data.item.title} image={data.item.image} address={data.item.address} onSelect={() => navigation.navigate('Detalle')}/>
       )
     }
 

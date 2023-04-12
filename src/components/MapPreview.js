@@ -1,8 +1,8 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { Children } from 'react'
-import { STATIC_MAP_API_KEY_URL } from '../constants/database'
+import { STATIC_MAP_API_KEY } from '../constants/database'
 
-const MapPreview = ({location}) => {
+const MapPreview = ({location, children}) => {
     const mapPreviewUrl = location ? `https://maps.googleapis.com/maps/api/staticmap?center=${location.lat},${location.lng}&zoom=13&size=600x300&maptype=roadmap
     &markers=color:blue%7Clabel:S%7C${location.lat},${location.lng}
     &markers=color:red%7Clabel:C%7C40.718217,-73.998284
@@ -10,7 +10,7 @@ const MapPreview = ({location}) => {
     return (
     <View>
         {location
-        ? <Image source={{ uri: mapPreviewUrl}}/>
+        ? <Image style={styles.mapa} source={{ uri: mapPreviewUrl}}/>
         : (children)
         }
     </View>
@@ -19,4 +19,9 @@ const MapPreview = ({location}) => {
 
 export default MapPreview
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    mapa: {
+        width: 100,
+        height: 100
+    }
+})

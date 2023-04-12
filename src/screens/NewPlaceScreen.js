@@ -9,9 +9,10 @@ const NewPlaceScreen = ({ navigation }) => {
     const dispatch = useDispatch()
     const [titleValue, setTitleValue] = useState('')
     const [selectImage, setSelectImage] = useState('')
+    const [locationValue, setlocationValue] = useState()
     
     const handleSave = () => {
-        dispatch(placeActions.addPlace(titleValue, selectImage))
+        dispatch(placeActions.addPlace(titleValue, selectImage, locationValue))
         navigation.goBack()
     }
     const onHandlerImageTaken = path => setSelectImage(path)
@@ -21,7 +22,7 @@ const NewPlaceScreen = ({ navigation }) => {
             <Text>Titulo</Text>
             <TextInput value={titleValue} onChangeText={setTitleValue}/>
             <ImageSelector onImage={image => setSelectImage(image)}/>
-            <LocationService onLocation={location=>console.log(location)} />
+            <LocationService onLocation={location=>setlocationValue(location)} />
             <Button title='Guardar' onPress={handleSave} />
         </View>
     </ScrollView>
