@@ -1,12 +1,14 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import React from 'react'
 
-const PlaceItem = props => {
+const PlaceItem = ({ title, image, onSelect }) => {
+  console.log(image);
+
   return (
-    <TouchableOpacity onPress={props.onSelect}>
-        <Image source={{ url: props.image}}/>
+    <TouchableOpacity style={styles.PlaceItem} onPress={onSelect}>
+        <Image style={styles.image} source={ {uri: image}}/>
         <View>
-            <Text>{props.title}</Text>
+            <Text>{title}</Text>
         </View>
     </TouchableOpacity>
   )
@@ -14,4 +16,13 @@ const PlaceItem = props => {
 
 export default PlaceItem
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  PlaceItem: {
+    flexDirection: 'row',
+  },
+  image: {
+    width: 70,
+    height: 70,
+    borderRadius: 35
+  }
+})

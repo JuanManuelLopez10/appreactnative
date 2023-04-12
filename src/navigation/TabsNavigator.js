@@ -8,6 +8,7 @@ import Colors from '../constants/Colors'
 import OrderScreen from '../screens/OrderScreen'
 import ImageSelector from '../components/ImageSelector'
 import NewPlaceScreen from '../screens/NewPlaceScreen'
+import PlaceNavigator from './PlaceNavigator'
 
 const BottomTabs = createBottomTabNavigator()
 const TabsNavigator = () => {
@@ -35,9 +36,8 @@ tabBarIcon: ({ focused }) => (
           </View>
           
         )}}/>
-        <BottomTabs.Screen name='Camera' component={NewPlaceScreen} options={{
+        <BottomTabs.Screen name='Camera' component={PlaceNavigator} options={{
           tabBarShowLabel: false,
-          headerShown: false,
           tabBarIcon: ({ focused }) => (
           <View>
             <Ionicons name='md-camera' size={24} color={focused ? Colors.accent : 'black'}/>

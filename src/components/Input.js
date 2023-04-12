@@ -32,6 +32,7 @@ const Input = props => {
     useEffect(() => {
         if (inputState.touched) {
             onInputChange(id, inputState.value, inputState.isValid)
+            console.log(inputState);
         }
     }, [inputState, onInputChange])
 
@@ -62,6 +63,7 @@ const Input = props => {
         const lostFocusHandler = () => {
             dispatch({ type: INPUT_BLUR })
         }
+        console.log(id);
     return (
         <View>
             <Text>{props.label}</Text>

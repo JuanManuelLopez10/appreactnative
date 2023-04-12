@@ -1,11 +1,10 @@
-import { Alert, StyleSheet, Text, View, Button } from 'react-native'
+import { Alert, StyleSheet, Text, View, Button, Image } from 'react-native'
 import React, { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
 
-
-const ImageSelector = () => {
-
+const ImageSelector = ({onImage}) => {
     const [pickedUri, setpickedUri] = useState()
+    
     const verifyPermissions = async () => {
         const { status } = await ImagePicker.requestCameraPermissionsAsync()
         if (status !== 'granted') {
@@ -26,15 +25,15 @@ const ImageSelector = () => {
             aspect: [16,9],
             quality: 0.8
         })
-        setpickedUri(image.uri)
-        props.onImage(image.uri)
+        setpickedUri(image.assets[0].uri)
+        onImage(image.assets[0].uri)
     }
 
   return (
     <View>
         <View>
-            {!pickedUri ? (<Text>No hay imagen seleccionada</Text>)
-            : (<Image source={{uri: pickedUri}}/>)
+            {!pickedUri ? <Text>No hay imagen seleccionada</Text>
+            : <Image style={styles.image} source={{uri:pickedUri}}/>
             }
         </View>
         <Button title='Tomar foto' onPress={handlerTakeImage} />
@@ -44,4 +43,9 @@ const ImageSelector = () => {
 
 export default ImageSelector
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    image: {
+        width:50,
+        height: 50
+    }
+})

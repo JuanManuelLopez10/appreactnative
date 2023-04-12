@@ -1,24 +1,20 @@
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Platform, StyleSheet, Text, View } from 'react-native'
 import React, { useLayoutEffect } from 'react'
-import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import HeaderButton from '../components/HeaderButton'
+import { useSelector } from 'react-redux'
+import PlaceItem from '../components/PlaceItem'
 
 const PlaceListScreen = ({navigation}) => {
-  useLayoutEffect(() => {
-    navigation.setOptions({
-        headerRight: () => (
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                <Item title='Nueva' iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'} onPress={() => navigation.push('Nuevo')}/>
-                </HeaderButtons>
-        )
-    })
-  }, [navigation])
+    const places = useSelector(state => state.places.places)
+    const renderPlaceItem = (data) => {
+      console.log('image ' + data.item.image);
+      return(
+      <PlaceItem title={data.item.title} image={data.item.image} onSelect={() => navigation.navigate('Detalle')}/>
+      )
+    }
+
   
     return (
-    <View>
-      <Text>PlaceListScreen</Text>
-    </View>
-  )
+      <FlatList style={{flex:1}} data={places} keyExtractor={item => item.id} renderItem={renderPlaceItem}/>)
 }
 
 export default PlaceListScreen

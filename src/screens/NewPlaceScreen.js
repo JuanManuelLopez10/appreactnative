@@ -2,21 +2,27 @@ import { ScrollView, StyleSheet, Text, TextInput, View, Button } from 'react-nat
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as placeActions from '../store/actions/place.actions'
+import ImageSelector from '../components/ImageSelector'
+import LocationService from '../components/LocationService'
 
-const NewPlaceScreen = ([navigation]) => {
+const NewPlaceScreen = ({ navigation }) => {
     const dispatch = useDispatch()
     const [titleValue, setTitleValue] = useState('')
-    const titleChangeHandler = text => setTitleValue(text)
-    const savePlaceHandler = () => {
-        dispatch(placeActions.addPlace(titleValue))
+    const [selectImage, setSelectImage] = useState('')
+    
+    const handleSave = () => {
+        dispatch(placeActions.addPlace(titleValue, selectImage))
         navigation.goBack()
     }
+    const onHandlerImageTaken = path => setSelectImage(path)
   return (
     <ScrollView>
         <View>
             <Text>Titulo</Text>
-            <TextInput value={titleValue} onChangeText={titleChangeHandler}/>
-            <Button title='Guardar' onPress={savePlaceHandler} />
+            <TextInput value={titleValue} onChangeText={setTitleValue}/>
+            <ImageSelector onImage={image => setSelectImage(image)}/>
+            <LocationService onLocation={location=>console.log(location)} />
+            <Button title='Guardar' onPress={handleSave} />
         </View>
     </ScrollView>
   )

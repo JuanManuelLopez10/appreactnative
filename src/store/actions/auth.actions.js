@@ -3,6 +3,7 @@ import { URL_AUTH_SIGN } from "../../constants/database";
 export const SIGNUP = 'SIGNUP'
 
 export const signup = ( email, password ) => {
+    console.log('lapassword ' + password);
     return async dispatch => {
         try {
             
