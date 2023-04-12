@@ -3,12 +3,22 @@ import React, { useState } from 'react'
 import * as Location from 'expo-location'
 import Colors from '../constants/Colors'
 import MapPreview from './MapPreview'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { useEffect } from 'react'
 
 const LocationService = ({onLocation}) => {
     const navigation = useNavigation
+    const route = useRoute()
+    const mapLocation = route.params?.mapLocation
     const [location, setLocation] = useState(null)
     
+    useEffect(() => {
+        if(mapLocation){
+            setLocation(mapLocation)
+            onLocation(mapLocation.lat, mapLocation.lng)
+        }
+    }, [mapLocation])
+
     const handleLocation = async () => {
         const hasPermission = await verifyPermissions()
         if(!hasPermission){
