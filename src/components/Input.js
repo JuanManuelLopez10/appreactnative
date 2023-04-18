@@ -32,7 +32,6 @@ const Input = props => {
     useEffect(() => {
         if (inputState.touched) {
             onInputChange(id, inputState.value, inputState.isValid)
-            console.log(inputState);
         }
     }, [inputState, onInputChange])
 
@@ -63,20 +62,28 @@ const Input = props => {
         const lostFocusHandler = () => {
             dispatch({ type: INPUT_BLUR })
         }
-        console.log(id);
     return (
-        <View>
-            <Text>{props.label}</Text>
-            <TextInput {...props} value={inputState.value} onChangeText={textChangeHandler} onBlur={lostFocusHandler}/>
-            {!inputState.isValid && inputState.touched && (
-                <View>
-                    <Text>{props.errorText}</Text>
-                </View>
-            )}
+        <View style={styles.Input}>
+            <TextInput placeholder='Email' {...props} value={inputState.value} onChangeText={textChangeHandler} onBlur={lostFocusHandler}/>
         </View>
         
     )
 }
 export default Input
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    Input: {
+        borderRadius: 15,
+        width: '90%',
+        padding: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        backgroundColor: 'white',
+        elevation: 4,
+    }
+})

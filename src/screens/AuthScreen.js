@@ -1,92 +1,106 @@
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useReducer, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { signup } from '../store/actions/auth.actions'
-import Input from '../components/Input'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React from 'react'
+import Colors from '../constants/Colors'
+import { fontPixel, heightPixel, pixelSizeHorizontal, widthPixel } from '../../utils/normalize'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { Image } from 'react-native'
 
-const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE'
-
-export const formReducer = (state, action) => {
-    if (action.type === FORM_INPUT_UPDATE){
-        const inputValues = {
-            ...state.inputValues,
-            [action.input] : action.value
-        }
-        const inputValidities = {
-            ...state.inputValidities,
-            [action.input] : action.isValid
-        }
-        let formIsValid = true
-
-        for (const key in inputValidities){
-            formIsValid = formIsValid && inputValidities[key]
-        }
-        return {
-            formIsValid: formIsValid,
-            inputValidities: inputValidities,
-            inputValues: inputValues
-        }
+const AuthScreen = ({navigation}) => {
+    const NavigateToSignIn = () => {
+        navigation.navigate('SignIn')
     }
-    return state
-}
-
-const AuthScreen = () => {
-    const dispatch = useDispatch()
-    const [Password, setPassword] = useState('')
-    const cambiarshowpassword = (text) => {
-        setPassword(text)
+    const NavigateToSignUp = () => {
+        navigation.navigate('SignUp')
     }
-    const [formState, dispatchFormState] = useReducer(formReducer, {
-        inputValues: {
-            email: '',
-            password: '',
-        },
-        inputValidities: {
-            email: false,
-            password: false,
-        },
-        formIsValid: false
-    })
-
-    const onHandleRegister = () => {
-        console.log(formState);
-        if (formState.inputValues.password === '') {
-            alert('errooooor')
-        }
-        if(!formState.formIsValid){
-            dispatch(signup(formState.inputValues.email, Password))
-        } else {
-            console.log(formState.inputValues.email) 
-            console.log(formState.inputValues.password) 
-            alert('Ingrese el email y contraseña válidos')
-        }
-    }
-
-    const handleChangedText = useCallback((inputIdentifier, inputValue, inputValidity) => {
-        dispatchFormState ({
-            type: FORM_INPUT_UPDATE,
-            value: inputValue,
-            isValid: inputValidity,
-            input: inputIdentifier
-        })
-    },[dispatchFormState])
 
     return (
-    <KeyboardAvoidingView behavior='height'>
-        <View>
-            <Text>Formulario</Text>
-            <View>
-                <Input initialValue={formState.inputValues.email} initialValid={formState.inputValidities.email} onInputChange={handleChangedText} id='email' required minLength={5} label='Email' errorText='Por favor, ingrese un mail válido' autoCapitalize='none' keyboardType='email-address' />
-                <TextInput onChangeText={cambiarshowpassword} placeholder='Password'/>
-                <TouchableOpacity onPress={onHandleRegister}>
-                    <Text>Registrarse</Text>
-                </TouchableOpacity>
+        <>
+            <SafeAreaView />
+            <View style={styles.Screen}>
+                <View>
+                    <Image style={styles.Logo} src={'https://previews.123rf.com/images/vladischern/vladischern1804/vladischern180400001/98715833-alimentos-carne-filete-asado-a-la-parrilla-dibujado-a-mano-ilustraci%C3%B3n-vectorial-dibujo-realista.jpg'}/>
+                    <Text style={styles.LogoName}>Hagamo un asado</Text>
+                </View>
+                <View style={styles.Options}>
+                    <Text style={styles.OptionsTitle}>Bienvenido</Text>
+                    <Text style={styles.OptionsSubtitle}>¿Ya tenés una cuenta?</Text>
+                    <View style={styles.OptionsView}>
+                        <TouchableOpacity onPress={NavigateToSignIn} style={[styles.OptionButton, { backgroundColor: Colors.light }]}>
+                            <Text style={[styles.OptionButtonText]}>Iniciar sesión</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={NavigateToSignUp} style={[styles.OptionButton, { backgroundColor: Colors.dark }]}>
+                            <Text style={[styles.OptionButtonText, {color: Colors.light}]}>Registrarse</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
-        </View>
-    </KeyboardAvoidingView>
-  )
+        </>
+    )
 }
 
 export default AuthScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    Screen: {
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+    Logo: {
+      height: heightPixel(200),
+      width: widthPixel(200),
+      alignSelf: 'center',
+      marginTop: heightPixel(50)
+    },
+    LogoName: {
+        alignSelf: 'center',
+        fontSize: fontPixel(40),
+        color: Colors.primary
+    },
+    Options: {
+        width: '100%',
+        height: '50%',
+        display: 'flex',
+        justifyContent: 'space-around',
+        paddingBottom: heightPixel(100),
+        backgroundColor: Colors.primary,
+        alignItems: 'center',
+        borderTopEndRadius: 50,
+        borderTopLeftRadius: 50
+    },
+    OptionsTitle: {
+        color: 'white',
+        marginTop: pixelSizeHorizontal(30),
+        fontSize: fontPixel(40),
+    },
+    OptionsSubtitle: {
+        fontSize: fontPixel(15),
+        color: Colors.light
+    },
+    OptionsView: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: heightPixel(30)
+
+    },
+    OptionButton: {
+        paddingHorizontal: widthPixel(10),
+        paddingVertical: heightPixel(15),
+        borderRadius: heightPixel(30),
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+
+        elevation: 9,
+    },
+    OptionButtonText: {
+        fontSize: fontPixel(20)
+    }
+})

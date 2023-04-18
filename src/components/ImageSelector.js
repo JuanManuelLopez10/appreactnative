@@ -1,6 +1,7 @@
 import { Alert, StyleSheet, Text, View, Button, Image } from 'react-native'
 import React, { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
+import { widthPixel } from '../../utils/normalize'
 
 const ImageSelector = ({onImage}) => {
     const [pickedUri, setpickedUri] = useState()
@@ -22,7 +23,7 @@ const ImageSelector = ({onImage}) => {
         if(!isCameraOk) return
         const image = await ImagePicker.launchCameraAsync({
             allowsEditing: true,
-            aspect: [16,9],
+            aspect: [1,1],
             quality: 0.8
         })
         setpickedUri(image.assets[0].uri)
@@ -30,13 +31,13 @@ const ImageSelector = ({onImage}) => {
     }
 
   return (
-    <View>
-        <View>
-            {!pickedUri ? <Text>No hay imagen seleccionada</Text>
+    <View style={styles.ViewImageSelector}>
+        <View >
+            {!pickedUri ? <Image style={styles.image} src={'https://thumbs.dreamstime.com/b/imagen-masculina-del-perfil-s%C3%ADmbolo-icono-avatar-de-la-silueta-132834199.jpg'}/>
             : <Image style={styles.image} source={{uri:pickedUri}}/>
             }
         </View>
-        <Button title='Tomar foto' onPress={handlerTakeImage} />
+        <Button title='Guardar' onPress={handlerTakeImage} />
     </View>
   )
 }
@@ -44,8 +45,13 @@ const ImageSelector = ({onImage}) => {
 export default ImageSelector
 
 const styles = StyleSheet.create({
+    ViewImageSelector: {
+        width: '50%',
+        display: 'flex',
+        alignItems: 'center'
+    },
     image: {
-        width:50,
-        height: 50
+        width: widthPixel(100),
+        height: widthPixel(100)
     }
 })

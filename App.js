@@ -5,22 +5,17 @@ import * as SplashScreen from 'expo-splash-screen'
 import MainNavigator from './src/navigation/MainNavigator';
 import { Provider } from 'react-redux';
 import store from './src/store';
+import { init } from './src/db';
 
 SplashScreen.preventAutoHideAsync()
-
-export default function App() {
-  const [idPortrait, setidPortrait] = useState(true)
-  const onPortrait = () => {
-    const dim = Dimensions.get('screen')
-    return dim.height >= dim.width
-  }
-  const statePortrait = () => setidPortrait(onPortrait())
-  useEffect(()=>{
-    Dimensions.addEventListener('change', statePortrait)
-    return () => {
-      Dimensions.addEventListener('change', statePortrait)
-    }
+  init()
+    .then(() => console.log('Database inicializada'))
+    .catch(err => {
+    console.log('       error:', err);
+    console.log('       error:', 'Database fail connect');
   })
+export default function App() {
+
   const [loaded] = useFonts({
     "open-sans-bold" : require('./assets/fonts/OpenSans-Bold.ttf'),
     "open-sans-regular" : require('./assets/fonts/OpenSans-Regular.ttf'),
@@ -31,44 +26,6 @@ export default function App() {
     }
   }, [loaded]);
 
-
-  const [nombreusuario, setnombreusuario] = useState()
-  const [contraseñausuario, setcontraseñausuario] = useState()
-  const [TipoNuevoAsado, setTipoNuevoAsado] = useState(undefined)
-  const [itemText, setItemText] = useState('')
-  const [itemlleva, setItemlleva] = useState('')
-  const [items, setItems] = useState([
-    {id: 1, value: "item0"}
-  ])
-  const registrarse = (a, b) => {
-    setnombreusuario(a)
-    setcontraseñausuario(b)
-  }
-  const cerrarsesion = () => {
-    setnombreusuario()
-    setcontraseñausuario()
-  }
-    const [OpenMenu, setOpenMenu] = useState(false)
-  const openmenu = () => {
-    console.log("abrir menu");
-    setOpenMenu(true)
-  }
-  const closemenu = () => {
-    setOpenMenu(false)
-  }
-
-  const [TipoDeAsado, setTipoDeAsado] = React.useState("");
-
-  const SeleccionarTipoDeAsado = (val) => {
-    setTipoDeAsado(val)
-    console.log(TipoDeAsado);
-  }
-  const EmpezarAsado = () => {
-    setTipoNuevoAsado(TipoDeAsado)
-    console.log("astr");
-    console.log(TipoNuevoAsado);
-
-  }
   if(!loaded){
     return null;
   }

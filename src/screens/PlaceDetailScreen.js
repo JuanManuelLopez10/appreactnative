@@ -6,6 +6,7 @@ const PlaceDetailScreen = ({ route }) => {
   const { placeId } = route.params
 
   const selectedPlace = useSelector(state => state.places.places.find(place => place.id === placeId))
+
     return (
     <View>
       <Text>{selectedPlace.address}</Text>
