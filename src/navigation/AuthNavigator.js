@@ -10,9 +10,8 @@ import AcountScreen from '../screens/AcountScreen'
 const Stack = createNativeStackNavigator()
 
 const AuthNavigator = () => {
-    const isAuth = useSelector(state=>state.auth.userId)
-    console.log('      ISAUTH: ',    isAuth);
-    
+    const isAuth = useSelector(state=>state.auth)
+    console.log('     isAuth: ', isAuth);
     return(
     <Stack.Navigator screenOptions={{
         headerStyle:{
@@ -20,7 +19,7 @@ const AuthNavigator = () => {
         }
     }}>
         {
-            isAuth
+            isAuth.token
             ? <>
             <Stack.Screen name='Auth' component={AcountScreen} options={{headerShown: false}}/>
             </>       
@@ -28,6 +27,7 @@ const AuthNavigator = () => {
            <Stack.Screen name='Auth' component={AuthScreen} options={{headerShown: false}}/>
             <Stack.Screen name='SignIn' component={SignInScreen} options={{headerShown: false}}/>
             <Stack.Screen name='SignUp' component={SignUpScreen} options={{headerShown: false}}/>
+            <Stack.Screen name='CreateUser' component={AcountScreen} options={{headerShown: false}}/>
            </>
         }
     </Stack.Navigator>

@@ -1,7 +1,7 @@
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Button } from 'react-native'
 import React, { useCallback, useReducer, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { signup } from '../store/actions/auth.actions'
+import { signup, signupothers } from '../store/actions/auth.actions'
 import Input from '../components/Input'
 import { fontPixel, heightPixel, widthPixel } from '../../utils/normalize'
 import Colors from '../constants/Colors'
@@ -34,7 +34,7 @@ export const formReducer = (state, action) => {
     return state
 }
 
-const SignUpScreen = () => {
+const SignUpScreen = ({navigation}) => {
     const [PasswordShown, setPasswordShown] = useState(false)
     const turnPasswordToShown = () => {
         setPasswordShown(true)
@@ -67,7 +67,9 @@ const SignUpScreen = () => {
         },
         formIsValid: false
     })
-
+    const Prueba = (text) => {
+        dispatch(signupothers(text))
+    }
     const onHandleRegister = () => {
         console.log(formState);
         if (Password===RepeatedPassword) {
@@ -75,6 +77,7 @@ const SignUpScreen = () => {
             }
             if(!formState.formIsValid){
                 dispatch(signup(formState.inputValues.email, Password))
+                navigation.navigate('CreateUser')
             } else {
                 console.log(formState.inputValues.email) 
                 console.log(formState.inputValues.password) 
@@ -106,6 +109,7 @@ const SignUpScreen = () => {
                 <Image style={styles.Logo} src={'https://previews.123rf.com/images/vladischern/vladischern1804/vladischern180400001/98715833-alimentos-carne-filete-asado-a-la-parrilla-dibujado-a-mano-ilustraci%C3%B3n-vectorial-dibujo-realista.jpg'} />
                 <Text style={styles.LogoName}>Hagamo un asado</Text>
             </View>
+            <Button title='Prueba' onPress={()=>Prueba('26lopez.jm@gmail.com')} />
             <View style={styles.Form}>
                 <Input initialValue={formState.inputValues.email} initialValid={formState.inputValidities.email} onInputChange={handleChangedText} id='email' required minLength={5} label='Email' errorText='Por favor, ingrese un mail válido' autoCapitalize='none' keyboardType='email-address' />
                 <View style={styles.Input}>

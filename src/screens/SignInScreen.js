@@ -64,8 +64,7 @@ const SignInScreen = ({ navigation }) => {
     })
     const onHandleRegister = () => {
         console.log(formState);
-        if (formState.inputValues.password === '') {
-        }
+
         if (!formState.formIsValid) {
             dispatch(signin(formState.inputValues.email, Password))
             console.log('     email: ' + formState.inputValues.email)

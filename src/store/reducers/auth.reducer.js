@@ -1,4 +1,5 @@
 import { SIGNUP } from "../actions/auth.actions"
+import { SIGNUPOTHERS } from "../actions/auth.actions"
 import { SIGNIN } from "../actions/auth.actions"
 
 const initialState = {
@@ -18,8 +19,13 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 token: action.token,
-                userId: action.userId
+                userId: action.userId,
+                email: action.email
             }
+        case SIGNUPOTHERS:
+            return {
+                ...state,
+            }        
             default:
                 return state
     }

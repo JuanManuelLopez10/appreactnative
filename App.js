@@ -9,7 +9,7 @@ import { init } from './src/db';
 
 SplashScreen.preventAutoHideAsync()
   init()
-    .then(() => console.log('Database inicializada'))
+    .then(() => console.log('           Database inicializada'))
     .catch(err => {
     console.log('       error:', err);
     console.log('       error:', 'Database fail connect');

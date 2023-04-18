@@ -1,8 +1,46 @@
 import { URL_AUTH_SIGN, URL_API, URL_AUTH_SIGNIN } from "../../constants/database";
 
 export const SIGNUP = 'SIGNUP'
+export const SIGNUPOTHERS = 'SIGNUPOTHERS'
 export const SIGNIN = 'SIGNIN'
 
+export const signupothers = (email, NickName) => {
+    return async dispatch => {
+        try {
+                const responseExtra = await fetch(`${URL_API}/users.json`, {
+                    method: 'GET',
+                    header: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const respuesta = await responseExtra.json()
+                console.log(respuesta);
+            
+                const arraydeusuarios = Object.keys(respuesta).map(function(clave) {
+                    return respuesta[clave];
+                  });
+                arraydeusuarios.map(item => {if (item.email===email) {
+                    item.NickName=NickName
+                }})
+                const response = await fetch(`${URL_API}/users/.json`, {
+                    method: 'PUT',
+                    header: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(arraydeusuarios)
+                })
+
+                dispatch({
+                type: SIGNUPOTHERS,
+            })
+        }
+        catch (error) {
+
+            console.log('error' + error.message);
+        }
+
+    }
+}
 export const signup = (email, password) => {
     return async dispatch => {
         try {
@@ -29,7 +67,8 @@ export const signup = (email, password) => {
                     },
                     body: JSON.stringify({
                         email: email,
-                        id: data.localId
+                        id: data.localId,
+                        
                     }),
 
                 })
@@ -43,7 +82,7 @@ export const signup = (email, password) => {
             dispatch({
                 type: SIGNUP,
                 token: data.idToken,
-                userId: data.localId
+                userId: data.localId,
             })
         }
         catch (error) {
@@ -75,6 +114,7 @@ export const signin = (email, password) => {
                     type: SIGNIN,
                     token: data.idToken,
                     userId: data.localId,
+                    email: email
             })
         }
         catch (error) {

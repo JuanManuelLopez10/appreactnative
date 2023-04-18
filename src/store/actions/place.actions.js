@@ -6,16 +6,18 @@ export const ADD_PLACE = 'ADD_PLACE'
 export const LOAD_PLACE = 'LOAD_PLACE'
 
 export const addPlace = (title, image, location) => {
+    
     return async dispatch => {
-        console.log('   location place.actions: ',location);
         const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${STATIC_MAP_API_KEY}`)
         if (!response.ok) {
             throw new Error('respuesta incorrecta')
         }
         const resData = await response.json()
+
         if(!resData.results){
             throw new Error('No hay localizacion')
         }
+        
         const address = resData.results[0].formatted_address
 
         
@@ -32,7 +34,7 @@ export const addPlace = (title, image, location) => {
             )
             console.log(result);
             
-        dispatch({ type: ADD_PLACE, payload: {id:result.insertAddress, title, image: Path, address, lat: location.lat, lng: location.lng}})
+        dispatch({ type: ADD_PLACE, payload: {id:result.insertAddress, title, image: Path, address: 'Address', lat: location.lat, lng: location.lng}})
 
         } catch (err) {
             console.log(err.message);
