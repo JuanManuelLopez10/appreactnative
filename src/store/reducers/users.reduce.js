@@ -17,6 +17,8 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 results: action.results,
             }    
+        
+            
             default:
                 return state
     }

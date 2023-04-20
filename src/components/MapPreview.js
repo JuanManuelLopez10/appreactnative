@@ -3,8 +3,8 @@ import React, { Children } from 'react'
 import { STATIC_MAP_API_KEY } from '../constants/database'
 
 const MapPreview = ({location, children}) => {
-    const mapPreviewUrl = location ? `https://maps.googleapis.com/maps/api/staticmap?center=${location.lat},${location.lng}&zoom=13&size=600x300&maptype=roadmap
-    &markers=color:blue%7Clabel:S%7C${location.lat},${location.lng}
+    const mapPreviewUrl = location ? `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=13&size=600x300&maptype=roadmap
+    &markers=color:red%7Clabel:%7C${location.latitude},${location.longitude}
     &markers=color:red%7Clabel:C%7C40.718217,-73.998284
     &key=${STATIC_MAP_API_KEY}` : ''
     return (

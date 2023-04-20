@@ -7,7 +7,6 @@ const heightBaseScale = SCREEN_HEIGHT / 840;
 function normalize (size, based = 'width') {
     const newSize = 
         based === 'height' ? size = heightBaseScale * size : size = widthBaseScale * size
-        console.log(heightBaseScale);
         return Math.round(PixelRatio.roundToNearestPixel(newSize))
 }
 

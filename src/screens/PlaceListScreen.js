@@ -12,7 +12,6 @@ const PlaceListScreen = ({navigation}) => {
       dispatch(addressAction.loadAddress())
     }, [])
     const renderPlaceItem = (data) => {
-      console.log('LA IMAGEN ES ' + data.item.image);
       return(
       <PlaceItem title={data.item.title} image={data.item.image} onSelect={() => navigation.navigate('Detalle')}/>
       )

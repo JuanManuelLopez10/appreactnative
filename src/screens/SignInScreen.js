@@ -40,11 +40,9 @@ const SignInScreen = ({ navigation }) => {
     const [PasswordShown, setPasswordShown] = useState(false)
     const turnPasswordToShown = () => {
         setPasswordShown(true)
-        console.log(PasswordShown);
     }
     const turnPasswordToHide = () => {
         setPasswordShown(false)
-        console.log(PasswordShown);
     }
     const dispatch = useDispatch()
     const [Password, setPassword] = useState('')
@@ -63,12 +61,9 @@ const SignInScreen = ({ navigation }) => {
         formIsValid: false
     })
     const onHandleRegister = () => {
-        console.log(formState);
 
         if (!formState.formIsValid) {
             dispatch(signin(formState.inputValues.email, Password))
-            console.log('     email: ' + formState.inputValues.email)
-            console.log('     password: ' + Password)
 
         } else {
             alert('Ingrese el email y contraseña válidos')

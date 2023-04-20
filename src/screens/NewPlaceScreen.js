@@ -15,6 +15,7 @@ const NewPlaceScreen = ({ navigation }) => {
         dispatch(placeActions.addPlace(titleValue, selectImage, locationValue))
         navigation.goBack()
     }
+    const onHandlerImageTaken = path => setSelectImage(path)
   return (
     <ScrollView>
         <View>

@@ -26,6 +26,7 @@ const ImageSelector = ({onImage}) => {
             aspect: [1,1],
             quality: 0.8
         })
+        console.log(image);
         setpickedUri(image.assets[0].uri)
         onImage(image.assets[0].uri)
     }
@@ -37,7 +38,7 @@ const ImageSelector = ({onImage}) => {
             : <Image style={styles.image} source={{uri:pickedUri}}/>
             }
         </View>
-        <Button title='Guardar' onPress={handlerTakeImage} />
+        <Button title='Tomar foto' onPress={handlerTakeImage} />
     </View>
   )
 }

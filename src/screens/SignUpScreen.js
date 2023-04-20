@@ -38,11 +38,9 @@ const SignUpScreen = ({navigation}) => {
     const [PasswordShown, setPasswordShown] = useState(false)
     const turnPasswordToShown = () => {
         setPasswordShown(true)
-        console.log(PasswordShown);
     }
     const turnPasswordToHide = () => {
         setPasswordShown(false)
-        console.log(PasswordShown);
     }
 
 
@@ -71,7 +69,6 @@ const SignUpScreen = ({navigation}) => {
         dispatch(signupothers(text))
     }
     const onHandleRegister = () => {
-        console.log(formState);
         if (Password===RepeatedPassword) {
             if (formState.inputValues.password === '') {
             }
@@ -79,8 +76,6 @@ const SignUpScreen = ({navigation}) => {
                 dispatch(signup(formState.inputValues.email, Password))
                 navigation.navigate('CreateUser')
             } else {
-                console.log(formState.inputValues.email) 
-                console.log(formState.inputValues.password) 
                 alert('Ingrese el email y contraseña válidos')
             }
         }else{
@@ -109,7 +104,6 @@ const SignUpScreen = ({navigation}) => {
                 <Image style={styles.Logo} src={'https://previews.123rf.com/images/vladischern/vladischern1804/vladischern180400001/98715833-alimentos-carne-filete-asado-a-la-parrilla-dibujado-a-mano-ilustraci%C3%B3n-vectorial-dibujo-realista.jpg'} />
                 <Text style={styles.LogoName}>Hagamo un asado</Text>
             </View>
-            <Button title='Prueba' onPress={()=>Prueba('26lopez.jm@gmail.com')} />
             <View style={styles.Form}>
                 <Input initialValue={formState.inputValues.email} initialValid={formState.inputValidities.email} onInputChange={handleChangedText} id='email' required minLength={5} label='Email' errorText='Por favor, ingrese un mail válido' autoCapitalize='none' keyboardType='email-address' />
                 <View style={styles.Input}>

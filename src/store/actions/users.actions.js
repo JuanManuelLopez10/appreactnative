@@ -9,7 +9,6 @@ export const getusers = () => {
             const response = await fetch(`${URL_API}/users.json`)
 
             const data = await response.json()
-            console.log(data);
 
             dispatch({
                 type: GETUSERS,
@@ -24,7 +23,6 @@ export const getusers = () => {
 }
 
 export const searchusers = (searchText) => {
-    console.log('    El search Text: ',searchText);
     return async dispatch => {
         try {
             const responseUsers = await fetch(`${URL_API}/users.json`)
@@ -47,7 +45,6 @@ export const searchusers = (searchText) => {
             arraydeAsados.map(item => {if(item.email==searchText) {
                 Searched.push(item)
             }})
-            console.log('      results: ', Searched);
 
             dispatch({
                 type: SEARCHUSERS,

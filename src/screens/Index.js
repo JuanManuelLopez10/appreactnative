@@ -8,10 +8,11 @@ import { getusers, searchusers } from '../store/actions/users.actions';
 import { SearchBar } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import { fontPixel, heightPixel } from '../../utils/normalize'
+import { fontPixel, heightPixel, widthPixel } from '../../utils/normalize'
+import { Image } from 'react-native';
+import { ScrollView } from 'react-native';
 
 const Index = ({ navigation }) => {
-
 
   const categories = useSelector(state => state.categories.categories)
   const dispatch = useDispatch()
@@ -37,8 +38,14 @@ const Index = ({ navigation }) => {
   const renderGridItem = ({ item }) => (<GridItem item={item} onSelected={handleSelectedCategory} />)
 
   return (
-    <KeyboardAvoidingView>
       <View onLayout={handleSelect} style={styles.screen}>
+      <Image style={styles.Logo} src={'https://previews.123rf.com/images/vladischern/vladischern1804/vladischern180400001/98715833-alimentos-carne-filete-asado-a-la-parrilla-dibujado-a-mano-ilustraci%C3%B3n-vectorial-dibujo-realista.jpg'}/>
+        <View style={styles.CreatAsadoView}>
+          <Text style={styles.CreateAsadoTitle} >Organizá tu asado</Text>
+          <TouchableOpacity onPress={()=>{navigation.navigate('CreateAsado')}}>
+            <Ionicons  style={styles.CreateAsadoButton} name='add-circle' size={fontPixel(40)}/>
+          </TouchableOpacity>
+        </View>
         <View style={styles.SearchView}>
           <Text  style={styles.SearchTitle}>Buscar Amigos</Text>
           <View style={styles.SearchInput}>
@@ -57,9 +64,7 @@ const Index = ({ navigation }) => {
 
         </View>
         <FlatList style={styles.screen} data={categories} keyExtractor={item => item.id} renderItem={renderGridItem} numColumns={2} />
-        <Button title='Hola' onPress={() => handleSelect()} />
       </View>
-    </KeyboardAvoidingView>
   )
 
 }
@@ -71,6 +76,27 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: 'white',
     padding: '3%'
+  },
+  Logo: {
+    height: heightPixel(200),
+    width: widthPixel(200),
+    alignSelf: 'center',
+    marginTop: heightPixel(50)
+  },
+  CreatAsadoView: {
+    height: heightPixel(200),
+    paddingTop: heightPixel(85)
+  },
+  CreateAsadoTitle: {
+    color: Colors.primary,
+    fontSize: fontPixel(35),
+    fontWeight: 600,
+    alignSelf: 'center',
+  },
+  CreateAsadoButton: {
+    alignSelf: 'center',
+    marginTop: heightPixel(10),
+    color: Colors.primary
   },
   SearchInput: {
     width: '100%',

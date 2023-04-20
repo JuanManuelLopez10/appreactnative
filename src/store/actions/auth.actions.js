@@ -14,7 +14,6 @@ export const signupothers = (email, NickName) => {
                     }
                 })
                 const respuesta = await responseExtra.json()
-                console.log(respuesta);
             
                 const arraydeusuarios = Object.keys(respuesta).map(function(clave) {
                     return respuesta[clave];
@@ -58,7 +57,6 @@ export const signup = (email, password) => {
             })
 
             const data = await response.json()
-            console.log(data.localId);
             if (response.ok) {
                 const responseExtra = await fetch(`${URL_API}/users.json`, {
                     method: 'POST',
@@ -108,7 +106,6 @@ export const signin = (email, password) => {
                     })
                 })
             const data = await responseExtra.json()
-            console.log('     Data: ', data);
 
             dispatch({
                     type: SIGNIN,

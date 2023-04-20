@@ -11,7 +11,6 @@ const Stack = createNativeStackNavigator()
 
 const AuthNavigator = () => {
     const isAuth = useSelector(state=>state.auth)
-    console.log('     isAuth: ', isAuth);
     return(
     <Stack.Navigator screenOptions={{
         headerStyle:{

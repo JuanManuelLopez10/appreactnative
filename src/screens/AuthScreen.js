@@ -55,8 +55,9 @@ const styles = StyleSheet.create({
     },
     LogoName: {
         alignSelf: 'center',
-        fontSize: fontPixel(40),
-        color: Colors.primary
+        fontSize: fontPixel(35),
+        color: Colors.primary,
+        fontWeight: 500
     },
     Options: {
         width: '100%',

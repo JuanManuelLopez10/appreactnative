@@ -3,6 +3,7 @@ import React from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import { useState } from 'react'
 import { useLayoutEffect } from 'react'
+import { heightPixel } from '../../utils/normalize'
 
 const MapScreen = ({ navigation }) => {
     const initialRegion = {
@@ -41,7 +42,7 @@ export default MapScreen
 
 const styles = StyleSheet.create({
     mapa: {
-        height: 100,
-        width: 100
+        height: '100%',
+        width: '100%'
     }
 })
