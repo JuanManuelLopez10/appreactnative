@@ -4,8 +4,23 @@ import Colors from '../constants/Colors'
 import { fontPixel, heightPixel, pixelSizeHorizontal, widthPixel } from '../../utils/normalize'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Image } from 'react-native'
+import { deleteUser, fetchUser } from '../db'
+import { useDispatch } from 'react-redux'
+import { getsavedsignin } from '../store/actions/auth.actions'
 
 const AuthScreen = ({navigation}) => {
+    const dispatch = useDispatch()
+    const GetUserIfSaved = () => {
+        dispatch(getsavedsignin())
+    }
+    GetUserIfSaved()
+
+    // const fetcheu = async (useremail) => {
+    //     const deleteu = await deleteUser()
+    //     const fetc = await fetchUser()
+    //     console.log(deleteu.rows);
+    // }
+    // fetcheu()
     const NavigateToSignIn = () => {
         navigation.navigate('SignIn')
     }

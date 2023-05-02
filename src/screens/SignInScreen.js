@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput ,TouchableOpacity, View, Image } from 'react-native'
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { signin, signup } from '../store/actions/auth.actions'
@@ -6,6 +6,8 @@ import Input from '../components/Input'
 import Colors from '../constants/Colors'
 import { fontPixel, heightPixel, widthPixel } from '../../utils/normalize'
 import { Ionicons } from '@expo/vector-icons'
+import { CheckBox } from 'react-native-elements'
+import { insertUser } from '../db'
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE'
 
@@ -38,6 +40,7 @@ export const formReducer = (state, action) => {
 
 const SignInScreen = ({ navigation }) => {
     const [PasswordShown, setPasswordShown] = useState(false)
+    const [stayLogin, setstayLogin] = useState(false)
     const turnPasswordToShown = () => {
         setPasswordShown(true)
     }
@@ -60,11 +63,11 @@ const SignInScreen = ({ navigation }) => {
         },
         formIsValid: false
     })
-    const onHandleRegister = () => {
+    const onHandleRegister = async () => {
 
         if (!formState.formIsValid) {
             dispatch(signin(formState.inputValues.email, Password))
-
+            const saveuser = await insertUser(formState.inputValues.email, Password)
         } else {
             alert('Ingrese el email y contraseña válidos')
         }
@@ -95,7 +98,7 @@ const SignInScreen = ({ navigation }) => {
                         {
                             PasswordShown===false
                             ? <>
-                            <TextInput onChangeText={cambiarshowpassword} placeholder='Password' secureTextEntry />
+                            <TextInput style={{width: '80%'}} onChangeText={cambiarshowpassword} placeholder='Password' secureTextEntry />
                             <Ionicons onPress={turnPasswordToShown} style={styles.ShowPassword} name='md-eye' size={fontPixel(20)}/>
                              </>
                             : <>
@@ -110,7 +113,7 @@ const SignInScreen = ({ navigation }) => {
                     <TouchableOpacity style={styles.LoginButton} onPress={onHandleRegister}>
                         <Text style={styles.LoginButtonText}>Entrar</Text>
                     </TouchableOpacity>
-
+                    <CheckBox checked={()=>{setstayLogin(true)}} />
                 </View>
                 <View style={styles.ViewGoToSignUpScreen}>
                 <TouchableOpacity style={styles.GoToSignUpScreen} onPress={GoToSignUpScreen} >

@@ -20,7 +20,7 @@ const AuthNavigator = () => {
         {
             isAuth.token
             ? <>
-            <Stack.Screen name='Auth' component={AcountScreen} options={{headerShown: false}}/>
+            <Stack.Screen name={isAuth.NickName} component={AcountScreen}/>
             </>       
            :<>
            <Stack.Screen name='Auth' component={AuthScreen} options={{headerShown: false}}/>

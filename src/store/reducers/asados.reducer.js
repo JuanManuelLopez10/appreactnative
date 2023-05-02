@@ -1,4 +1,4 @@
-import { CREATEASADO, SETLOCATIONASADO } from "../actions/asados.actions";
+import { ADDGUEST, CREATEASADO, SETLOCATIONASADO } from "../actions/asados.actions";
 
 const InitialState = {
     type: ''
@@ -8,11 +8,13 @@ const AsadoReducer = (state = InitialState, action) => {
         case CREATEASADO:
             let newtype
             newtype = action.asadoType
-            console.log('    type: ', newtype);
+            console.log('    type: ', action.asadoDate);
 
             return {
                 ...state,
-                type: newtype
+                type: newtype,
+                date: action.stringdate,
+                readableDate: action.readableDate
             }
         case SETLOCATIONASADO:    
                 return {
@@ -20,6 +22,11 @@ const AsadoReducer = (state = InitialState, action) => {
                     location: action.location,
                     address: action.address
                 }
+        case ADDGUEST:
+                return {
+                    ...state,
+                    invitados: action.invitados
+                }   
                 default:
             return state;
 

@@ -18,7 +18,7 @@ const RootReducer = combineReducers({
     auth: authReducer,
     places: placeReducer,
     users: usersReducer,
-    asado: AsadoReducer 
+    asado: AsadoReducer,
 })
 
 export default createStore(RootReducer, applyMiddleware(thunk))

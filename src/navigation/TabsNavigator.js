@@ -23,7 +23,6 @@ const TabsNavigator = () => {
           </View>
         )
       }} />
-
       <BottomTabs.Screen name='Carrito' component={CartNavigate} options={{
         tabBarShowLabel: false,
         headerShown: false,
@@ -41,15 +40,6 @@ const TabsNavigator = () => {
             <Ionicons name='md-list' size={24} color={focused ? Colors.primary : 'black'} />
           </View>
 
-        )
-      }} />
-      <BottomTabs.Screen name='Camera' component={PlaceNavigator} options={{
-        tabBarShowLabel: false,
-        headerShown: false,
-        tabBarIcon: ({ focused }) => (
-          <View>
-            <Ionicons name='md-camera' size={24} color={focused ? Colors.primary : 'black'} />
-          </View>
         )
       }} />
       <BottomTabs.Screen name='Cuenta' component={AuthNavigator} options={{

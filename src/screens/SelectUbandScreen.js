@@ -8,8 +8,22 @@ import MapView, { Marker } from 'react-native-maps'
 import * as Location from 'expo-location'
 import { Alert } from 'react-native'
 import Colors from '../constants/Colors'
+import { setlocationasado } from '../store/actions/asados.actions'
 
 const SelectUbandScreen = ({ navigation }) => {
+    const asado = useSelector(state => state.asado)
+    const verifyPermissions = async () => {
+        const { status } = await Location.requestForegroundPermissionsAsync()
+        if (status!=='granted'){
+            Alert.alert(
+                'Permisos insuficientes',
+                'Necesita dar permiso para obtener ubicación',
+                [{text:'Ok'}]
+            )
+                return false
+        }
+        return true
+    }
     const dispatch = useDispatch()
     let initialRegion = {
         latitude: -34.877815393926944,
@@ -44,41 +58,70 @@ const SelectUbandScreen = ({ navigation }) => {
             longitude: event.nativeEvent.coordinate.longitude
         })
     }
-    const asadotype = useSelector(state => state.asado)
-    const confirmAsadoLocation = () => {
-        // dispatch(setlocationasado(LocationValue.lat, LocationValue.lng, ))
-    }
+    const GetCurrentLocation = async () => {
+        const isLocationOk = await verifyPermissions()
+        if (!isLocationOk) return
 
+        const CurrentLocation = await Location.getCurrentPositionAsync()
+        const locationactual = {
+            latitude: CurrentLocation.coords.latitude,
+            longitude: CurrentLocation.coords.longitude
+        }
+        setselectedLoc(locationactual)
+    }
+    const confirmAsadoLocation = async () => {
+        if (selectedLoc) {
+            const getubicacionstreet = await Location.reverseGeocodeAsync(selectedLoc)
+            const ubicaciónstring = getubicacionstreet[0].street + ', ' +  getubicacionstreet[0].subregion
+            console.log('ubiiii ', selectedLoc);
+            dispatch(setlocationasado(selectedLoc.latitude, selectedLoc.longitude, ubicaciónstring))
+            navigation.navigate('CreateAsado')
+            // Alert.alert('¿Desea guardar esta ubicación?', `${ubicaciónstring}`, [{text: 'Omitir', onPress: () => {
+            //     navigation.navigate('SelectTime')
+            // }},{text: 'Si', onPress: () => {
+            //     navigation.navigate('SelectGuests')
+            // }}] )
+        }else{
+            Alert.alert('Por favor, selecciona una ubicación')
+        }
+    }
+    console.log(asado);
+    let initialRegiona = {
+            latitude: -34.877815393926944,
+            longitude: -54.861974604427814,
+            latitudeDelta: 0.0022,
+            longitudeDelta: 0.421
+    }
+    const newLocation = () => {
+        if (asado){
+            initialRegiona.latitude = asado.location.latitude
+            initialRegiona.longitude = asado.location.longitude       
+        }
+}
     return (
         <View>
+            {
             <MapView initialRegion={initialRegion} region={selectedLoc ? selectedLoc : initialRegion} onPress={selectLocation} style={{ height: '65%', width: '100%' }}>
                 {selectedLoc && <Marker title='Ubicacion' coordinate={{ latitude: selectedLoc.latitude, longitude: selectedLoc.longitude }} />}
-            </MapView>
-            <View style={styles.asadoTypeView}>
-                <Text style={styles.asadotype}>Tipo de asado: "{asadotype.type}"</Text>
+            </MapView>                
+            }
+
+            <View style={{backgroundColor: 'white'}}>
+            <View style={styles.SearchUbication}>
+                <TextInput style={styles.SearchInput} onEndEditing={()=>{if (searchedAddress) {
+                    SearchAddress(searchedAddress)
+                }}} placeholder='Buscar ubicación' onChangeText={handleSearchAddress} />
             </View>
             <View style={styles.SearchUbication}>
-                <TextInput style={styles.SearchInput} placeholder='Buscar ubicación' onChangeText={handleSearchAddress} />
-                <Button onPress={() => SearchAddress(searchedAddress)} title='Buscar' />
+                <TouchableOpacity onPress={GetCurrentLocation} style={styles.MyUbicationButton}>
+                    <Text>Mi ubicación actual</Text>
+                </TouchableOpacity>
             </View>
-            <>
-      <Button title="Open" onPress={() => setOpen(true)} />
-      <DatePicker
-        modal
-        open={open}
-        date={date}
-        onConfirm={(date) => {
-          setOpen(false)
-          setDate(date)
-        }}
-        onCancel={() => {
-          setOpen(false)
-        }}
-      />
-    </>
-            <TouchableOpacity onPress={() => confirmAsadoLocation()}>
-                <Text>Confirmar</Text>
+            <TouchableOpacity style={styles.ConfirmButton} onPress={() => confirmAsadoLocation()}>
+                <Text style={styles.ConfirmButtonText}>Confirmar</Text>
             </TouchableOpacity>
+            </View>
+
         </View>
     )
 }
@@ -97,22 +140,46 @@ const styles = StyleSheet.create({
     SearchUbication: {
         display: 'flex',
         flexDirection: 'row',
-        width: '90%',
+        width: '90%',        
         alignSelf: 'center',
         marginVertical: heightPixel(20),
         backgroundColor: 'white',
+        borderRadius: 10,
+        height: heightPixel(50),
+        borderColor: Colors.light,
+        borderWidth: 1
+    },
+    SearchInput: {
+        display: 'flex',
+        width: '100%',
+        textAlign: 'center',
+    },
+    MyUbicationButton: {
+        width: '100%', 
+        height:'100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'  
+    },
+    ConfirmButton: {        
+        backgroundColor: Colors.primary,
+        width: '50%',
+        alignSelf: 'center',
+        paddingHorizontal: widthPixel(10),
+        paddingVertical: heightPixel(15),
+        borderRadius: heightPixel(30),
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 3,
+            height: 4,
         },
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65,
-        elevation: 6,
-        borderRadius: 10
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9,
     },
-    SearchInput: {
-        width: '80%',
-        padding: widthPixel(6)
+    ConfirmButtonText: {
+        color: Colors.light,
+        alignSelf: 'center',
+        fontSize: fontPixel(15)
     }
 })

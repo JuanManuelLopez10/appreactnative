@@ -8,6 +8,10 @@ const CartScreen = () => {
   const dispatch = useDispatch()
   const datos = useSelector(state => state.cart.items)
   const total = useSelector(state => state.cart.total)
+  const myUser = useSelector(state => state.auth)
+  console.log('                                 ',myUser.FriendsRequests);
+  
+
 
   const renderItems = ({ item }) => <CartItem item={item} />
   const confirm = (payload, total) => {

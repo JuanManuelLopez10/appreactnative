@@ -2,10 +2,10 @@ import * as SQLite from 'expo-sqlite'
 
 const db = SQLite.openDatabase('addres.db')
 
-export const init = () => {
+export const initUser = () => {
   const promise = new Promise ((resolve, reject) => {
     db.transaction((tx) => {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS address (id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, image TEXT NOT NULL, address TEXT NOT NULL, lat REAL NOT NULL, lng REAL NOT NULL)',
+        tx.executeSql('CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL)',
         [],
         () => { resolve() },
         (_, err) => { reject(err) })
@@ -13,14 +13,12 @@ export const init = () => {
   })
   return promise
 }
-export const insertAddress = (
-  title, image, address, lat, lng
-) => {
+export const insertUser = (email, password) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        'INSERT INTO address (title, image, address, lat, lng) VALUES (?, ?, ?, ?, ?);',
-        [title, image, address, lat, lng],
+        'INSERT INTO user (email, password) VALUES (?, ?);',
+        [email, password],
         (_, result) => resolve(result),
         (_, err) => reject(err),
       )
@@ -28,11 +26,25 @@ export const insertAddress = (
   })
   return promise
 }
-export const fetchAddress = () => {
+export const deleteUser = () => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM address',
+        'DELETE FROM user',
+        [],
+        (_, result) => resolve(result),
+        (_, err) => reject(err),
+      )
+    })
+  })
+  return promise
+}
+
+export const fetchUser = () => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT * FROM user',
         [],
         (_, result) => resolve(result),
         (_, err) => reject(err),       

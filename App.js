@@ -5,15 +5,16 @@ import * as SplashScreen from 'expo-splash-screen'
 import MainNavigator from './src/navigation/MainNavigator';
 import { Provider } from 'react-redux';
 import store from './src/store';
-import { init } from './src/db';
+import { initUser } from './src/db';
 
 SplashScreen.preventAutoHideAsync()
-  init()
-    .then(() => console.log('           Database inicializada'))
-    .catch(err => {
-    console.log('       error:', err);
-    console.log('       error:', 'Database fail connect');
-  })
+  initUser()
+  .then(() => console.log('           Database inicializada'))
+  .catch(err => {
+  console.log('       error:', err);
+  console.log('       error:', 'Database fail connect');
+})
+
 export default function App() {
 
   const [loaded] = useFonts({

@@ -74,7 +74,6 @@ const SignUpScreen = ({navigation}) => {
             }
             if(!formState.formIsValid){
                 dispatch(signup(formState.inputValues.email, Password))
-                navigation.navigate('CreateUser')
             } else {
                 alert('Ingrese el email y contraseña válidos')
             }
@@ -133,9 +132,6 @@ const SignUpScreen = ({navigation}) => {
                     }
                 </View>
 
-                <TouchableOpacity>
-                    <Text>¿Olvidaste tu contraseña?</Text>
-                </TouchableOpacity>
                 <TouchableOpacity style={styles.LoginButton} onPress={onHandleRegister}>
                     <Text style={styles.LoginButtonText}>Entrar</Text>
                 </TouchableOpacity>

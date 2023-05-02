@@ -1,8 +1,10 @@
-import { GETUSERS, SEARCHUSERS } from "../actions/users.actions"
+import { LOGOUT, SIGNUPOTHERS, VERIFYUSERNICKNAME } from "../actions/auth.actions"
+import { GETUSERS, SEARCHUSERS, SELECTUSERSEARCHED } from "../actions/users.actions"
 
 const initialState = {
     users: [],
-    results: []
+    results: [],
+    searcheduser: ''
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -17,7 +19,17 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 results: action.results,
             }    
-        
+        case SELECTUSERSEARCHED:
+            return {
+                ...state,
+                searcheduser: action.userSearched,
+            }    
+        case VERIFYUSERNICKNAME:
+            return {
+                ...state,
+                exist: action.exist,
+            }    
+ 
             
             default:
                 return state
