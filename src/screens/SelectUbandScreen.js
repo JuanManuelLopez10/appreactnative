@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fontPixel, heightPixel, widthPixel } from '../../utils/normalize'
 import { TouchableOpacity } from 'react-native'
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import * as Location from 'expo-location'
 import { Alert } from 'react-native'
 import Colors from '../constants/Colors'
@@ -101,7 +101,7 @@ const SelectUbandScreen = ({ navigation }) => {
     return (
         <View>
             {
-            <MapView initialRegion={initialRegion} region={selectedLoc ? selectedLoc : initialRegion} onPress={selectLocation} style={{ height: '65%', width: '100%' }}>
+            <MapView initialRegion={initialRegion} region={selectedLoc ? selectedLoc : initialRegion} onPress={selectLocation}  provider={PROVIDER_GOOGLE}  style={{ height: '65%', width: '100%' }}>
                 {selectedLoc && <Marker title='Ubicacion' coordinate={{ latitude: selectedLoc.latitude, longitude: selectedLoc.longitude }} />}
             </MapView>                
             }
