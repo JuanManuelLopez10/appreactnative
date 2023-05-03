@@ -33,7 +33,7 @@ const MapScreen = ({ navigation }) => {
         })
     }, [navigation, handsave])
   return (
-    <MapView style={styles.mapa} initialRegion={initialRegion} onPress={selectLocation}>
+    <MapView style={styles.mapa} initialRegion={initialRegion} onPress={selectLocation} provider={MapView.PROVIDER_GOOGLE}>
         {selectedLoc && <Marker title='Ubicacion' coordinate={{latitude: selectedLoc.lat, longitude: selectedLoc.lng}}/>}
     </MapView>
   )
