@@ -32,7 +32,7 @@ const SelectUbandScreen = ({ navigation }) => {
         longitudeDelta: 0.421
     }
     const [searchedAddress, setsearchedAddress] = useState('')
-    const [selectedLoc, setselectedLoc] = useState(null)
+    const [selectedLoc, setselectedLoc] = useState()
 
     const handleSearchAddress = (text) => {
         setsearchedAddress(text)
@@ -54,16 +54,18 @@ const SelectUbandScreen = ({ navigation }) => {
     }
     const selectLocation = event => {
         Alert.alert(`${event.nativeEvent.coordinate.latitude}`)
-        // setselectedLoc({
-        //     latitude: event.nativeEvent.coordinate.latitude,
-        //     longitude: event.nativeEvent.coordinate.longitude
-        // })
+        const objeto = {
+            latitude: event.nativeEvent.coordinate.latitude,
+            longitude: event.nativeEvent.coordinate.longitude
+        }
+        setselectedLoc(objeto)
     }
     const GetCurrentLocation = async () => {
         const isLocationOk = await verifyPermissions()
-        if (!isLocationOk) return
+        if (!isLocationOk) return;
 
         const CurrentLocation = await Location.getCurrentPositionAsync()
+        
         const locationactual = {
             latitude: CurrentLocation.coords.latitude,
             longitude: CurrentLocation.coords.longitude
