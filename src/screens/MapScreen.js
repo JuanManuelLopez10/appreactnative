@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from 'react-native'
 import React from 'react'
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { useState } from 'react'
 import { useLayoutEffect } from 'react'
 
@@ -33,7 +33,7 @@ const MapScreen = ({ navigation }) => {
         })
     }, [navigation, handsave])
   return (
-    <MapView style={styles.mapa} initialRegion={initialRegion} onPress={selectLocation} provider={MapView.PROVIDER_GOOGLE}>
+    <MapView style={styles.mapa} initialRegion={initialRegion} onPress={selectLocation} provider={PROVIDER_GOOGLE}>
         {selectedLoc && <Marker title='Ubicacion' coordinate={{latitude: selectedLoc.lat, longitude: selectedLoc.lng}}/>}
     </MapView>
   )
