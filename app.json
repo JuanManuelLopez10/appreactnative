@@ -27,7 +27,13 @@
           "apiKey": "AIzaSyC9srLm0BdSlQeckFeiY5QyDSA3eojoaB0"
         }
       },
-      "package": "com.jotaeme10.tercera"
+      "versionCode": 1,
+      "package": "com.jotaeme10.tercera",
+      "permissions":[
+        "ACCESS_FINE_LOCATION",
+        "WRITE_EXTERNAL_STORAGE",
+        "CAMERA"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
