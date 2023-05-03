@@ -53,10 +53,11 @@ const SelectUbandScreen = ({ navigation }) => {
         }
     }
     const selectLocation = event => {
-        setselectedLoc({
-            latitude: event.nativeEvent.coordinate.latitude,
-            longitude: event.nativeEvent.coordinate.longitude
-        })
+        Alert.alert(`${event.nativeEvent.coordinate.latitude}`)
+        // setselectedLoc({
+        //     latitude: event.nativeEvent.coordinate.latitude,
+        //     longitude: event.nativeEvent.coordinate.longitude
+        // })
     }
     const GetCurrentLocation = async () => {
         const isLocationOk = await verifyPermissions()
