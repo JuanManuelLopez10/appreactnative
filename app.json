@@ -22,7 +22,6 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.jotaeme10.tercera",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -33,21 +32,13 @@
         }
       },
       "versionCode": 1,
+      "package": "com.jotaeme10.tercera",
       "permissions":[
         "ACCESS_FINE_LOCATION",
         "WRITE_EXTERNAL_STORAGE",
         "CAMERA"
       ]
     },
-    "plugins": [
-      [
-        "expo-location",
-        {
-          "accuracy": "best",
-          "askPermission": true
-        }
-      ]
-    ],
     "web": {
       "favicon": "./assets/favicon.png"
     }, 
