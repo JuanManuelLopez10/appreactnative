@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import React from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import { useState } from 'react'
 import { useLayoutEffect } from 'react'
-import { heightPixel } from '../../utils/normalize'
 
 const MapScreen = ({ navigation }) => {
+
     const initialRegion = {
         latitude: 37.42,
         longitude: -122.08,
@@ -14,13 +14,14 @@ const MapScreen = ({ navigation }) => {
     }
     const [selectedLoc, setselectedLoc] = useState()
     const selectLocation = event => {
+
         setselectedLoc({
             lat: event.nativeEvent.coordinate.latitude,
             lng: event.nativeEvent.coordinate.longitude
         })
     }
     const handsave = () => {
-        if(selectedLoc){
+        if(selectedLoc && selectedLoc.lat && selectedLoc.lng){
             navigation.navigate('Nuevo', {mapLocation:selectedLoc})
         }
     }
