@@ -53,10 +53,12 @@ const SelectUbandScreen = ({ navigation }) => {
         }
     }
     const selectLocation = event => {
-        setselectedLoc({
+        const objeto = {
             latitude: event.nativeEvent.coordinate.latitude,
             longitude: event.nativeEvent.coordinate.longitude
-        })
+        }
+        setselectedLoc(objeto)
+
     }
     const GetCurrentLocation = async () => {
         const isLocationOk = await verifyPermissions()
@@ -102,7 +104,7 @@ const SelectUbandScreen = ({ navigation }) => {
         <View>
             {
             <MapView initialRegion={initialRegion} region={selectedLoc ? selectedLoc : initialRegion} onPress={selectLocation} style={{ height: '65%', width: '100%' }}>
-                {selectedLoc && <Marker title='Ubicacion' coordinate={{ latitude: selectedLoc.latitude, longitude: selectedLoc.longitude }} />}
+                {selectedLoc && <Marker title='Ubicacion'  onPress={(e) => console.log('Ubicación seleccionada', e.nativeEvent.coordinate)} coordinate={{ latitude: selectedLoc.latitude, longitude: selectedLoc.longitude }} />}
             </MapView>                
             }
 
