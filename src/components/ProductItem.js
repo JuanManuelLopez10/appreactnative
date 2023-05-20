@@ -1,14 +1,21 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
+import { Image } from 'react-native';
+import { heightPixel, widthPixel } from '../../utils/normalize';
 
-const ProductItem = ({ item, onSelected }) => {
+const ProductItem = ({ item, onSelect }) => {
+    console.log(item.image);
+
     return (
-        <TouchableOpacity style={styles.product} onPress={()=> onSelected(item)}>
+        <TouchableOpacity onPress={()=>onSelect(item)} style={styles.product}>
+            <Image style={styles.Image} source={{ uri: item.image }} />
             <View>
-                <Text>{item.nombre}</Text>
+                <Text>{item.title}</Text>
+                <Text>$ {item.price}</Text>
             </View>
             <View>
-                <Text>$ {item.precio}</Text>
+
+                <TextInput keyboardType='number-pad' placeholder='0'/>                
             </View>
         </TouchableOpacity>
     )
@@ -18,9 +25,20 @@ export default ProductItem
 
 const styles = StyleSheet.create({
     product: {
-        margin: 30,
-        backgroundColor: '#ccc',
-        elevation: 20,
-        padding: 10
+        backgroundColor: 'white',
+        margin: 10,
+        width: '95%',
+        height: heightPixel(110),
+        display: 'flex',
+        flexDirection: 'row',
+        elevation: 5,
+        padding: 5,
+        justifyContent: 'space-around'
+    },
+    Image: {
+        height: heightPixel(80),   
+        width: heightPixel(80),
+        borderRadius: 100
+        
     }
 })

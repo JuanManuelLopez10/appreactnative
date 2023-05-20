@@ -1,26 +1,21 @@
-import { PRODUCTS } from "../../../data/products";
-import {SELECT_PRODUCT, FILTERED_PRODUCT} from "../actions/products.action";
+import { SELECTCATEGORY } from "../actions/products.actions"
 
 const initialState = {
-    products: PRODUCTS,
-    filteredproducts: [],
-    selected: null
+    category: null
 }
 
 const ProductsReducer = (state = initialState, action) => {
     switch (action.type){
-        case SELECT_PRODUCT:
+        case SELECTCATEGORY:
             return {
                 ...state,
-                selected: state.products.find(product => product.id === action.productID)}
-        case FILTERED_PRODUCT:
-            return {
-                ...state,
-                filteredproducts: state.products.filter(product => product.category === action.categoryID)
-            }
-        default:
-            return state
+                category: action.category,
+            } 
+ 
+            
+            default:
+                return state
     }
 }
 
-export default ProductsReducer;
+export default ProductsReducer

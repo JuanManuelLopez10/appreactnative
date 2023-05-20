@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import TabsNavigator from './TabsNavigator'
 import { useSelector } from 'react-redux'
 import AuthNavigator from './AuthNavigator'
-import { deleteUser } from '../db'
 
 const MainNavigator = () => {
   const isAuth = useSelector(state=>state.auth)

@@ -27,7 +27,7 @@ const AcountScreen = ({navigation}) => {
     const ifuserexists = () => {
         if (user.Profile) {
             setProfile(user.Profile)
-            
+
         }
     }
     const selectProfile = (item) => {

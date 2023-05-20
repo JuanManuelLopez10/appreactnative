@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, TextInput  
 import React from 'react'
 import GridItem from '../components/GridItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCategory } from '../store/actions/category.action';
 import { useState } from 'react';
 import { fetchimagenes, getusers, searchusers } from '../store/actions/users.actions';
 import { Ionicons } from '@expo/vector-icons';

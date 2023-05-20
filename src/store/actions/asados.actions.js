@@ -1,3 +1,5 @@
+import { Alert } from "react-native"
+
 export const CREATEASADO = 'CREATEASADO'
 export const SETLOCATIONASADO = 'SETLOCATIONASADO'
 export const ADDGUEST = 'ADDGUEST'
@@ -37,32 +39,13 @@ export const setlocationasado = (lat, lng, address) => {
 
     }
 }
-export const addguest = (invitado, asado) => {
+export const addguest = (invitados) => {
     return async dispatch => {
         try {
-            let newGuests 
-            if(asado.invitados){
-                let exist = false
-                
-                asado.invitados.map(aaa => {if (aaa.email===invitado.email) {
-                    exist=true                    
-                }})
-
-                if (exist===true) {
-                    console.log('This user exists');
-                }else{
-                    newGuests = asado.guests,
-                    newGuests.push(invitado)
-                }
-
-            }else{
-                newGuests = [invitado]
-                console.log('                  guest invited:  ', invitado);
-            }
 
             dispatch({
                     type: ADDGUEST,
-                    invitados: newGuests
+                    invitados: invitados
             })
         }
         catch (error) {

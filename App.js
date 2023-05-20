@@ -5,7 +5,7 @@ import * as SplashScreen from 'expo-splash-screen'
 import MainNavigator from './src/navigation/MainNavigator';
 import { Provider } from 'react-redux';
 import store from './src/store';
-import { initUser } from './src/db';
+import { initDarkMode, initUser, insertMode } from './src/db';
 
 SplashScreen.preventAutoHideAsync()
   initUser()
@@ -14,9 +14,20 @@ SplashScreen.preventAutoHideAsync()
   console.log('       error:', err);
   console.log('       error:', 'Database fail connect');
 })
-
+initDarkMode()
+.then(() => console.log('           DarkMode inicializada'))
+.catch(err => {
+console.log('       error:', err);
+console.log('       error:', 'Database fail connect');
+})
+insertMode('Light')
+.then(() => console.log('           DarkMode inicializada'))
+.catch(err => {
+console.log('       error:', err);
+console.log('       error:', 'Database fail connect');
+})
 export default function App() {
-
+  
   const [loaded] = useFonts({
     "open-sans-bold" : require('./assets/fonts/OpenSans-Bold.ttf'),
     "open-sans-regular" : require('./assets/fonts/OpenSans-Regular.ttf'),
@@ -33,7 +44,7 @@ export default function App() {
   return(
   <>
     <Provider store={store}>
-    <View style={styles.screen} onLayout={onLayoutRootView}>
+    <View style={styles.screen} onLayout={onLayoutRootView}>   
       <MainNavigator/>
     </View>
     </Provider>

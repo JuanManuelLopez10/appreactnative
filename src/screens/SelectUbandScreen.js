@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fontPixel, heightPixel, widthPixel } from '../../utils/normalize'
 import { TouchableOpacity } from 'react-native'
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import * as Location from 'expo-location'
 import { Alert } from 'react-native'
 import Colors from '../constants/Colors'
@@ -52,14 +52,32 @@ const SelectUbandScreen = ({ navigation }) => {
             Alert.alert('No se encontró con exactitud la dirección', 'Por favor dar más detalles como ciudad, departamento, etc...')
         }
     }
+
+    const confirmAsadoLocation = async (selectedLoc) => {
+            const getubicacionstreet = await Location.reverseGeocodeAsync(selectedLoc)
+            const ubicaciónstring = getubicacionstreet[0].street + ', ' +  getubicacionstreet[0].subregion
+            console.log('ubiiii ', selectedLoc);
+            dispatch(setlocationasado(selectedLoc.latitude, selectedLoc.longitude, ubicaciónstring))
+            
+            // Alert.alert('¿Desea guardar esta ubicación?', `${ubicaciónstring}`, [{text: 'Omitir', onPress: () => {
+            //     navigation.navigate('SelectTime')
+            // }},{text: 'Si', onPress: () => {
+            //     navigation.navigate('SelectGuests')
+            // }}] )
+
+    }
     const selectLocation = event => {
+    
         const objeto = {
             latitude: event.nativeEvent.coordinate.latitude,
             longitude: event.nativeEvent.coordinate.longitude
         }
-        setselectedLoc(objeto)
+        Alert.alert(`Latitud: ${objeto.latitude} y longitud: ${objeto.longitude}`)
+        // setselectedLoc(objeto)
+        confirmAsadoLocation(objeto)
 
     }
+
     const GetCurrentLocation = async () => {
         const isLocationOk = await verifyPermissions()
         if (!isLocationOk) return
@@ -69,23 +87,7 @@ const SelectUbandScreen = ({ navigation }) => {
             latitude: CurrentLocation.coords.latitude,
             longitude: CurrentLocation.coords.longitude
         }
-        setselectedLoc(locationactual)
-    }
-    const confirmAsadoLocation = async () => {
-        if (selectedLoc) {
-            const getubicacionstreet = await Location.reverseGeocodeAsync(selectedLoc)
-            const ubicaciónstring = getubicacionstreet[0].street + ', ' +  getubicacionstreet[0].subregion
-            console.log('ubiiii ', selectedLoc);
-            dispatch(setlocationasado(selectedLoc.latitude, selectedLoc.longitude, ubicaciónstring))
-            navigation.navigate('CreateAsado')
-            // Alert.alert('¿Desea guardar esta ubicación?', `${ubicaciónstring}`, [{text: 'Omitir', onPress: () => {
-            //     navigation.navigate('SelectTime')
-            // }},{text: 'Si', onPress: () => {
-            //     navigation.navigate('SelectGuests')
-            // }}] )
-        }else{
-            Alert.alert('Por favor, selecciona una ubicación')
-        }
+        confirmAsadoLocation(locationactual)
     }
     console.log(asado);
     let initialRegiona = {
@@ -94,16 +96,11 @@ const SelectUbandScreen = ({ navigation }) => {
             latitudeDelta: 0.0022,
             longitudeDelta: 0.421
     }
-    const newLocation = () => {
-        if (asado){
-            initialRegiona.latitude = asado.location.latitude
-            initialRegiona.longitude = asado.location.longitude       
-        }
-}
+
     return (
         <View>
             {
-            <MapView initialRegion={initialRegion} region={selectedLoc ? selectedLoc : initialRegion} onPress={selectLocation} style={{ height: '65%', width: '100%' }}>
+            <MapView initialRegion={initialRegion} provider={PROVIDER_GOOGLE} region={selectedLoc ? selectedLoc : initialRegion} onPress={selectLocation} style={{ height: '65%', width: '100%' }}>
                 {selectedLoc && <Marker title='Ubicacion'  onPress={(e) => console.log('Ubicación seleccionada', e.nativeEvent.coordinate)} coordinate={{ latitude: selectedLoc.latitude, longitude: selectedLoc.longitude }} />}
             </MapView>                
             }
@@ -119,7 +116,7 @@ const SelectUbandScreen = ({ navigation }) => {
                     <Text>Mi ubicación actual</Text>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.ConfirmButton} onPress={() => confirmAsadoLocation()}>
+            <TouchableOpacity style={styles.ConfirmButton} onPress={()=> navigation.navigate('CreateAsado')}>
                 <Text style={styles.ConfirmButtonText}>Confirmar</Text>
             </TouchableOpacity>
             </View>

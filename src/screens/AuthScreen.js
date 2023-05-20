@@ -1,10 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import Colors from '../constants/Colors'
 import { fontPixel, heightPixel, pixelSizeHorizontal, widthPixel } from '../../utils/normalize'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Image } from 'react-native'
-import { deleteUser, fetchUser } from '../db'
+import { deleteUser, fetchMode, fetchUser, insertMode, updateMode } from '../db'
 import { useDispatch } from 'react-redux'
 import { getsavedsignin } from '../store/actions/auth.actions'
 
@@ -32,8 +32,25 @@ const AuthScreen = ({navigation}) => {
         <>
             <SafeAreaView />
             <View style={styles.Screen}>
-                <View>
-                    <Image style={styles.Logo} src={'https://previews.123rf.com/images/vladischern/vladischern1804/vladischern180400001/98715833-alimentos-carne-filete-asado-a-la-parrilla-dibujado-a-mano-ilustraci%C3%B3n-vectorial-dibujo-realista.jpg'}/>
+                <View style={styles.Header}>
+                <Text></Text>
+                <Image style={styles.Logo} source={require('../../assets/icon.png')} />
+                <TouchableOpacity onPress={async () => {
+                    const result = await fetchUser()
+                    console.log(result.rows._array)
+                    insertMode('Light')
+                    fetchMode()
+                    .then(() => console.log('           Database inicializada'))
+                    .catch(err => {
+                    console.log('       error:', err);
+                    console.log('       error:', 'Database fail connect');
+                  })
+                }} >
+                    <Text>s</Text>
+                </TouchableOpacity>
+                </View>
+
+                {/* <View>
                     <Text style={styles.LogoName}>Hagamo un asado</Text>
                 </View>
                 <View style={styles.Options}>
@@ -45,9 +62,9 @@ const AuthScreen = ({navigation}) => {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={NavigateToSignUp} style={[styles.OptionButton, { backgroundColor: Colors.dark }]}>
                             <Text style={[styles.OptionButtonText, {color: Colors.light}]}>Registrarse</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                        </TouchableOpacity> */}
+                    {/* </View>
+                </View> */}
             </View>
         </>
     )
@@ -62,9 +79,21 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-between'
     },
+    Header:{
+        width: '100%',
+        height: heightPixel(60),
+        position: 'absolute',
+        marginTop: 0,
+        padding: 0,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: widthPixel(20)
+    },
     Logo: {
-      height: heightPixel(200),
-      width: widthPixel(200),
+      height: heightPixel(60),
+      width: heightPixel(60),
       alignSelf: 'center',
       marginTop: heightPixel(50)
     },
