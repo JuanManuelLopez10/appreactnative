@@ -40,11 +40,11 @@ export default function App() {
   return(
   <>
     <Provider store={store}>
-    <KeyboardAwareScrollView style={{height: '100%', width: '100%'}}>
+    <KeyboardAvoidingView style={{height: '100%', width: '100%'} }>
     <View style={styles.screen} onLayout={onLayoutRootView}>   
       <MainNavigator/>
     </View>
-    </KeyboardAwareScrollView>
+    </KeyboardAvoidingView>
     </Provider>
     </>
   )

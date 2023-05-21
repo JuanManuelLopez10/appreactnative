@@ -93,10 +93,8 @@ const SignInScreen = ({ navigation }) => {
                         <Text></Text>
                         <TouchableOpacity onPress={async () => {
                             const current = await fetchMode()
-                            console.log(current.rows._array[0].mode);
                             const algo = current.rows._array[0].mode
                             dispatch(changeMode(algo))
-                            console.log('Pureb');
                         }} >
                             <Ionicons name={Auth.Mode === 'Dark' ? 'moon' : 'sunny'} style={{ fontSize: fontPixel(30), color: Colors.primary }} />
                         </TouchableOpacity>

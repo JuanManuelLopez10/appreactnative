@@ -22,7 +22,6 @@ const MainNavigator = () => {
     DA()
   }, [])
   const isAuth = useSelector(state=>state.auth)
-  console.log(isAuth);
   
 //   const deleteu = async () => {
 //     const dele = await deleteUser()
