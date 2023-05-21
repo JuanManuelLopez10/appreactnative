@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
 import { URL_AUTH_SIGN, URL_API, URL_AUTH_SIGNIN } from "../../constants/database";
-import { deleteUser, fetchUser, insertUser } from "../../db";
+import { deleteUser, fetchUser, insertUser, updateMode } from "../../db";
 
 export const SIGNUP = 'SIGNUP'
 export const SIGNUPOTHERS = 'SIGNUPOTHERS'
@@ -10,6 +10,7 @@ export const VERIFYUSERNICKNAME = 'VERIFYUSERNICKNAME'
 export const GETNOTIFICATIONS = 'GETNOTIFICATIONS'
 export const LOGOUT = 'LOGOUT'
 export const GETFRIENDS = 'GETFRIENDS'
+export const CHANGEMODE = 'CHANGEMODE'
 
 export const signupothers = (email, Name, Surname, NickName, Profile) => {
     return async dispatch => {
@@ -337,6 +338,29 @@ export const getFriends = (email) => {
                 dispatch({
                 type: GETFRIENDS,
                 friends: user
+            })
+        }
+        catch (error) {
+
+            console.log('error' + error.message);
+        }
+
+    }
+}
+export const changeMode = (currentMode) => {
+    return async dispatch => {
+        try {
+            let newMode
+            if (currentMode==='Light') {
+            updateMode('Dark')
+            newMode = 'Dark'
+            }else{
+            newMode = 'Light'
+            updateMode('Light')
+            }
+                dispatch({
+                type: CHANGEMODE,
+                darkMode: newMode
             })
         }
         catch (error) {

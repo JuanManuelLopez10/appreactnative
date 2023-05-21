@@ -1,10 +1,11 @@
-import { GETFRIENDS, GETNOTIFICATIONS, GETSAVEDSIGNIN, LOGOUT, SIGNUP } from "../actions/auth.actions"
+import { CHANGEMODE, GETFRIENDS, GETNOTIFICATIONS, GETSAVEDSIGNIN, LOGOUT, SIGNUP } from "../actions/auth.actions"
 import { SIGNUPOTHERS } from "../actions/auth.actions"
 import { SIGNIN } from "../actions/auth.actions"
 
 const initialState = {
     token: null,
-    userId: null
+    userId: null,
+    Mode: null
 }
 
 const authReducer = (state = initialState, action) => {
@@ -62,8 +63,13 @@ const authReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     Friends: action.friends
-                }                  
-                        
+                }         
+                case CHANGEMODE:
+                    return {
+                        ...state,
+                        Mode: action.darkMode
+                    }                      
+                   
             default:
                 return state
     }

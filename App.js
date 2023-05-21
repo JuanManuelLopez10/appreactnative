@@ -1,31 +1,26 @@
 import React ,{ useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, Dimensions} from 'react-native';
+import { StyleSheet, View, Dimensions, KeyboardAvoidingView} from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen'
 import MainNavigator from './src/navigation/MainNavigator';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import store from './src/store';
-import { initDarkMode, initUser, insertMode } from './src/db';
+import { deleteMode, deleteUser, fetchMode, fetchUser, initDarkMode, initUser, insertMode } from './src/db';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 SplashScreen.preventAutoHideAsync()
-  initUser()
-  .then(() => console.log('           Database inicializada'))
-  .catch(err => {
-  console.log('       error:', err);
-  console.log('       error:', 'Database fail connect');
-})
+initUser()
 initDarkMode()
-.then(() => console.log('           DarkMode inicializada'))
-.catch(err => {
-console.log('       error:', err);
-console.log('       error:', 'Database fail connect');
-})
-insertMode('Light')
-.then(() => console.log('           DarkMode inicializada'))
-.catch(err => {
-console.log('       error:', err);
-console.log('       error:', 'Database fail connect');
-})
+const ya = async () => {
+  const pro = await fetchMode()
+  if (pro.rows._array[0]) {
+  } else {
+    insertMode('Light')
+
+  }
+}
+ya()
+
 export default function App() {
   
   const [loaded] = useFonts({
@@ -41,35 +36,23 @@ export default function App() {
   if(!loaded){
     return null;
   }
+  
   return(
   <>
     <Provider store={store}>
+    <KeyboardAwareScrollView style={{height: '100%', width: '100%'}}>
     <View style={styles.screen} onLayout={onLayoutRootView}>   
       <MainNavigator/>
     </View>
+    </KeyboardAwareScrollView>
     </Provider>
     </>
-    // 
-    //   <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={30}>
-    
-    //   <Header openmenu={openmenu} closemenu={closemenu} OpenMenu={OpenMenu} cerrarsesion={cerrarsesion} />
-    //     <TextInput placeholder='No se que hace'/>
-    //   {
-    //     nombreusuario && contraseñausuario
-    //     ?         <>
-    //         <Index SeleccionarTipoDeAsado={SeleccionarTipoDeAsado} EmpezarAsado={EmpezarAsado} TipoNuevoAsado={TipoNuevoAsado}/>
-    // </>
-    //     : <Registrarse registrarse={registrarse}/>
-
-    //   }
-    //   </KeyboardAvoidingView>
-
-    // </View>
   )
 
 }
 
 const styles = StyleSheet.create({
+
   screen:{
     height: '100%'
   },

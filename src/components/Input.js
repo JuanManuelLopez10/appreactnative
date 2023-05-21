@@ -1,5 +1,6 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useEffect, useReducer } from 'react'
+import Colors from '../constants/Colors'
 
 const INPUT_CHANGE = 'INPUT_CHANGE'
 const INPUT_BLUR = 'INPUT_BLUR'
@@ -63,8 +64,9 @@ const Input = props => {
             dispatch({ type: INPUT_BLUR })
         }
     return (
-        <View style={styles.Input}>
-            <TextInput placeholder='Email' {...props} value={inputState.value} onChangeText={textChangeHandler} onBlur={lostFocusHandler}/>
+        
+        <View style={[styles.Input, {backgroundColor: props.mode==='Light' ? 'white' : Colors.darkBackground}]}>
+            <TextInput placeholderTextColor={props.mode==='Light' ? 'black' : 'white'} style={{color: props.mode==='Light' ? 'black' : 'white'}} placeholder='Email' {...props} value={inputState.value} onChangeText={textChangeHandler} onBlur={lostFocusHandler}/>
         </View>
         
     )
@@ -73,9 +75,9 @@ export default Input
 
 const styles = StyleSheet.create({
     Input: {
-        borderRadius: 15,
+        borderRadius: 5,
         width: '90%',
-        padding: 5,
+        padding: 8,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -85,5 +87,7 @@ const styles = StyleSheet.create({
         shadowRadius: 2.62,
         backgroundColor: 'white',
         elevation: 4,
+        borderColor: Colors.primary,
+        borderWidth: 1
     }
 })

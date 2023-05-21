@@ -16,7 +16,7 @@ export const initUser = () => {
 export const initDarkMode = () => {
   const promise = new Promise ((resolve, reject) => {
     db.transaction((tx) => {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS darkmode (id INTEGER PRIMARY KEY NOT NULL, mode TEXT NOT NULL)',
+        tx.executeSql('CREATE TABLE IF NOT EXISTS darkMode (id INTEGER PRIMARY KEY AUTOINCREMENT, value TEXT NOT NULL)',
         [],
         () => { resolve() },
         (_, err) => { reject(err) })
@@ -24,6 +24,8 @@ export const initDarkMode = () => {
   })
   return promise
 }
+
+
 export const insertMode = (mode) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -50,6 +52,10 @@ export const insertUser = (email, password) => {
   })
   return promise
 }
+
+
+
+
 export const deleteUser = () => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -63,6 +69,21 @@ export const deleteUser = () => {
   })
   return promise
 }
+export const deleteMode = () => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'DELETE FROM darkmode',
+        [],
+        (_, result) => resolve(result),
+        (_, err) => reject(err),
+      )
+    })
+  })
+  return promise
+}
+
+
 
 export const fetchUser = () => {
   const promise = new Promise((resolve, reject) => {
@@ -83,6 +104,20 @@ export const fetchMode = () => {
       tx.executeSql(
         'SELECT * FROM darkmode',
         [],
+        (_, result) => resolve(result),
+        (_, err) => reject(err),       
+      )
+    })
+  })
+  return promise
+}
+
+export const updateMode = (newMode) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'UPDATE darkmode SET mode = ? WHERE id = 1',
+        [newMode],
         (_, result) => resolve(result),
         (_, err) => reject(err),       
       )

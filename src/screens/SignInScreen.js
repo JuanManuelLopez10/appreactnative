@@ -1,13 +1,13 @@
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput ,TouchableOpacity, View, Image } from 'react-native'
+import { StyleSheet, Text, TextInput ,TouchableOpacity, View, Image, KeyboardAvoidingView } from 'react-native'
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { signin, signup } from '../store/actions/auth.actions'
+import { changeMode, signin, signup } from '../store/actions/auth.actions'
 import Input from '../components/Input'
-import Colors from '../constants/Colors'
+import Colors, { APPNAME } from '../constants/Colors'
 import { fontPixel, heightPixel, widthPixel } from '../../utils/normalize'
 import { Ionicons } from '@expo/vector-icons'
 import { CheckBox } from 'react-native-elements'
-import { insertUser } from '../db'
+import { fetchMode, insertUser } from '../db'
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE'
 
@@ -44,6 +44,7 @@ const SignInScreen = ({ navigation }) => {
     const turnPasswordToShown = () => {
         setPasswordShown(true)
     }
+    const Auth = useSelector(state=>state.auth)
     const turnPasswordToHide = () => {
         setPasswordShown(false)
     }
@@ -86,34 +87,46 @@ const SignInScreen = ({ navigation }) => {
     }
     
     return (
-        <KeyboardAvoidingView behavior='height'>
-            <View style={styles.Screen}>
-                <View>
-                    <Image style={styles.Logo} src={'https://previews.123rf.com/images/vladischern/vladischern1804/vladischern180400001/98715833-alimentos-carne-filete-asado-a-la-parrilla-dibujado-a-mano-ilustraci%C3%B3n-vectorial-dibujo-realista.jpg'} />
-                    <Text style={styles.LogoName}>Hagamo un asado</Text>
+    <KeyboardAvoidingView  style={styles.container}>
+            <View style={[styles.Screen, {backgroundColor: Auth.Mode==='Light' ? 'white' : Colors.darkBackground}]}>
+            <View style={styles.Header}>
+                        <Text></Text>
+                        <TouchableOpacity onPress={async () => {
+                            const current = await fetchMode()
+                            console.log(current.rows._array[0].mode);
+                            const algo = current.rows._array[0].mode
+                            dispatch(changeMode(algo))
+                            console.log('Pureb');
+                        }} >
+                            <Ionicons name={Auth.Mode === 'Dark' ? 'moon' : 'sunny'} style={{ fontSize: fontPixel(30), color: Colors.primary }} />
+                        </TouchableOpacity>
+                    </View>
+
+                <View style={{marginTop: heightPixel(70)}}>
+                    <Image style={styles.Logo} source={require('../../assets/icon.png')} />
+                    <Text style={styles.LogoName}>{APPNAME}</Text>
                 </View>
                 <View style={styles.Form}>
-                    <Input initialValue={formState.inputValues.email} initialValid={formState.inputValidities.email} onInputChange={handleChangedText} id='email' required minLength={5} label='Email' errorText='Por favor, ingrese un mail válido' autoCapitalize='none' keyboardType='email-address' />
-                    <View style={styles.Input}>
+                    <Input initialValue={formState.inputValues.email} mode={Auth.Mode} initialValid={formState.inputValidities.email} onInputChange={handleChangedText} id='email' required minLength={5} label='Email' errorText='Por favor, ingrese un mail válido' autoCapitalize='none' keyboardType='email-address' />
+                    <View style={[styles.Input, {backgroundColor: Auth.Mode==='Light' ? 'white' : Colors.darkBackground}]}>
                         {
                             PasswordShown===false
                             ? <>
-                            <TextInput style={{width: '80%'}} onChangeText={cambiarshowpassword} placeholder='Password' secureTextEntry />
+                            <TextInput placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%'}} onChangeText={cambiarshowpassword} placeholder='Password' secureTextEntry />
                             <Ionicons onPress={turnPasswordToShown} style={styles.ShowPassword} name='md-eye' size={fontPixel(20)}/>
                              </>
                             : <>
-                            <TextInput onChangeText={cambiarshowpassword} placeholder='Password'  />
+                            <TextInput  placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%'}} onChangeText={cambiarshowpassword} placeholder='Password'  />
                             <Ionicons onPress={turnPasswordToHide} style={styles.ShowPassword} name='md-eye-off' size={fontPixel(20)}/>
                             </>
                         }
                     </View>
                     <TouchableOpacity>
-                        <Text style={styles.ForgottenPassword}>Olvidé mi contraseña</Text>
+                        <Text style={[styles.ForgottenPassword, {color: Auth.Mode==='Light' ? 'black' : 'white'}]}>Olvidé mi contraseña</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.LoginButton} onPress={onHandleRegister}>
                         <Text style={styles.LoginButtonText}>Entrar</Text>
                     </TouchableOpacity>
-                    <CheckBox checked={()=>{setstayLogin(true)}} />
                 </View>
                 <View style={styles.ViewGoToSignUpScreen}>
                 <TouchableOpacity style={styles.GoToSignUpScreen} onPress={GoToSignUpScreen} >
@@ -121,7 +134,7 @@ const SignInScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 </View>
             </View>
-        </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
     )
 }
 
@@ -131,7 +144,6 @@ const styles = StyleSheet.create({
     Screen: {
         width: '100%',
         height: '100%',
-        backgroundColor: 'white',
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center'
@@ -155,9 +167,9 @@ const styles = StyleSheet.create({
     },
     Input: {
 
-        borderRadius: 15,
+        borderRadius: 5,
         width: '90%',
-        padding: 5,
+        padding: 8,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -169,7 +181,9 @@ const styles = StyleSheet.create({
         elevation: 4,
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        borderColor: Colors.primary,
+        borderWidth: 1
     },
     LoginButton: {
         borderRadius: 15,
@@ -219,5 +233,21 @@ const styles = StyleSheet.create({
         elevation: 4,
         display: 'flex',
         alignItems: 'center'
+    },
+    Header: {
+        width: '100%',
+        height: heightPixel(60),
+        position: 'absolute',
+        marginTop: 0,
+        paddingHorizontal: widthPixel(10),
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: widthPixel(20),
+        zIndex: 3
+    },
+    container: {
+        height: heightPixel(900)
     }
 })

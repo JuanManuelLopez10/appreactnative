@@ -1,14 +1,18 @@
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Button, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import Colors from '../constants/Colors'
 import { fontPixel, heightPixel, pixelSizeHorizontal, widthPixel } from '../../utils/normalize'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Image } from 'react-native'
 import { deleteUser, fetchMode, fetchUser, insertMode, updateMode } from '../db'
-import { useDispatch } from 'react-redux'
-import { getsavedsignin } from '../store/actions/auth.actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { changeMode, getsavedsignin } from '../store/actions/auth.actions'
+import { Ionicons } from '@expo/vector-icons'
 
-const AuthScreen = ({navigation}) => {
+
+const AuthScreen = ({ navigation }) => {
+    const auth = useSelector(state => state.auth)
+    console.log(auth);
     const dispatch = useDispatch()
     const GetUserIfSaved = () => {
         dispatch(getsavedsignin())
@@ -31,26 +35,47 @@ const AuthScreen = ({navigation}) => {
     return (
         <>
             <SafeAreaView />
-            <View style={styles.Screen}>
-                <View style={styles.Header}>
-                <Text></Text>
-                <Image style={styles.Logo} source={require('../../assets/icon.png')} />
-                <TouchableOpacity onPress={async () => {
-                    const result = await fetchUser()
-                    console.log(result.rows._array)
-                    insertMode('Light')
-                    fetchMode()
-                    .then(() => console.log('           Database inicializada'))
-                    .catch(err => {
-                    console.log('       error:', err);
-                    console.log('       error:', 'Database fail connect');
-                  })
-                }} >
-                    <Text>s</Text>
-                </TouchableOpacity>
-                </View>
+            <ImageBackground source={require('../../assets/blog_35864_8995.jpg')} style={{ flex: 1 }}>
+                <View style={auth.Mode === 'Light' ? styles.overlayLight : styles.overlayLightDark} />
+                <View style={[styles.Screen, { backgroundColor: auth.Mode === 'Dark' ? 'rgb(30,30,30,0.7)' : 'rgb(255,255,255,0.7)' }]}>
+                    <View style={styles.Header}>
+                        <Text></Text>
+                        <Image style={styles.Logo} source={require('../../assets/icon.png')} />
+                        <TouchableOpacity onPress={async () => {
+                            const current = await fetchMode()
+                            console.log(current.rows._array[0].mode);
+                            const algo = current.rows._array[0].mode
+                            dispatch(changeMode(algo))
+                            console.log('Pureb');
+                        }} >
+                            <Ionicons name={auth.Mode === 'Dark' ? 'moon' : 'sunny'} style={{ fontSize: fontPixel(30), color: auth.Mode === 'Dark' ? 'white' : 'black' }} />
+                        </TouchableOpacity>
+                    </View>
 
-                {/* <View>
+                    <Text></Text>
+
+                    <View style={styles.Screeen} >
+                        <Text style={[styles.Title, { color: auth.Mode === 'Dark' ? 'white' : 'black' }]} >Celebrá el arte</Text>
+                        <Text style={styles.Subtitle} >de un buen asado</Text>
+                    </View>
+                    <View style={{ margin: 30 }}>
+                        <TouchableOpacity style={styles.Button} onPress={() => {
+                            navigation.navigate('SignIn')
+                        }}>
+                            <Text style={styles.ButtonText} >Iniciar sesión</Text>
+                        </TouchableOpacity>
+                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                            <Text style={{ color: auth.Mode === 'Dark' ? 'white' : 'black' }} >¿No tienes cuenta? </Text>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('SignUp')
+                            }}>
+                                <Text style={{ color: auth.Mode === 'Dark' ? 'white' : 'black', textDecorationLine: 'underline'}} >
+                                    Registrate
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    {/* <View>
                     <Text style={styles.LogoName}>Hagamo un asado</Text>
                 </View>
                 <View style={styles.Options}>
@@ -62,10 +87,11 @@ const AuthScreen = ({navigation}) => {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={NavigateToSignUp} style={[styles.OptionButton, { backgroundColor: Colors.dark }]}>
                             <Text style={[styles.OptionButtonText, {color: Colors.light}]}>Registrarse</Text>
-                        </TouchableOpacity> */}
-                    {/* </View>
+                        </TouchableOpacity>
+                    </View>
                 </View> */}
-            </View>
+                </View>
+            </ImageBackground>
         </>
     )
 }
@@ -77,75 +103,73 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+
     },
-    Header:{
+    Screeen: {
+        display: 'flex',
+        padding: widthPixel(20),
+        justifyContent: 'center',
+
+    },
+    Header: {
         width: '100%',
         height: heightPixel(60),
         position: 'absolute',
         marginTop: 0,
-        padding: 0,
+        paddingHorizontal: widthPixel(10),
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: widthPixel(20)
+        paddingHorizontal: widthPixel(20),
+        zIndex: 3
     },
     Logo: {
-      height: heightPixel(60),
-      width: heightPixel(60),
-      alignSelf: 'center',
-      marginTop: heightPixel(50)
-    },
-    LogoName: {
+        height: heightPixel(60),
+        width: heightPixel(60),
         alignSelf: 'center',
-        fontSize: fontPixel(35),
-        color: Colors.primary,
-        fontWeight: 500
+        marginTop: heightPixel(50)
     },
-    Options: {
-        width: '100%',
-        height: '50%',
-        display: 'flex',
-        justifyContent: 'space-around',
-        paddingBottom: heightPixel(100),
-        backgroundColor: Colors.primary,
-        alignItems: 'center',
-        borderTopEndRadius: 50,
-        borderTopLeftRadius: 50
+    Title: {
+        fontSize: fontPixel(55),
+        fontWeight: '700'
     },
-    OptionsTitle: {
-        color: 'white',
-        marginTop: pixelSizeHorizontal(30),
+    Subtitle: {
         fontSize: fontPixel(40),
+        color: Colors.primary,
+        fontWeight: '500'
     },
-    OptionsSubtitle: {
-        fontSize: fontPixel(15),
-        color: Colors.light
+    overlayLight: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)', // Ajusta el color y la opacidad del sobrefondo aquí
     },
-    OptionsView: {
-        width: '100%',
+    overlayLightDark: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.8)', // Ajusta el color y la opacidad del sobrefondo aquí
+    },
+    Button: {
+        backgroundColor: Colors.primary,
+        height: heightPixel(70),
+        width: widthPixel(250),
+        borderRadius: 200,
+        alignSelf: 'center',
+        marginBottom: heightPixel(70),
         display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginTop: heightPixel(30)
-
-    },
-    OptionButton: {
-        paddingHorizontal: widthPixel(10),
-        paddingVertical: heightPixel(15),
-        borderRadius: heightPixel(30),
+        justifyContent: 'center',
+        alignItems: 'center',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 4,
+            height: 9,
         },
-        shadowOpacity: 0.32,
-        shadowRadius: 5.46,
-
-        elevation: 9,
+        shadowOpacity: 0.48,
+        shadowRadius: 11.95,
+        
+        elevation: 18,
     },
-    OptionButtonText: {
-        fontSize: fontPixel(20)
+    ButtonText: {
+        fontSize: fontPixel(20),
+        color: 'white'
     }
 })
