@@ -4,7 +4,6 @@ import { Image } from 'react-native';
 import { heightPixel, widthPixel } from '../../utils/normalize';
 
 const ProductItem = ({ item, onSelect }) => {
-    console.log(item.image);
 
     return (
         <TouchableOpacity onPress={()=>onSelect(item)} style={styles.product}>

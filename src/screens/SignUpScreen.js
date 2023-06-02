@@ -4,8 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { signup, signupothers } from '../store/actions/auth.actions'
 import Input from '../components/Input'
 import { fontPixel, heightPixel, widthPixel } from '../../utils/normalize'
-import Colors from '../constants/Colors'
+import Colors, { APPNAME } from '../constants/Colors'
 import { Ionicons } from '@expo/vector-icons'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { fetchMode } from '../db'
+import { changeMode } from '../store/actions/theme.actions'
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE'
 
@@ -95,51 +98,73 @@ const SignUpScreen = ({navigation}) => {
     const GoToSignUpScreen = () => {
         navigation.navigate('SignIn')
     }
+    const Auth = useSelector(state => state.theme)
 
     return (
-        <KeyboardAvoidingView behavior='height'>
-        <View style={styles.Screen}>
-            <View>
-                <Image style={styles.Logo} src={'https://previews.123rf.com/images/vladischern/vladischern1804/vladischern180400001/98715833-alimentos-carne-filete-asado-a-la-parrilla-dibujado-a-mano-ilustraci%C3%B3n-vectorial-dibujo-realista.jpg'} />
-                <Text style={styles.LogoName}>Hagamo un asado</Text>
+    <KeyboardAvoidingView  style={styles.container}>
+        <SafeAreaView/>
+            <View style={[styles.Screen, {backgroundColor: Auth.Mode==='Light' ? 'white' : Colors.darkBackground}]}>
+            <View style={styles.Header}>
+                        <Text></Text>
+                        <TouchableOpacity onPress={async () => {
+                            const current = await fetchMode()
+                            const algo = current.rows._array[0].mode
+                            dispatch(changeMode(algo))
+                        }} >
+                            <Ionicons name={Auth.Mode === 'Dark' ? 'moon' : 'sunny'} style={{ fontSize: fontPixel(30), color: Colors.primary }} />
+                        </TouchableOpacity>
+            </View>
+            <View style={{marginTop: heightPixel(70)}} >
+            <Image style={styles.Logo} source={require('../../assets/icon.png')} />
+                <Text style={styles.LogoName}>{APPNAME}</Text>
             </View>
             <View style={styles.Form}>
-                <Input initialValue={formState.inputValues.email} initialValid={formState.inputValidities.email} onInputChange={handleChangedText} id='email' required minLength={5} label='Email' errorText='Por favor, ingrese un mail válido' autoCapitalize='none' keyboardType='email-address' />
-                <View style={styles.Input}>
+                
+            <View style={{height: 40, display: 'flex', flexDirection: 'row', justifyContent:'center', width:'100%', overflow: 'hidden', marginBottom: heightPixel(15)}} >
+                    <View style={{height: '50%', borderBottomWidth: 1, borderBottomColor: 'grey', width: '50%', alignSelf: 'flex-start'}} ></View>
+                    <Text style={{alignSelf:'center', color: 'grey'}} >   Registrarse   </Text>
+                    <View style={{height: '50%', borderBottomWidth: 1, borderBottomColor: 'grey', width: '50%', alignSelf: 'flex-start'}} ></View>
+                </View>
+
+                <Input initialValue={formState.inputValues.email} mode={Auth.Mode} initialValid={formState.inputValidities.email} onInputChange={handleChangedText} id='email' required minLength={5} label='Email' errorText='Por favor, ingrese un mail válido' autoCapitalize='none' keyboardType='email-address' />
+                <View style={[styles.Input, {backgroundColor: Auth.Mode==='Light' ? 'white' : Colors.darkBackground, marginVertical: heightPixel(20)}]}>
                     {
                         PasswordShown===false
                         ? <>
-                        <TextInput onChangeText={cambiarshowpassword} placeholder='Password' secureTextEntry />
+                        <TextInput placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%', color: Auth.Mode==='Light' ? 'black' : 'white'}} onChangeText={cambiarshowpassword} placeholder='Password' secureTextEntry />
                         <Ionicons onPress={turnPasswordToShown} style={styles.ShowPassword} name='md-eye' size={fontPixel(20)}/>
                          </>
                         : <>
-                        <TextInput onChangeText={cambiarshowpassword} placeholder='Password'  />
+                        <TextInput placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%', color: Auth.Mode==='Light' ? 'black' : 'white'}} onChangeText={cambiarshowpassword} placeholder='Password'  />
                         <Ionicons onPress={turnPasswordToHide} style={styles.ShowPassword} name='md-eye-off' size={fontPixel(20)}/>
                         </>
                     }
                 </View>
-                <View style={styles.Input}>
+                <View style={[styles.Input, {backgroundColor: Auth.Mode==='Light' ? 'white' : Colors.darkBackground, marginBottom: heightPixel(40)}]}>
                     {
                         PasswordShown===false
                         ? <>
-                        <TextInput onChangeText={cambiarshowrepeatedpassword} placeholder='Password' secureTextEntry />
+                        <TextInput placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%', color: Auth.Mode==='Light' ? 'black' : 'white'}}  onChangeText={cambiarshowrepeatedpassword} placeholder='Password' secureTextEntry />
                         <Ionicons onPress={turnPasswordToShown} style={styles.ShowPassword} name='md-eye' size={fontPixel(20)}/>
                          </>
                         : <>
-                        <TextInput onChangeText={cambiarshowrepeatedpassword} placeholder='Password'  />
+                        <TextInput placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%', color: Auth.Mode==='Light' ? 'black' : 'white'}} onChangeText={cambiarshowrepeatedpassword} placeholder='Password'  />
                         <Ionicons onPress={turnPasswordToHide} style={styles.ShowPassword} name='md-eye-off' size={fontPixel(20)}/>
                         </>
                     }
                 </View>
 
                 <TouchableOpacity style={styles.LoginButton} onPress={()=>{onHandleRegister}}>
-                    <Text style={styles.LoginButtonText}>Entrar</Text>
+                    <Text  style={[styles.LoginButtonText, {color: Auth.Mode==='Light' ? 'black' : 'white'}]}>Registrarse</Text>
                 </TouchableOpacity>
-
+                <View style={styles.ViewGoToSignUpScreen}>
+                    <Text style={{color: Auth.Mode==='Dark' ? 'white' : 'black'}}>¿Ya tienes cuenta? </Text>
+                <TouchableOpacity onPress={GoToSignUpScreen} >
+                    <Text style={{color: Auth.Mode==='Dark' ? 'white' : 'black'}}>Iniciar sesión</Text>
+                </TouchableOpacity>
+                </View>
             </View>
-            <TouchableOpacity onPress={GoToSignUpScreen} >
-                <Text>Registrarse</Text>
-            </TouchableOpacity>
+
         </View>
     </KeyboardAvoidingView>
 
@@ -166,8 +191,21 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: 'white',
         display: 'flex',
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
         alignItems: 'center'
+    },
+    Header: {
+        width: '100%',
+        height: heightPixel(60),
+        position: 'absolute',
+        marginTop: 0,
+        paddingHorizontal: widthPixel(10),
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: widthPixel(20),
+        zIndex: 3
     },
     Logo: {
         height: heightPixel(100),
@@ -184,13 +222,14 @@ const styles = StyleSheet.create({
         width: '80%',
         height: '50%',
         display: 'flex',
-        justifyContent: 'space-around'
+        justifyContent: 'flex-start',
+        marginTop: heightPixel(30),
+        alignItems: 'center'
     },
     Input: {
-
-        borderRadius: 15,
+        borderRadius: 5,
         width: '90%',
-        padding: 5,
+        padding: 8,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -202,7 +241,11 @@ const styles = StyleSheet.create({
         elevation: 4,
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        borderColor: Colors.primary,
+        borderWidth: 1    },
+    container: {
+        height: heightPixel(900)
     },
     LoginButton: {
         borderRadius: 15,
@@ -226,6 +269,10 @@ const styles = StyleSheet.create({
     ShowPassword: {
         margin: 5,
         color: Colors.primary
+    },
+    ViewGoToSignUpScreen:{
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: heightPixel(30)
     }
-
 })

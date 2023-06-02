@@ -1,13 +1,15 @@
-import { StyleSheet, Text, TextInput ,TouchableOpacity, View, Image, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text, ImageBackground, TextInput ,TouchableOpacity, View, Image, KeyboardAvoidingView } from 'react-native'
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeMode, signin, signup } from '../store/actions/auth.actions'
+import { signin, signup } from '../store/actions/auth.actions'
 import Input from '../components/Input'
 import Colors, { APPNAME } from '../constants/Colors'
 import { fontPixel, heightPixel, widthPixel } from '../../utils/normalize'
 import { Ionicons } from '@expo/vector-icons'
 import { CheckBox } from 'react-native-elements'
 import { fetchMode, insertUser } from '../db'
+import { changeMode } from '../store/actions/theme.actions'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE'
 
@@ -44,7 +46,7 @@ const SignInScreen = ({ navigation }) => {
     const turnPasswordToShown = () => {
         setPasswordShown(true)
     }
-    const Auth = useSelector(state=>state.auth)
+    const Auth = useSelector(state=>state.theme)
     const turnPasswordToHide = () => {
         setPasswordShown(false)
     }
@@ -88,6 +90,9 @@ const SignInScreen = ({ navigation }) => {
     
     return (
     <KeyboardAvoidingView  style={styles.container}>
+            <ImageBackground source={require('../../assets/blog_35864_8995.jpg')} style={{ flex: 1 }}>
+
+            <SafeAreaView/>
             <View style={[styles.Screen, {backgroundColor: Auth.Mode==='Light' ? 'white' : Colors.darkBackground}]}>
             <View style={styles.Header}>
                         <Text></Text>
@@ -98,40 +103,49 @@ const SignInScreen = ({ navigation }) => {
                         }} >
                             <Ionicons name={Auth.Mode === 'Dark' ? 'moon' : 'sunny'} style={{ fontSize: fontPixel(30), color: Colors.primary }} />
                         </TouchableOpacity>
-                    </View>
+            </View>
 
                 <View style={{marginTop: heightPixel(70)}}>
                     <Image style={styles.Logo} source={require('../../assets/icon.png')} />
                     <Text style={styles.LogoName}>{APPNAME}</Text>
                 </View>
                 <View style={styles.Form}>
+
+                <View style={{height: 40, display: 'flex', flexDirection: 'row', justifyContent:'center', width:'100%', overflow: 'hidden'}} >
+                    <View style={{height: '50%', borderBottomWidth: 1, borderBottomColor: 'grey', width: '50%', alignSelf: 'flex-start'}} ></View>
+                    <Text style={{alignSelf:'center', color: 'grey'}} >   Iniciar sesión   </Text>
+                    <View style={{height: '50%', borderBottomWidth: 1, borderBottomColor: 'grey', width: '50%', alignSelf: 'flex-start'}} ></View>
+                </View>
+
                     <Input initialValue={formState.inputValues.email} mode={Auth.Mode} initialValid={formState.inputValidities.email} onInputChange={handleChangedText} id='email' required minLength={5} label='Email' errorText='Por favor, ingrese un mail válido' autoCapitalize='none' keyboardType='email-address' />
-                    <View style={[styles.Input, {backgroundColor: Auth.Mode==='Light' ? 'white' : Colors.darkBackground}]}>
+                    <View style={[styles.Input, {backgroundColor: Auth.Mode==='Light' ? 'white' : Colors.darkBackground, marginVertical: heightPixel(20)}]}>
                         {
                             PasswordShown===false
                             ? <>
-                            <TextInput placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%'}} onChangeText={cambiarshowpassword} placeholder='Password' secureTextEntry />
+                            <TextInput placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%', color: Auth.Mode==='Light' ? 'black' : 'white'}} onChangeText={cambiarshowpassword} placeholder='Password' secureTextEntry />
                             <Ionicons onPress={turnPasswordToShown} style={styles.ShowPassword} name='md-eye' size={fontPixel(20)}/>
                              </>
                             : <>
-                            <TextInput  placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%'}} onChangeText={cambiarshowpassword} placeholder='Password'  />
+                            <TextInput placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%', color: Auth.Mode==='Light' ? 'black' : 'white'}} onChangeText={cambiarshowpassword} placeholder='Password'  />
                             <Ionicons onPress={turnPasswordToHide} style={styles.ShowPassword} name='md-eye-off' size={fontPixel(20)}/>
                             </>
                         }
                     </View>
                     <TouchableOpacity>
-                        <Text style={[styles.ForgottenPassword, {color: Auth.Mode==='Light' ? 'black' : 'white'}]}>Olvidé mi contraseña</Text>
+                        <Text style={[styles.ForgottenPassword, {color: Auth.Mode==='Light' ? 'black' : 'white', marginBottom: heightPixel(20)}]}>Olvidé mi contraseña</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.LoginButton} onPress={onHandleRegister}>
-                        <Text style={styles.LoginButtonText}>Entrar</Text>
+                        <Text style={[styles.LoginButtonText, {color: Auth.Mode==='Light' ? 'black' : 'white'}]}>Entrar</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.ViewGoToSignUpScreen}>
-                <TouchableOpacity style={styles.GoToSignUpScreen} onPress={GoToSignUpScreen} >
-                    <Text style={{color: Colors.light}}>Registrarse</Text>
+                    <Text style={{color: Auth.Mode==='Dark' ? 'white' : 'black'}}>¿Aún no tienes cuenta? </Text>
+                <TouchableOpacity onPress={GoToSignUpScreen} >
+                    <Text style={{color: Auth.Mode==='Dark' ? 'white' : 'black'}}>Registrate</Text>
                 </TouchableOpacity>
                 </View>
             </View>
+            </ImageBackground>
             </KeyboardAvoidingView>
     )
 }
@@ -143,7 +157,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         display: 'flex',
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
         alignItems: 'center'
     },
     Logo: {
@@ -159,9 +173,11 @@ const styles = StyleSheet.create({
     },
     Form: {
         width: '80%',
-        height: '40%',
+        height: '32%',
         display: 'flex',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        marginTop: heightPixel(30)
     },
     Input: {
 
@@ -200,7 +216,6 @@ const styles = StyleSheet.create({
     LoginButtonText: {
         alignSelf: 'center',
         fontSize: fontPixel(17),
-        color: Colors.dark
     },
     ShowPassword: {
         margin: 5,
@@ -208,7 +223,9 @@ const styles = StyleSheet.create({
     },
     ViewGoToSignUpScreen: {
         display: 'flex',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
         height: '10%',
         width: '80%'
     },
@@ -216,22 +233,7 @@ const styles = StyleSheet.create({
         color: Colors.primary,
         textDecorationLine: 'underline'
     },
-    GoToSignUpScreen: {
-        borderRadius: 15,
-        width: '90%',
-        padding: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-        backgroundColor: Colors.dark,
-        elevation: 4,
-        display: 'flex',
-        alignItems: 'center'
-    },
+
     Header: {
         width: '100%',
         height: heightPixel(60),

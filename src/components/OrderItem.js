@@ -7,7 +7,6 @@ const formatDay = (time) => {
 }
 
 const OrderItem = ({ item }) => {
-    console.log(item);
     return (
         <View>
             <View>

@@ -56,7 +56,6 @@ const AcountScreen = ({navigation}) => {
     }
     const loggout = () => {
         dispatch(logout())
-        console.log(user);
     }
     
     return (

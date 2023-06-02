@@ -64,11 +64,7 @@ const authReducer = (state = initialState, action) => {
                     ...state,
                     Friends: action.friends
                 }         
-                case CHANGEMODE:
-                    return {
-                        ...state,
-                        Mode: action.darkMode
-                    }                      
+                 
                    
             default:
                 return state

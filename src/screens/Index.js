@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, TextInput  } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import GridItem from '../components/GridItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -13,6 +13,10 @@ const Index = ({ navigation }) => {
 
   const dispatch = useDispatch()
   const user = useSelector(state => state.auth)
+  const theme = useSelector(state => state.theme)
+  useEffect(()=>{
+    console.log(theme);
+  })
   const [Search, setSearch] = useState('')
   const handleSelect = () => {
     dispatch(getusers())
@@ -26,12 +30,8 @@ const Index = ({ navigation }) => {
     navigation.navigate('SearchResults')
   }
   return (
-      <View onLayout={handleSelect} style={{padding: widthPixel(5), backgroundColor: 'white', height: '100%'}}>
-      <Image style={styles.Logo} src={'https://previews.123rf.com/images/vladischern/vladischern1804/vladischern180400001/98715833-alimentos-carne-filete-asado-a-la-parrilla-dibujado-a-mano-ilustraci%C3%B3n-vectorial-dibujo-realista.jpg'}/>
-      <View style={styles.SearchView}>
-          <Text style={styles.SearchTitle}>Buscar Amigos</Text>
-        </View>
-      <View style={styles.SearchInput}>
+      <View onLayout={handleSelect} style={{padding: widthPixel(5), backgroundColor: theme.Mode==='Light' ? Colors.lightBackground : Colors.darkBackground, height: '100%', display:'flex', alignItems: 'center'}}>
+                <View style={styles.SearchInput}>
             <TextInput placeholder='Buscar' style={styles.searchInput} onChangeText={OnChangeSearchBarText}/>
             <TouchableOpacity style={styles.ButtonSearch} onPress={SearchResult}>
               <Ionicons size={fontPixel(25)} style={styles.ButtonSearchText} name='md-search' />
@@ -104,18 +104,18 @@ const styles = StyleSheet.create({
   },
   SearchInput: {
     width: '80%',
-    backgroundColor: Colors.light,
+    backgroundColor: Colors.darkBackground,
+    borderColor: Colors.primary,
+    borderWidth: 1,
     display: 'flex',
     flexDirection: 'row',
-    marginLeft: 10,
   },
   searchInput : {
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
-    width: '90%',
+    width: '85%',
     height: heightPixel(45),
     margin: 5
-    
   }
 
 })

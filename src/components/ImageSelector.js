@@ -26,7 +26,6 @@ const ImageSelector = ({onImage}) => {
             aspect: [1,1],
             quality: 0.8
         })
-        console.log(image);
         setpickedUri(image.assets[0].uri)
         onImage(image.assets[0].uri)
     }

@@ -6,25 +6,19 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Image } from 'react-native'
 import { deleteUser, fetchMode, fetchUser, insertMode, updateMode } from '../db'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeMode, getsavedsignin } from '../store/actions/auth.actions'
+import { getsavedsignin } from '../store/actions/auth.actions'
 import { Ionicons } from '@expo/vector-icons'
+import { changeMode } from '../store/actions/theme.actions'
 
 
 const AuthScreen = ({ navigation }) => {
-    const auth = useSelector(state => state.auth)
-    console.log(auth);
+    const auth = useSelector(state => state.theme)
     const dispatch = useDispatch()
     const GetUserIfSaved = () => {
         dispatch(getsavedsignin())
     }
     GetUserIfSaved()
 
-    // const fetcheu = async (useremail) => {
-    //     const deleteu = await deleteUser()
-    //     const fetc = await fetchUser()
-    //     console.log(deleteu.rows);
-    // }
-    // fetcheu()
     const NavigateToSignIn = () => {
         navigation.navigate('SignIn')
     }
@@ -43,10 +37,8 @@ const AuthScreen = ({ navigation }) => {
                         <Image style={styles.Logo} source={require('../../assets/icon.png')} />
                         <TouchableOpacity onPress={async () => {
                             const current = await fetchMode()
-                            console.log(current.rows._array[0].mode);
                             const algo = current.rows._array[0].mode
                             dispatch(changeMode(algo))
-                            console.log('Pureb');
                         }} >
                             <Ionicons name={auth.Mode === 'Dark' ? 'moon' : 'sunny'} style={{ fontSize: fontPixel(30), color: auth.Mode === 'Dark' ? 'white' : 'black' }} />
                         </TouchableOpacity>
