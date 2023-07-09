@@ -13,34 +13,29 @@ import SelectOrder from '../screens/SelectOrder'
 import CategoryScreen from '../screens/CategoryScreen'
 import { useSelector } from 'react-redux'
 import { Image } from 'react-native-elements'
-import { widthPixel } from '../../utils/normalize'
+import { heightPixel, widthPixel } from '../../utils/normalize'
 
 const Stack = createNativeStackNavigator()
 
 const Navigate = ({navigation}) => {
   const theme = useSelector(state=>state.theme)
   const auth = useSelector(state=>state.auth)
-  
+  const imagen = auth.Profile.OptionImage
   return (
-    
+    <View style={styles.Container} >
         <Stack.Navigator initialRouteName="Asa2" >
-            <Stack.Screen name="Asa2" component={Index} options={{headerShown:true, headerStyle:{backgroundColor: theme.Mode==='Dark' ? Colors.darkBackground : Colors.lightBackground}, headerTitle:()=>(  
-                <Image style={styles.Logo} source={theme.Mode==='Dark' ? require(`../../assets/largeDarkicon.png`) : require(`../../assets/largeLighticon.png`)} />
-            ), headerRight:()=>(
-              <TouchableOpacity onPress={()=>navigation.navigate('Cuenta')}>
-                <Text>SSS</Text>
-              </TouchableOpacity>
-            )}}/>
-            <Stack.Screen name="CreateAsado" component={CreateAsado} options={{title: 'Crear asado: Tipo',animationTypeForReplace: 'pop' ,headerStyle: {backgroundColor: Colors.primary}, headerShadowVisible: false, animation: 'slide_from_right', animationDuration: 3000  }}/>
-            <Stack.Screen name="SelectUbicationAndDate" component={SelectUbandScreen} options={{title: 'Crear asado: Lugar', animationTypeForReplace: 'pop',  animation: 'slide_from_right', animationDuration: 3000 }}/>
-            <Stack.Screen name="SelectGuests" component={SelectGestsScreen} options={{title: 'Crear asado', headerStyle: {backgroundColor: Colors.primary}}}/>
-            <Stack.Screen name="SearchResults" component={SearchResultsScreen} options={{title: 'Resultados'}}/>
-            <Stack.Screen name="SearchedUser" component={SearchedUser} options={{title: 'Resultados'}}/>
-            <Stack.Screen name="SelectOrder" component={SelectOrder} options={{title: 'Pedido por persona', headerStyle: {backgroundColor: Colors.primary}}}/>
-            <Stack.Screen name="Category" component={CategoryScreen} options={{title: 'Pedido por persona', headerStyle: {backgroundColor: Colors.primary}}}/>
-            <Stack.Screen name="ProductScreen" component={CategoryScreen} options={{title: 'Pedido por persona', headerStyle: {backgroundColor: Colors.primary}}}/>
+            <Stack.Screen name="Asa2" component={Index} options={{headerShown:false}}/>
+            <Stack.Screen name="CreateAsado" component={CreateAsado} options={{headerShown:false}}/>
+            <Stack.Screen name="SelectUbicationAndDate" component={SelectUbandScreen} options={{headerShown:false}}/>
+            <Stack.Screen name="SelectGuests" component={SelectGestsScreen} options={{headerShown:false}}/>
+            <Stack.Screen name="SearchResults" component={SearchResultsScreen} options={{headerShown:false}}/>
+            <Stack.Screen name="SearchedUser" component={SearchedUser} options={{headerShown:false}}/>
+            <Stack.Screen name="SelectOrder" component={SelectOrder} options={{headerShown:false}}/>
+            <Stack.Screen name="Category" component={CategoryScreen} options={{headerShown:false}}/>
+            <Stack.Screen name="ProductScreen" component={CategoryScreen} options={{headerShown:false}}/>
 
         </Stack.Navigator>
+        </View>
   )
 }
 
@@ -50,5 +45,15 @@ const styles = StyleSheet.create({
   Logo:{
     width: widthPixel(90),
     height: widthPixel(40),
+  },
+  Imagen:{
+    width: widthPixel(50),
+    height: heightPixel(50),
+    borderRadius:50
+  },
+  Container:{
+    height: '100%',
+    width:'100%',
+    
   }
 })

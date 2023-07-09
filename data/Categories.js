@@ -24,36 +24,5 @@ export const CATEGORIES = [
         title: 'Acompañamientos',
         image: 'https://cdn-icons-png.flaticon.com/512/3831/3831114.png',
         color: 'green'
-    },
-    {
-        id: 4,
-        title: 'Picadas y snacks',
-        image: 'https://cdn-icons-png.flaticon.com/512/26/26121.png',
-        color: 'yellow'
-    },
-    {
-        id: 5,
-        title: 'Opciones veganas',
-        image: 'https://cdn-icons-png.flaticon.com/512/1483/1483042.png',
-        color: 'green'
-    },
-    {
-        id: 6,
-        title: 'Verduras',
-        image: 'https://i.pinimg.com/originals/ab/b2/a1/abb2a1075c28b839046c4dca48f13086.png',
-        color: 'orange'
-    },
-    {
-        id: 7,
-        title: 'Otros',
-        image: 'https://cdn-icons-png.flaticon.com/512/457/457934.png',
-        color: 'grey'
-    },
-    {
-        id: 8,
-        title: 'Utensilios',
-        image: 'https://cdn-icons-png.flaticon.com/512/457/457934.png',
-        color: 'grey'
-    }
-    
+    } 
 ]

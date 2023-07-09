@@ -65,8 +65,8 @@ const Input = props => {
         }
     return (
         
-        <View style={[styles.Input, {backgroundColor: props.mode==='Light' ? 'white' : Colors.darkBackground}]}>
-            <TextInput placeholderTextColor={props.mode==='Light' ? 'black' : 'white'} style={{color: props.mode==='Light' ? 'black' : 'white'}} placeholder='Email' {...props} value={inputState.value} onChangeText={textChangeHandler} onBlur={lostFocusHandler}/>
+        <View style={[styles.Input, {backgroundColor:Colors.darkBackground}]}>
+            <TextInput placeholderTextColor={'white'} style={{color: 'white'}} placeholder='Email' {...props} value={inputState.value} onChangeText={textChangeHandler} onBlur={lostFocusHandler}/>
         </View>
         
     )

@@ -103,6 +103,7 @@ export const signup = (email, password) => {
             })
 
             const data = await response.json()
+            
             if (response.ok) {
                 const responseExtra = await fetch(`${URL_API}/users.json`, {
                     method: 'POST',
@@ -153,7 +154,6 @@ export const signin = (email, password) => {
                     })
                 })
             const data = await responseExtra.json()
-
             const response = await fetch(`${URL_API}/users.json`, {
                 method: 'GET',
                 header: {
@@ -358,6 +358,8 @@ export const changeMode = (currentMode) => {
             newMode = 'Light'
             updateMode('Light')
             }
+
+            console.log('AAAAAAAAAA');
                 dispatch({
                 type: CHANGEMODE,
                 darkMode: newMode

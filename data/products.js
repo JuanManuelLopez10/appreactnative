@@ -3,6 +3,7 @@ export const PRODUCTS = [
         title: 'Asado de tira Novillo',
         image: 'https://prod-resize.tiendainglesa.com.uy/images/large/P094658-1.jpg?20210907153349,Asado-de-Tira-Novillo-en-Tienda-Inglesa',
         category: 'Carne vacuna',
+        main: true,
         priceType: 'Kg',
         price: 489
     },
@@ -11,6 +12,7 @@ export const PRODUCTS = [
         image: 'https://prod-resize.tiendainglesa.com.uy/images/large/P085766-2.jpg?20230215154510,Vacio-de-Ternera-Kg-en-Tienda-Inglesa',
         category: 'Carne vacuna',
         priceType: 'Kg',
+        main: true,
         price: 619
     },
     {
@@ -32,6 +34,7 @@ export const PRODUCTS = [
         image: 'https://prod-resize.tiendainglesa.com.uy/images/large/P002110-1.jpg?20210424030019,Chorizos-Extra-CATTIVELLI-en-Tienda-Inglesa',
         category: 'Carne vacuna',
         priceType: 'Kg',
+        main: true,
         price: 515
     },
     {
@@ -90,6 +93,7 @@ export const PRODUCTS = [
         image: 'https://prod-resize.tiendainglesa.com.uy/images/large/P047393-1.jpg?20220930090023,Solomillo-de-Cerdo-Kg-en-Tienda-Inglesa',
         category: 'Carne de cerdo',
         priceType: 'Kg',
+        main: true,
         price: 285
     },
 

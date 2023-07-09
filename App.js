@@ -7,19 +7,22 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import store from './src/store';
 import { deleteMode, deleteUser, fetchMode, fetchUser, initDarkMode, initUser, insertMode } from './src/db';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { getusers } from './src/store/actions/users.actions';
 
 SplashScreen.preventAutoHideAsync()
+// deleteUser()
 initUser()
-initDarkMode()
-const ya = async () => {
-  const pro = await fetchMode()
-  if (pro.rows._array[0]) {
-  } else {
-    insertMode('Light')
 
-  }
-}
-ya()
+// initDarkMode()
+// const ya = async () => {
+//   const pro = await fetchMode()
+//   if (pro.rows._array[0]) {
+//   } else {
+//     insertMode('Light')
+
+//   }
+// }
+// ya()
 
 export default function App() {
   const [loaded] = useFonts({

@@ -9,11 +9,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getsavedsignin } from '../store/actions/auth.actions'
 import { Ionicons } from '@expo/vector-icons'
 import { changeMode } from '../store/actions/theme.actions'
+import { LinearGradient } from 'expo-linear-gradient';
+import { getusers } from '../store/actions/users.actions'
 
 
 const AuthScreen = ({ navigation }) => {
     const auth = useSelector(state => state.theme)
+    const user = useSelector(state => state.auth)
+
     const dispatch = useDispatch()
+    dispatch(getusers())
     const GetUserIfSaved = () => {
         dispatch(getsavedsignin())
     }
@@ -30,34 +35,30 @@ const AuthScreen = ({ navigation }) => {
         <>
             <SafeAreaView />
             <ImageBackground source={require('../../assets/blog_35864_8995.jpg')} style={{ flex: 1 }}>
-                <View style={auth.Mode === 'Light' ? styles.overlayLight : styles.overlayLightDark} />
-                <View style={[styles.Screen, { backgroundColor: auth.Mode === 'Dark' ? 'rgb(30,30,30,0.7)' : 'rgb(255,255,255,0.7)' }]}>
+                <View style={styles.overlayLightDark} />
+                <View style={[styles.Screen, { backgroundColor: 'rgb(30,30,30,0.7)'}]}>
                     <View style={styles.Header}>
-                        <Text></Text>
                         <Image style={styles.Logo} source={require('../../assets/icon.png')} />
-                        <TouchableOpacity onPress={async () => {
-                            const current = await fetchMode()
-                            const algo = current.rows._array[0].mode
-                            dispatch(changeMode(algo))
-                        }} >
-                            <Ionicons name={auth.Mode === 'Dark' ? 'moon' : 'sunny'} style={{ fontSize: fontPixel(30), color: auth.Mode === 'Dark' ? 'white' : 'black' }} />
-                        </TouchableOpacity>
                     </View>
 
                     <Text></Text>
 
                     <View style={styles.Screeen} >
-                        <Text style={[styles.Title, { color: auth.Mode === 'Dark' ? 'white' : 'black' }]} >Celebrá el arte</Text>
+                        <Text style={[styles.Title, { color: 'white'}]} >Celebrá el arte</Text>
                         <Text style={styles.Subtitle} >de un buen asado</Text>
                     </View>
                     <View style={{ margin: 30 }}>
-                        <TouchableOpacity style={styles.Button} onPress={() => {
+                    <LinearGradient colors={[Colors.primary, Colors.secondary]} start={{ x: 0, y: 0 }} style={styles.Button}>
+                        
+                        <TouchableOpacity style={[styles.Button, {marginBottom:0}]} onPress={() => {
                             navigation.navigate('SignIn')
                         }}>
                             <Text style={styles.ButtonText} >Iniciar sesión</Text>
                         </TouchableOpacity>
+                        </LinearGradient>
+
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                            <Text style={{ color: auth.Mode === 'Dark' ? 'white' : 'black' }} >¿No tienes cuenta? </Text>
+                            <Text style={{ color: 'white'}} >¿No tienes cuenta? </Text>
                             <TouchableOpacity onPress={() => {
                                 navigation.navigate('SignUp')
                             }}>
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         paddingHorizontal: widthPixel(20),
         zIndex: 3
     },
@@ -141,10 +142,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.8)', // Ajusta el color y la opacidad del sobrefondo aquí
     },
     Button: {
-        backgroundColor: Colors.primary,
         height: heightPixel(70),
         width: widthPixel(250),
         borderRadius: 200,
+        borderColor:Colors.secondary,
+        borderWidth: heightPixel(3),
         alignSelf: 'center',
         marginBottom: heightPixel(70),
         display: 'flex',

@@ -9,6 +9,9 @@ import { selectType, settypeanddate } from '../store/actions/asados.actions'
 import { Alert } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
+import { LinearGradient } from 'expo-linear-gradient';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+
 
 
 const CreateAsado = ({ navigation }) => {
@@ -39,9 +42,9 @@ const CreateAsado = ({ navigation }) => {
         const day = fecha.getDate()
         const month = fecha.getMonth()
         const year = fecha.getFullYear()
-        const minute = fecha.getMinutes()
+        const minute = fecha.getMinutes()<10 ? '0'+fecha.getMinutes() : fecha.getMinutes()
         const hour = fecha.getHours()
-        const fechacompleta = ' ' + day + '/' + month + '/' + year + ' - ' + hour + ':' + minute
+        const fechacompleta = ' ' + day + '/' + month + '/' + year + ' - ' + hour + ':' +   minute
         const object = {
             string: Daate,
             readabledate: fechacompleta
@@ -57,42 +60,29 @@ const CreateAsado = ({ navigation }) => {
             Alert.alert('Falta fecha')
         }else if(selectedOption && DateSelected && asado.location===null){
             Alert.alert('Falta ubicación')
-        }else if(selectedOption==='' && DateSelected && asado.location){
-            Alert.alert('Falta tipo de asado')
-        }else if(selectedOption==='' && DateSelected && asado.location===null){
-            Alert.alert('Falta tipo de asado y ubicación')
-        }else if(selectedOption===null && DateSelected===null && asado.location){
-            Alert.alert('Falta tipo de asado y fecha')
         }else if(selectedOption && DateSelected===null && asado.location===null){
             Alert.alert('Falta fecha y ubicación')
-        }else if(selectedOption==='Privado'){
-            Alert.alert('Tipo de asado (Privado) no disponible')
         }else{
             Alert.alert('Seleccione las características del asado')
         }
     
     }
+    
 
     return (
+    <LinearGradient colors={[Colors.darkBackground, Colors.darksecondaryBackground]} start={{ x: 0, y: 0 }} style={{height:'100%'}}>
         <View style={styles.Screen}>
-            <View>
-                <Text style={styles.ScreenTitle}>Selecciona el tipo de asado</Text>
-                <SelectDropdown
-                    data={options}
-                    buttonStyle={styles.DropdownButton}
-                    onSelect={(selection) => { setSelectedOption(selection) }}
-                    defaultButtonText={<><Text>Selecciona una opción</Text><Ionicons name='arrow-down' size={fontPixel(20)} /></>} />
-
+            <View style={{height:heightPixel(130), width:'100%', display:'flex', justifyContent:'flex-end'}}>
+                <Text style={{fontSize:fontPixel(40), color:'white', marginLeft: widthPixel(15)}} >NUEVO ASADO</Text>
             </View>
+
             <View>
-                <Text style={styles.ScreenTitle}>Ubicación del asado</Text>
                 <TouchableOpacity style={styles.DropdownButton} onPress={() => navigation.navigate('SelectUbicationAndDate')} >
-                    <Text numberOfLines={1} style={styles.Setubication}>{asado.location ? asado.address : 'Confirmar'}</Text>
+                    <Text numberOfLines={1} style={styles.Setubication}>{asado.location ? asado.address : 'Buscar ubicación'}</Text>          
                 </TouchableOpacity>
             </View>
 
             <View>
-                <Text style={styles.ScreenTitle}>Fecha del asado</Text>
                 <TouchableOpacity style={styles.DropdownButton} onPress={showDatePicker} >
                     <Text numberOfLines={1} style={styles.Setubication}>{DateSelected ? DateSelected.readabledate : 'Seleccionar fecha'}</Text>
                 </TouchableOpacity>
@@ -103,15 +93,32 @@ const CreateAsado = ({ navigation }) => {
                     onCancel={hideDatePicker}
                 />
             </View>
+
             <View>
-                <TouchableOpacity onPress={confirmAsado} style={[styles.DropdownButton, {backgroundColor: Colors.primary}]}>
-                    <Text numberOfLines={1} style={[styles.Setubication, {color: Colors.light}]}>Continuar</Text>
+                <TouchableOpacity style={styles.DropdownButton} onPress={()=>{navigation.navigate('SelectGuests')}} >
+                    <Text numberOfLines={1} style={styles.Setubication}>Seleccionar comida</Text>
+                </TouchableOpacity>
+            </View>
+            <View>
+                <TouchableOpacity style={styles.DropdownButton} onPress={()=>{navigation.navigate('SelectGuests')}} >
+                    <Text numberOfLines={1} style={styles.Setubication}>Invitar amigos</Text>
                 </TouchableOpacity>
             </View>
             <TouchableOpacity>
-                <Text style={{ color: Colors.primary, textDecorationLine: 'underline' }}>Necesito ayuda</Text>
+                <Text style={{ color: Colors.primary, textDecorationLine: 'underline', fontSize:fontPixel(15) }}>Necesito ayuda</Text>
             </TouchableOpacity>
+            <View>
+            <LinearGradient colors={[Colors.primary, Colors.secondary]} start={{ x: 0, y: 0 }} style={[styles.DropdownButton, {borderColor:Colors.darkthirdBackground}]}>
+                        
+                        <TouchableOpacity style={[styles.Button, {marginBottom:0}]} onPress={confirmAsado}>
+                            <Text style={{fontSize:fontPixel(20)}} >Iniciar sesión</Text>
+                        </TouchableOpacity>
+            </LinearGradient>
+
+            </View>
+
         </View>
+    </LinearGradient>
     )
 }
 
@@ -119,7 +126,7 @@ export default CreateAsado
 
 const styles = StyleSheet.create({
     Screen: {
-        height: '100%',
+        height: '95%',
         width: '100%',
         paddingVertical: heightPixel(30),
         display: 'flex',
@@ -137,10 +144,8 @@ const styles = StyleSheet.create({
         width: '70%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
-        borderColor: Colors.light,
+        borderColor: 'white',
         borderWidth: 2,
-        borderRadius: 20,
         alignSelf: 'center',
         alignContent: 'center',
 
@@ -152,11 +157,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
         elevation: 6,
-        width: widthPixel(260),
+        width: widthPixel(320),
         height: heightPixel(50)
     },
     ConfirmButton: {
-        marginTop: heightPixel(20),
         backgroundColor: Colors.primary,
         padding: widthPixel(10),
         borderRadius: 5,
@@ -168,6 +172,7 @@ const styles = StyleSheet.create({
         color: Colors.light
     },
     Setubication: {
-        fontSize: fontPixel(17)
+        fontSize: fontPixel(17),
+        color:'white'
     }
 })

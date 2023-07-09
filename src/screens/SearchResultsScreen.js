@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import UserItem from '../components/UserItem'
 import { FlatList } from 'react-native'
 import { useState } from 'react'
 import { selectusersearched } from '../store/actions/users.actions'
@@ -18,7 +17,7 @@ const SearchResultsScreen = ({navigation}) => {
         navigation.navigate('SearchedUser')
     } 
     const renderItem = ({ item }) => (
-        <UserItem item={item} onSelect={handleSelect} useFor='Searched'/>
+        <TextInput item={item} onSelect={handleSelect} useFor='Searched'/>
       )
 
     return (

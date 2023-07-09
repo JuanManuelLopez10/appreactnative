@@ -1,14 +1,16 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fontPixel, heightPixel, widthPixel } from '../../utils/normalize'
 import Colors from '../constants/Colors'
 import { sendFriendRequest } from '../store/actions/users.actions'
+import { LinearGradient } from 'expo-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { Ionicons } from '@expo/vector-icons'
 
 const SearchedUser = () => {
     const item = useSelector(state => state.users.searcheduser)
     const myUser = useSelector(state => state.auth) 
-    console.log(myUser);
     const dispatch = useDispatch()
     const sendRequest = () => {
         dispatch(sendFriendRequest(myUser, item.id, 'Friendship'))
@@ -17,23 +19,31 @@ const SearchedUser = () => {
     return (
         <>
             <SafeAreaView />
-            <View style={styles.Screen}>
+             <LinearGradient colors={[Colors.darkBackground, Colors.darksecondaryBackground]} start={{ x: 0, y: 0 }} style={[styles.Screen, {height:'100%'}]}>
                 <View style={styles.header}>
+                <LinearGradient colors={[Colors.darkBackground, Colors.darkthirdBackground]} start={{ x: 0, y: 0 }} style={styles.header}>
+                    <View style={{height:heightPixel(70), width:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                        <Text style={{fontSize:fontPixel(20), color:'white'}} >Perfil</Text>
+                    </View>
+
                     <View style={styles.ProfileImageSelectorButton}>
-                        <Image style={[{ height: 200, width: widthPixel(200), height: heightPixel(200) }]} source={{ uri: item.Profile.OptionImage }} />
+                        <Image style={[{width: widthPixel(120), height: heightPixel(120) }]} source={{ uri: item.Profile.OptionImage }} />
                     </View>
                     <View>
-                        <Text style={styles.userName}>{item.Name + item.Surname}</Text>
-                        {/* <TextInput style={styles.userName} placeholder={user.name ? user.name : 'Sin nombre aun'} onChangeText={handleChangedNameText}/> */}
-                        <Text style={styles.userEmail}>{item.email}</Text>
+                        <Text style={styles.userName}>{item.Name} {item.Surname}</Text>
+                        <Text style={[styles.userName,{fontSize:fontPixel(20), marginTop:heightPixel(5), color:'grey'}]}>{item.NickName}</Text>
                     </View>
+                </LinearGradient>
                 </View>
 
-
-
                <View style={styles.body}>
-
-                <View style={styles.InputView}>
+               <LinearGradient colors={[Colors.darkBackground, Colors.darkthirdBackground]} start={{ x: 0, y: 0 }} style={{width:widthPixel(340), height:heightPixel(100), alignSelf:'center', borderRadius: heightPixel(20)}}>
+                <TouchableOpacity style={styles.bodyTouchable}>
+                  <Ionicons name='people' size={fontPixel(50)} color={'grey'} />
+                  <Text>AAA</Text>
+                </TouchableOpacity>
+                </LinearGradient>
+                {/* <View style={styles.InputView}>
                         <Text style={styles.InputLabel}>Avatar seleccionado:</Text>
                         <Text style={styles.InputDescription}>{item.Profile.OptionTitle}</Text>
 
@@ -51,12 +61,12 @@ const SearchedUser = () => {
                         <Text style={styles.InputLabel}>Descripción:</Text>
                         <Text style={styles.InputDescription}>{item.Profile.Description}</Text>
 
-                </View>
+                </View> */}
                 <TouchableOpacity onPress={()=>sendRequest()}>
                     <Text>Enviar solicitud de amistad</Text>
                 </TouchableOpacity>
                 </View>
-            </View>
+            </LinearGradient>
         </>
     )
 }
@@ -69,13 +79,24 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     header: {
-        height: heightPixel(370),
+        height: heightPixel(420),
         width: '100%',
         display: 'flex',
-        justifyContent: 'flex-end',
-        paddingBottom: heightPixel(40),
+        justifyContent: 'flex-start',
         backgroundColor: Colors.primary,
-        paddingTop: heightPixel(30)
+        borderBottomEndRadius:widthPixel(70),
+        borderBottomStartRadius:widthPixel(70),
+        overflow:'hidden',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.37,
+        shadowRadius: 7.49,
+
+        elevation: 12,
+        marginBottom: heightPixel(20)
     },
     body: {
         width: '100%',
@@ -83,7 +104,28 @@ const styles = StyleSheet.create({
     },
     userName: {
         fontSize: fontPixel(30),
-        alignSelf: 'center'
+        alignSelf: 'center',
+        color:'white',
+        marginTop:heightPixel(20)
+    },
+    bodyTouchable:{
+    display: 'flex',
+    paddingLeft:widthPixel(21),
+    height:'100%',
+    width:'100%',
+    justifyContent:'flex-start',
+    alignItems:'center',
+    alignSelf:'center',
+    flexDirection: 'row',
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+
+    elevation: 12,
     },
     userEmail: {
         fontSize: fontPixel(20),
@@ -91,8 +133,9 @@ const styles = StyleSheet.create({
         marginTop: heightPixel(10)
     },
     ProfileImageSelectorButton: {
-        height: heightPixel(200),
-        width: widthPixel(200),
+        height: heightPixel(120),
+        width: widthPixel(120),
+        marginTop:heightPixel(30),
         alignSelf: 'center',
         borderRadius: 200,
         overflow: 'hidden',

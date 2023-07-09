@@ -103,17 +103,7 @@ const SignUpScreen = ({navigation}) => {
     return (
     <KeyboardAvoidingView  style={styles.container}>
         <SafeAreaView/>
-            <View style={[styles.Screen, {backgroundColor: Auth.Mode==='Light' ? 'white' : Colors.darkBackground}]}>
-            <View style={styles.Header}>
-                        <Text></Text>
-                        <TouchableOpacity onPress={async () => {
-                            const current = await fetchMode()
-                            const algo = current.rows._array[0].mode
-                            dispatch(changeMode(algo))
-                        }} >
-                            <Ionicons name={Auth.Mode === 'Dark' ? 'moon' : 'sunny'} style={{ fontSize: fontPixel(30), color: Colors.primary }} />
-                        </TouchableOpacity>
-            </View>
+            <View style={[styles.Screen, {backgroundColor: Colors.darkBackground}]}>
             <View style={{marginTop: heightPixel(70)}} >
             <Image style={styles.Logo} source={require('../../assets/icon.png')} />
                 <Text style={styles.LogoName}>{APPNAME}</Text>
@@ -127,40 +117,40 @@ const SignUpScreen = ({navigation}) => {
                 </View>
 
                 <Input initialValue={formState.inputValues.email} mode={Auth.Mode} initialValid={formState.inputValidities.email} onInputChange={handleChangedText} id='email' required minLength={5} label='Email' errorText='Por favor, ingrese un mail válido' autoCapitalize='none' keyboardType='email-address' />
-                <View style={[styles.Input, {backgroundColor: Auth.Mode==='Light' ? 'white' : Colors.darkBackground, marginVertical: heightPixel(20)}]}>
+                <View style={[styles.Input, {backgroundColor: Colors.darkBackground, marginVertical: heightPixel(20)}]}>
                     {
                         PasswordShown===false
                         ? <>
-                        <TextInput placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%', color: Auth.Mode==='Light' ? 'black' : 'white'}} onChangeText={cambiarshowpassword} placeholder='Password' secureTextEntry />
+                        <TextInput placeholderTextColor={'white'} style={{width: '80%', color: 'white'}} onChangeText={cambiarshowpassword} placeholder='Password' secureTextEntry />
                         <Ionicons onPress={turnPasswordToShown} style={styles.ShowPassword} name='md-eye' size={fontPixel(20)}/>
                          </>
                         : <>
-                        <TextInput placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%', color: Auth.Mode==='Light' ? 'black' : 'white'}} onChangeText={cambiarshowpassword} placeholder='Password'  />
+                        <TextInput placeholderTextColor={'white'} style={{width: '80%', color: 'white'}} onChangeText={cambiarshowpassword} placeholder='Password'  />
                         <Ionicons onPress={turnPasswordToHide} style={styles.ShowPassword} name='md-eye-off' size={fontPixel(20)}/>
                         </>
                     }
                 </View>
-                <View style={[styles.Input, {backgroundColor: Auth.Mode==='Light' ? 'white' : Colors.darkBackground, marginBottom: heightPixel(40)}]}>
+                <View style={[styles.Input, {backgroundColor:Colors.darkBackground, marginBottom: heightPixel(40)}]}>
                     {
                         PasswordShown===false
                         ? <>
-                        <TextInput placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%', color: Auth.Mode==='Light' ? 'black' : 'white'}}  onChangeText={cambiarshowrepeatedpassword} placeholder='Password' secureTextEntry />
+                        <TextInput placeholderTextColor={'white'} style={{width: '80%', color: 'white'}}  onChangeText={cambiarshowrepeatedpassword} placeholder='Password' secureTextEntry />
                         <Ionicons onPress={turnPasswordToShown} style={styles.ShowPassword} name='md-eye' size={fontPixel(20)}/>
                          </>
                         : <>
-                        <TextInput placeholderTextColor={Auth.Mode==='Light' ? 'black' : 'white'} style={{width: '80%', color: Auth.Mode==='Light' ? 'black' : 'white'}} onChangeText={cambiarshowrepeatedpassword} placeholder='Password'  />
+                        <TextInput placeholderTextColor={'white'} style={{width: '80%', color: 'white'}} onChangeText={cambiarshowrepeatedpassword} placeholder='Password'  />
                         <Ionicons onPress={turnPasswordToHide} style={styles.ShowPassword} name='md-eye-off' size={fontPixel(20)}/>
                         </>
                     }
                 </View>
 
-                <TouchableOpacity style={styles.LoginButton} onPress={()=>{onHandleRegister}}>
-                    <Text  style={[styles.LoginButtonText, {color: Auth.Mode==='Light' ? 'black' : 'white'}]}>Registrarse</Text>
+                <TouchableOpacity style={styles.LoginButton} onPress={()=>{onHandleRegister()}}>
+                    <Text  style={[styles.LoginButtonText, {color:'white'}]}>Registrarse</Text>
                 </TouchableOpacity>
                 <View style={styles.ViewGoToSignUpScreen}>
-                    <Text style={{color: Auth.Mode==='Dark' ? 'white' : 'black'}}>¿Ya tienes cuenta? </Text>
+                    <Text style={{color: 'white'}}>¿Ya tienes cuenta? </Text>
                 <TouchableOpacity onPress={GoToSignUpScreen} >
-                    <Text style={{color: Auth.Mode==='Dark' ? 'white' : 'black'}}>Iniciar sesión</Text>
+                    <Text style={{color: 'white'}}>Iniciar sesión</Text>
                 </TouchableOpacity>
                 </View>
             </View>

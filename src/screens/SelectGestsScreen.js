@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLayoutEffect } from 'react'
 import { getFriends } from '../store/actions/auth.actions'
-import UserItem from '../components/UserItem'
 import { addguest } from '../store/actions/asados.actions'
 import { Alert } from 'react-native'
 import { Button } from 'react-native-elements'
@@ -38,7 +37,7 @@ const SelectGestsScreen = ({navigation}) => {
       navigation.navigate('SelectOrder')
     }
     const renderItem = ({ item }) => (
-      <UserItem item={item} useFor='Guests' Guests={Guests} onInvite={invite}/>
+      <Text>{item.Name}</Text>
     )
 
   return (

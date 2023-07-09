@@ -13,7 +13,6 @@ export const getusers = () => {
             const response = await fetch(`${URL_API}/users.json`)
 
             const data = await response.json()
-
             dispatch({
                 type: GETUSERS,
                 users: data
@@ -36,7 +35,6 @@ export const searchusers = (searchText, user) => {
             });
 
 
-
             const SearchedbyEmail = arraydeusuarios.filter(user =>
                 user.email.toLowerCase().includes(searchText.toLowerCase())
             );
@@ -56,7 +54,6 @@ export const searchusers = (searchText, user) => {
                 (obj, index) => Searched.findIndex(elem => elem.id === obj.id && elem.name === obj.name) === index
               );
             const arrayWithoutUser = uniqueArr.filter(item => item.email!==user.email)
-
             dispatch({
                 type: SEARCHUSERS,
                 results: arrayWithoutUser
