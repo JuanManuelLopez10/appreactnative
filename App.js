@@ -1,13 +1,11 @@
 import React ,{ useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, Dimensions, KeyboardAvoidingView} from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView} from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen'
 import MainNavigator from './src/navigation/MainNavigator';
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Provider} from 'react-redux';
 import store from './src/store';
-import { deleteMode, deleteUser, fetchMode, fetchUser, initDarkMode, initUser, insertMode } from './src/db';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { getusers } from './src/store/actions/users.actions';
+import { deleteUser, initUser } from './src/db';
 
 SplashScreen.preventAutoHideAsync()
 // deleteUser()

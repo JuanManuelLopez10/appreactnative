@@ -1,41 +1,60 @@
-import { Button, TouchableOpacity,  Platform, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Index from '../screens/Index'
-
-import CreateAsado from '../screens/CreateAsado'
-import SelectGestsScreen from '../screens/SelectGestsScreen'
-import SelectUbandScreen from '../screens/SelectUbandScreen'
-import Colors from '../constants/Colors'
-import SearchResultsScreen from '../screens/SearchResultsScreen'
-import SearchedUser from '../screens/SearchedUser'
-import SelectOrder from '../screens/SelectOrder'
-import CategoryScreen from '../screens/CategoryScreen'
-import { useSelector } from 'react-redux'
-import { Image } from 'react-native-elements'
+import { useDispatch, useSelector } from 'react-redux'
 import { heightPixel, widthPixel } from '../../utils/normalize'
+import Header from '../components/Header'
+import { useEffect } from 'react'
+import { gettasks } from '../store/actions/tasks.actions'
+import { verifyFinishedTask } from '../store/actions/auth.actions'
+import { changePage } from '../store/actions/app.actions'
+import { ImageBackground } from 'react-native'
 
 const Stack = createNativeStackNavigator()
 
-const Navigate = ({navigation}) => {
-  const theme = useSelector(state=>state.theme)
+const Navigate = ({ navigation }) => {
   const auth = useSelector(state=>state.auth)
-  const imagen = auth.Profile.OptionImage
-  return (
-    <View style={styles.Container} >
-        <Stack.Navigator initialRouteName="Asa2" >
-            <Stack.Screen name="Asa2" component={Index} options={{headerShown:false}}/>
-            <Stack.Screen name="CreateAsado" component={CreateAsado} options={{headerShown:false}}/>
-            <Stack.Screen name="SelectUbicationAndDate" component={SelectUbandScreen} options={{headerShown:false}}/>
-            <Stack.Screen name="SelectGuests" component={SelectGestsScreen} options={{headerShown:false}}/>
-            <Stack.Screen name="SearchResults" component={SearchResultsScreen} options={{headerShown:false}}/>
-            <Stack.Screen name="SearchedUser" component={SearchedUser} options={{headerShown:false}}/>
-            <Stack.Screen name="SelectOrder" component={SelectOrder} options={{headerShown:false}}/>
-            <Stack.Screen name="Category" component={CategoryScreen} options={{headerShown:false}}/>
-            <Stack.Screen name="ProductScreen" component={CategoryScreen} options={{headerShown:false}}/>
+  const ttasks = useSelector(state=>state.tasks)
+  const tasks = ttasks.tasks
+  
+  // const completedArray = []
+  // const coso = () => {
+  //   if(tasks.length>0){
+  //   tasks.map((task)=>{
+  //     auth.metrics.map((metric)=>{
+  //       if (metric.class===task.task && metric.value>=task.divisions) {
+  //         const objeto = {
+  //           id: task.id,
+  //           completed: true,
+  //           claimed: false           
+  //         }
+  //         completedArray.push(objeto)
+  //       }
+  //     })
+  //  })
+  // }
+  // }
+  // const dispatch= useDispatch()  
+  // useEffect(()=>{
+  //   dispatch(gettasks())
+  //   coso()
+  //   if (completedArray.length>0) {
+  //     dispatch(verifyFinishedTask(completedArray, auth.email))      
+  //   }
+  // },[])
 
+
+  return (
+
+    <View style={styles.Container} >
+        <Stack.Navigator initialRouteName="Index" >
+            <Stack.Screen name="Index" component={Index} options={{headerShown:true, header: ()=>(
+              <Header auth={auth} navigation={navigation}/>
+            )}}/>
         </Stack.Navigator>
         </View>
+
   )
 }
 
@@ -54,6 +73,5 @@ const styles = StyleSheet.create({
   Container:{
     height: '100%',
     width:'100%',
-    
   }
 })

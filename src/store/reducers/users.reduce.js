@@ -19,18 +19,12 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 results: action.results,
             }    
-        case SELECTUSERSEARCHED:
-            return {
-                ...state,
-                searcheduser: action.userSearched,
-            }    
         case VERIFYUSERNICKNAME:
             return {
                 ...state,
                 exist: action.exist,
             }    
- 
-            
+ s           
             default:
                 return state
     }

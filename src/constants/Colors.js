@@ -1,12 +1,12 @@
 export default {
-    primary: "#e04523",
-    secondary: "#8c3f2f",
-    dark: '#261A18',
-    light: '#D99F7E',
-    lightBackground: '#b0b0b0',
-    darksecondaryBackground: '#3a395a',
+    primary: "#2332c4",
+    darkGrey: '#131313',
+    secondary: "#5b63b9",
+    lightBackground: '#3a71fd',
+    darksecondaryBackground: '#5456ad',
     darkthirdBackground: '#4c4c64',
-    
-    darkBackground: '#16161d'
+    darkBackground: '#27296e',
+    headerBackground: '#18206f', 
+    taskHeaderBackground: '#424389'
 }
 export const APPNAME = 'MeatApp' 

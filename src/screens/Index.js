@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, TextInput } from 'react-native'
 import React, { useEffect } from 'react'
-import GridItem from '../components/GridItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { fetchimagenes, getusers, searchusers } from '../store/actions/users.actions';
@@ -9,142 +8,59 @@ import Colors from '../constants/Colors';
 import { fontPixel, heightPixel, widthPixel } from '../../utils/normalize'
 import { Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { CATEGORIES } from '../../data/Categories';
 import { ScrollView } from 'react-native';
-import { PRODUCTS } from '../../data/Products';
+import { changePage } from '../store/actions/app.actions';
+import IndexTwoSections from '../components/IndexTwoSections';
+import IndexSpecials from '../components/IndexSpecials';
+import { getsubtasks } from '../store/actions/tasks.actions';
+import { addSession, getsavedsignin, loadCompletedTasks, reload } from '../store/actions/auth.actions';
+import { ImageBackground } from 'react-native';
 
 
 const Index = ({ navigation }) => {
+  const user = useSelector(state => state.auth)
+  const packs = useSelector(state => state.packs)
+  const gifts = useSelector(state => state.gifts)
+  const app = useSelector(state => state.app)
+  const tasks = useSelector(state => state.tasks)
+
 
   const dispatch = useDispatch()
-  const user = useSelector(state => state.auth)
-  const [UserAsado, setUserAsado] = useState([])
-  const [categories, setCategories] = useState([])
 
-  const [Search, setSearch] = useState('')
-  const handleSelect = () => {
-    dispatch(getusers())
-  }
-
-  const asados = () => {
-    if (user.asado) {
-      setUserAsado(user.asado)
-    }
-  }
-  asados()
-  const OnChangeSearchBarText = (search) => {
-    setSearch(search)
-  }
-  const SearchResult = () => {
-    dispatch(searchusers(Search, user))
-    navigation.navigate('SearchResults')
-  }
 
   return (
-    <LinearGradient colors={[Colors.darkBackground, Colors.darksecondaryBackground]} start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }} onLayout={handleSelect} style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-      <SafeAreaView />
-      <ScrollView contentContainerStyle={{ width: widthPixel(400), display: 'flex', alignItems: 'center' }} >
+    <View onLayout={()=>{
+      dispatch(reload(user.email))
+    }} style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+    <ImageBackground source={require('../../assets/coso2.jpg')} style={{ flex: 1 }}>
 
-        <View style={styles.Header}>
-          <TouchableOpacity onPress={() => {
-            navigation.navigate('Cuenta')
-          }}>
-            <Image style={styles.ProfileImage} source={{ uri: user.Profile.OptionImage }} />
-          </TouchableOpacity>
-        </View>
-        <View style={{ width: '100%', height: heightPixel(110), display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: widthPixel(15) }}>
-          <Text style={{ color: 'white', fontSize: fontPixel(20) }}>Bienvenido</Text>
-          <Text style={{ color: 'white', fontSize: fontPixel(40) }}>Hola {user.Name}</Text>
-        </View>
-
-
-        <LinearGradient colors={[Colors.darkBackground, Colors.darkthirdBackground]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} onLayout={handleSelect} style={styles.AsadosStatus}>
-
-          <View style={styles.AsadosStatusButton}>
-            <View style={{ width: '40%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
-              <Ionicons name='calendar' size={fontPixel(25)} color={'grey'} />
-            </View>
-
-
-            {
-              UserAsado.length > 0
-                ?
-                  <LinearGradient colors={[Colors.primary, Colors.darkBackground]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} onLayout={handleSelect} style={styles.AsadosStatusButtonPressable}>
-                <TouchableOpacity style={{height:'100%', width:'100%'}} onPress={() => { navigation.navigate('CreateAsado') }}>
-
-                    <Text style={styles.AsadosStatusButtonPressableText}>{UserAsado.length}</Text>
-                    </TouchableOpacity>
-                  </LinearGradient>
-
-                :
-                  <LinearGradient colors={[Colors.primary, Colors.darkBackground]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} onLayout={handleSelect} style={styles.AsadosStatusButtonPressable}>
-                <TouchableOpacity onPress={() => { navigation.navigate('CreateAsado') }}>
-
-                    <Text style={styles.AsadosStatusButtonPressableText}>+</Text>
-                    </TouchableOpacity>
-                  </LinearGradient>
-
-            }
-
-
-            <View style={{ width: '40%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
-              <Ionicons name='people' size={fontPixel(25)} color={'grey'} />
-            </View>
-          </View>
-          <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: heightPixel(5) }} >
-            <Text style={{ color: 'white', fontSize: fontPixel(21) }} >{
-              UserAsado.length > 0
-                ? `Tienes ${UserAsado.length}`
-                : 'No hay asados programados'
-            }</Text>
-          </View>
-        </LinearGradient>
-        <View style={{ marginTop: heightPixel(40), height:heightPixel(400), width:'100%', margin:0 }} >
-          <Text style={{fontSize:fontPixel(25),marginLeft:widthPixel(20), color:'white'}} >Destacados</Text>
-          <ScrollView horizontal={true}  style={{display: 'flex', flexDirection:'row'}}>
-          {
-            PRODUCTS.map(item => {
-              if (item.main===true){
-                return(
-                  
-                <TouchableOpacity key={item.title} style={[styles.category, {shadowColor:'black'}]}>
-                  <LinearGradient colors={[Colors.darkthirdBackground, Colors.darksecondaryBackground]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.category, {marginVertical:0, paddingTop:heightPixel(20)}]}>
-                <Image style={styles.categoryImage} source={{ uri: item.image }} />
-              <Text style={{color:'white', fontSize:fontPixel(15)}}>{item.title}</Text>
-              </LinearGradient>
-          </TouchableOpacity>
-            )}
-          })
-          }
-
-          </ScrollView>
-        </View>
+      <ScrollView contentContainerStyle={{ width: widthPixel(400), display: 'flex', marginBottom:heightPixel(10)}} >
+        <IndexTwoSections navigation={navigation}/>
+        <IndexSpecials/>
       </ScrollView>
-    </LinearGradient>
+      </ImageBackground>
+    </View>
   )
 }
 
 export default Index
 
 const styles = StyleSheet.create({
+  HeaderTitle:{
+    marginTop:'30%'
+  },
+  overlayLightDark: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)', // Ajusta el color y la opacidad del sobrefondo aquí
+},    
+Screen: {
+  height: '100%',
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-between',
 
-  ProfileImage: {
-    height: heightPixel(50),
-    width: heightPixel(50),
-    marginRight: widthPixel(20),
-    borderRadius: 100,
-    borderColor: Colors.primary,
-    borderWidth: 2
-  },
-  Header: {
-    width: '100%',
-    height: heightPixel(70),
-    display: 'flex',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end'
-  },
+},
+
   AsadosStatus: {
     height: heightPixel(190),
     width: widthPixel(310),

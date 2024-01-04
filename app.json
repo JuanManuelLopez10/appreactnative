@@ -2,7 +2,11 @@
   "expo": {
     "name": "Asado",
     "slug": "tercera",
-    "version": "1.0.0",
+    "version": "1.0.2",
+    "platforms": [
+      "android",
+      "ios"
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,21 +19,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jotaeme10.tercera"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyC9srLm0BdSlQeckFeiY5QyDSA3eojoaB0"
-        }
-      },
       "versionCode": 1,
       "package": "com.jotaeme10.tercera",
-      "permissions":[
+      "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
         "WRITE_EXTERNAL_STORAGE",
@@ -43,6 +43,12 @@
       "eas": {
         "projectId": "39ea01f8-63bb-40c4-abd9-df809aa86f74"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/39ea01f8-63bb-40c4-abd9-df809aa86f74"
     }
   }
 }

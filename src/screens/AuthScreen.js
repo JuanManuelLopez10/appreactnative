@@ -8,7 +8,6 @@ import { deleteUser, fetchMode, fetchUser, insertMode, updateMode } from '../db'
 import { useDispatch, useSelector } from 'react-redux'
 import { getsavedsignin } from '../store/actions/auth.actions'
 import { Ionicons } from '@expo/vector-icons'
-import { changeMode } from '../store/actions/theme.actions'
 import { LinearGradient } from 'expo-linear-gradient';
 import { getusers } from '../store/actions/users.actions'
 
@@ -34,18 +33,16 @@ const AuthScreen = ({ navigation }) => {
     return (
         <>
             <SafeAreaView />
-            <ImageBackground source={require('../../assets/blog_35864_8995.jpg')} style={{ flex: 1 }}>
+            <ImageBackground source={require('../../assets/coso.jpg')} style={{ flex: 1 }}>
                 <View style={styles.overlayLightDark} />
                 <View style={[styles.Screen, { backgroundColor: 'rgb(30,30,30,0.7)'}]}>
-                    <View style={styles.Header}>
-                        <Image style={styles.Logo} source={require('../../assets/icon.png')} />
-                    </View>
+
 
                     <Text></Text>
 
                     <View style={styles.Screeen} >
-                        <Text style={[styles.Title, { color: 'white'}]} >Celebrá el arte</Text>
-                        <Text style={styles.Subtitle} >de un buen asado</Text>
+                        <Text style={[styles.Title, { color: 'white'}]} >La felicidad</Text>
+                        <Text style={styles.Subtitle} >a largo plazo</Text>
                     </View>
                     <View style={{ margin: 30 }}>
                     <LinearGradient colors={[Colors.primary, Colors.secondary]} start={{ x: 0, y: 0 }} style={styles.Button}>
@@ -62,7 +59,7 @@ const AuthScreen = ({ navigation }) => {
                             <TouchableOpacity onPress={() => {
                                 navigation.navigate('SignUp')
                             }}>
-                                <Text style={{ color: auth.Mode === 'Dark' ? 'white' : 'black', textDecorationLine: 'underline'}} >
+                                <Text style={{ color: 'white', textDecorationLine: 'underline'}} >
                                     Registrate
                                 </Text>
                             </TouchableOpacity>

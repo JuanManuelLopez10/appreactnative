@@ -11,7 +11,6 @@ const Stack = createNativeStackNavigator()
 
 const AuthNavigator = () => {
     const isAuth = useSelector(state=>state.auth)
-    console.log(isAuth);
     return(
     <Stack.Navigator screenOptions={{
         headerStyle:{
@@ -21,7 +20,7 @@ const AuthNavigator = () => {
         {
             isAuth.token
             ? <>
-            <Stack.Screen name='Hello' component={AcountScreen}/>
+            <Stack.Screen name='Hello' options={{headerShown:false}} component={AcountScreen}/>
             </>       
            :<>
            <Stack.Screen name='Auth' component={AuthScreen} options={{headerShown: false}}/>

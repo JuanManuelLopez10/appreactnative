@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import TabsNavigator from './TabsNavigator'
@@ -7,22 +7,21 @@ import AuthNavigator from './AuthNavigator'
 import { changeMode } from '../store/actions/auth.actions'
 import { fetchMode } from '../db'
 import { useEffect } from 'react'
+import { getGifts } from '../store/actions/gifts.actions'
+import { getPacks } from '../store/actions/packs.actions'
 
 const MainNavigator = () => {
   const dispatch = useDispatch()
-  const DA = async () => {
-    const pro = await fetchMode()
-    if (pro.rows._array[0] && pro.rows._array[0].mode==='Light') {
-      dispatch(changeMode('Dark'))
-    } else {
-      dispatch(changeMode('Light'))      
+
+  useEffect(()=>{
+    const recargar = () => {
+      dispatch(getGifts())
+      dispatch(getPacks())
     }
-  }
-  useEffect(()=> {
-    DA()
-  }, [])
+    const intervaloId = setInterval(recargar, 1000);
+    return () => clearInterval(intervaloId)
+  },[])
   const isAuth = useSelector(state=>state.auth)
-  
 //   const deleteu = async () => {
 //     const dele = await deleteUser()
     
@@ -32,8 +31,8 @@ const MainNavigator = () => {
     <>
     <NavigationContainer>
       {
-        isAuth.NickName
-        ? <TabsNavigator/>
+        isAuth.Name
+        ? <TabsNavigator />
         : <AuthNavigator/>
       }
 

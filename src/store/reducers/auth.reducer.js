@@ -1,11 +1,10 @@
-import { CHANGEMODE, GETFRIENDS, GETNOTIFICATIONS, GETSAVEDSIGNIN, LOGOUT, SIGNUP } from "../actions/auth.actions"
+import { ADDSESSION, CHANGEMODE, CLAIM, GETFRIENDS, GETITEMS, GETNOTIFICATIONS, GETSAVEDSIGNIN, LOADCOMPLETEDTASKS, LOGOUT, OPENPACK, RELOAD, SELLGIFT, SIGNUP, USEGIFT, VERIFYFINISHEDTASK } from "../actions/auth.actions"
 import { SIGNUPOTHERS } from "../actions/auth.actions"
 import { SIGNIN } from "../actions/auth.actions"
 
 const initialState = {
     token: null,
     userId: null,
-    Mode: null
 }
 
 const authReducer = (state = initialState, action) => {
@@ -27,7 +26,12 @@ const authReducer = (state = initialState, action) => {
                 Surname: action.Surname,
                 NickName: action.NickName,
                 friends: action.friends,
-                Profile: action.Profile
+                money: action.money,
+                Profile: action.Profile,
+                packs: action.packs,
+                metrics: action.metrics,
+                tasks: action.tasks,
+                gifts: action.gifts
             }   
         case GETSAVEDSIGNIN:
             return {
@@ -40,7 +44,13 @@ const authReducer = (state = initialState, action) => {
                 NickName: action.NickName,
                 friends: action.friends,
                 Profile: action.Profile,
-                FriendsRequests: action.FriendsRequests
+                FriendsRequests: action.FriendsRequests,
+                money: action.money,
+                packs: action.packs,
+                tasks: action.tasks,
+                metrics: action.metrics,
+                gifts: action.gifts,
+                
             }
             case SIGNUPOTHERS:
                 return {
@@ -49,12 +59,51 @@ const authReducer = (state = initialState, action) => {
                     Surname: action.Surname,
                     NickName: action.NickName,
                     Profile: action.Profile,
-                }         
-            case GETNOTIFICATIONS:
-                return {
-                    ...state,
-                    notifications: action.notifications
-                }        
+                    packs: action.packs,
+                    metrics: action.metrics,
+                    money: action.money,
+                    tasks: action.tasks,
+                    gifts: action.gifts,
+                }     
+                case RELOAD:
+                    return {
+                        ...state,
+                        money: action.money,
+                        packs: action.packs,
+                        metrics: action.metrics,
+                        tasks: action.tasks
+                    }    
+                case LOADCOMPLETEDTASKS:
+                    return {
+                        ...state,
+                        tasks: action.tasks,
+                        metrics: action.metrics
+                    }    
+                    case GETITEMS:
+                        return {
+                            ...state,
+                            gifts: action.gifts
+                        }    
+                    case CLAIM:
+                        return {
+                            ...state,
+                            tasks: action.tasks,
+                            packs: action.packs,
+                            money: action.money,
+                            metrics: action.metrics
+                        }    
+                        case OPENPACK:
+                            return {
+                                ...state,
+                                packs: action.packs,
+                                gifts: action.gifts
+                            } 
+                    case ADDSESSION:
+                        return {
+                            ...state,
+                            lastDate: action.lastDate
+                        }    
+                      
             case LOGOUT:
                 return {
                     state: initialState
@@ -64,8 +113,24 @@ const authReducer = (state = initialState, action) => {
                     ...state,
                     Friends: action.friends
                 }         
-                 
-                   
+                case VERIFYFINISHEDTASK:
+                    return {
+                        ...state,
+                        tasks: action.tasks
+                    }    
+                    case SELLGIFT:
+                        return {
+                            ...state,
+                            gifts: action.gifts,
+                            money: action.money,
+                            metrics: action.metrics
+                        }    
+                        case USEGIFT:
+                            return {
+                                ...state,
+                                gifts: action.gifts,
+                            }    
+                        
             default:
                 return state
     }

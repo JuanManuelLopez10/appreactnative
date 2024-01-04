@@ -7,8 +7,6 @@ import { fontPixel, heightPixel, widthPixel } from '../../utils/normalize'
 import Colors, { APPNAME } from '../constants/Colors'
 import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { fetchMode } from '../db'
-import { changeMode } from '../store/actions/theme.actions'
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE'
 
@@ -98,7 +96,6 @@ const SignUpScreen = ({navigation}) => {
     const GoToSignUpScreen = () => {
         navigation.navigate('SignIn')
     }
-    const Auth = useSelector(state => state.theme)
 
     return (
     <KeyboardAvoidingView  style={styles.container}>
@@ -116,7 +113,7 @@ const SignUpScreen = ({navigation}) => {
                     <View style={{height: '50%', borderBottomWidth: 1, borderBottomColor: 'grey', width: '50%', alignSelf: 'flex-start'}} ></View>
                 </View>
 
-                <Input initialValue={formState.inputValues.email} mode={Auth.Mode} initialValid={formState.inputValidities.email} onInputChange={handleChangedText} id='email' required minLength={5} label='Email' errorText='Por favor, ingrese un mail válido' autoCapitalize='none' keyboardType='email-address' />
+                <Input initialValue={formState.inputValues.email} initialValid={formState.inputValidities.email} onInputChange={handleChangedText} id='email' required minLength={5} label='Email' errorText='Por favor, ingrese un mail válido' autoCapitalize='none' keyboardType='email-address' />
                 <View style={[styles.Input, {backgroundColor: Colors.darkBackground, marginVertical: heightPixel(20)}]}>
                     {
                         PasswordShown===false

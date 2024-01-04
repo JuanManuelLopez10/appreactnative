@@ -8,7 +8,6 @@ import { fontPixel, heightPixel, widthPixel } from '../../utils/normalize'
 import { Ionicons } from '@expo/vector-icons'
 import { CheckBox } from 'react-native-elements'
 import { fetchMode, insertUser } from '../db'
-import { changeMode } from '../store/actions/theme.actions'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE'
