@@ -68,7 +68,7 @@ const estilo = {
           arrayofSpecials.map(item => {
             if (arrayofSpecials.findIndex(it => it === item) <5) {
               return(
-                <GiftCardSpec pack={item} style={estilo} />
+                <GiftCardSpec key={item.name} pack={item} style={estilo} />
               )
             }
 

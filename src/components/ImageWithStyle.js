@@ -8,8 +8,12 @@ const ImageWithStyle = (props) => {
     const packs = useSelector(state => state.packs)
     if(props.gift.type==='money'){
         return (
+            <>
+                <View style={styles.Box} >
             <Image style={props.style} source={require('../../assets/coin.png')} />
-        
+            <Text style={styles.BoxText} >{props.gift.value}</Text>
+            </View>
+            </>
           )
     }else if(props.gift.type==='packs'){
         let valor

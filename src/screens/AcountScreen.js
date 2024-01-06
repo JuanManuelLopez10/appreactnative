@@ -262,6 +262,7 @@ const SearchedUser = () => {
     }
      const loggout = () => {
          dispatch(logout())
+         console.log('hh');
      }
      const saveUserEspecifications = () => {
          if (userName && Profile)
@@ -358,7 +359,7 @@ const SearchedUser = () => {
                         </View>
                         <Text style={styles.TituloEstadisticas} >Estadisticas</Text>
                         <ScrollView showsVerticalScrollIndicator style={{marginBottom:10, height:'auto'}} >
-                        {
+                        {/* {
                             user.metrics.map(metric => {
                                 if (metric.day===undefined) {
                                     return(
@@ -369,7 +370,7 @@ const SearchedUser = () => {
                                     )
                                 }
                             })
-                        }
+                        } */}
                         </ScrollView>
                         
 

@@ -31,9 +31,7 @@ const TabsNavigator = ({navigation}) => {
     dispatch(getPacks())
 
   },[])
-  useEffect(()=>{
-    
-  })
+
   // const getCompleted = ()=>{
   //   dispatch(gettasks())
   //   dispatch(getsubtasks())

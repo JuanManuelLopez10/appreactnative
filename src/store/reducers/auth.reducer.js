@@ -1,4 +1,4 @@
-import { ADDSESSION, CHANGEMODE, CLAIM, GETFRIENDS, GETITEMS, GETNOTIFICATIONS, GETSAVEDSIGNIN, LOADCOMPLETEDTASKS, LOGOUT, OPENPACK, RELOAD, SELLGIFT, SIGNUP, USEGIFT, VERIFYFINISHEDTASK } from "../actions/auth.actions"
+import { ADDSESSION, BUYPACK, CHANGEMODE, CLAIM, GETFRIENDS, GETITEMS, GETNOTIFICATIONS, GETSAVEDSIGNIN, LOADCOMPLETEDTASKS, LOGOUT, OPENPACK, RELOAD, SELLGIFT, SIGNUP, USEGIFT, VERIFYFINISHEDTASK } from "../actions/auth.actions"
 import { SIGNUPOTHERS } from "../actions/auth.actions"
 import { SIGNIN } from "../actions/auth.actions"
 
@@ -130,7 +130,13 @@ const authReducer = (state = initialState, action) => {
                                 ...state,
                                 gifts: action.gifts,
                             }    
-                        
+                            case BUYPACK:
+                                return {
+                                    ...state,
+                                    packs: action.packs,
+                                    money: action.money
+                                }    
+                            
             default:
                 return state
     }

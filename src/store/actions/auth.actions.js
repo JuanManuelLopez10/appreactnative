@@ -18,7 +18,7 @@ export const OPENPACK = 'OPENPACK'
 export const GETITEMS = 'GETITEMS'
 export const SELLGIFT = 'SELLGIFT'
 export const USEGIFT = 'USEGIFT'
-
+export const BUYPACK = 'BUYPACK'
 
 export const signupothers = (email, Name, Profile) => {
     return async dispatch => {
@@ -399,6 +399,8 @@ export const signin = (email, password) => {
             })
             const respuesta = await response.json()
             let objeto = {}
+         console.log('hh');
+
             const arraydeusuarios = Object.keys(respuesta).map(function(clave) {
                 return respuesta[clave];
               });
@@ -412,8 +414,6 @@ export const signin = (email, password) => {
                 objeto.tasks = item.tasks
                 objeto.gifts = item.gifts
             }})
-
-
 
             const result = await insertUser(email, password)
 
@@ -444,7 +444,7 @@ export const logout = () => {
     return async dispatch => {
         try {
             const dele = await deleteUser()
-
+            console.log('signout');
             dispatch({
                     type: LOGOUT,
             })
@@ -555,7 +555,9 @@ export const reload = (email) => {
                         'Content-Type': 'application/json'
                     }
                 })
+
                 const respuesta = await response.json()
+                
                 const arraydeusuarios = Object.keys(respuesta).map(function(clave) {
                     return respuesta[clave];
                   });
@@ -563,7 +565,6 @@ export const reload = (email) => {
                 arraydeusuarios.map(item => {if (item.email===email) {
                     usuario = item
                 }})
-                    
                 
                 
                 dispatch({
@@ -604,7 +605,7 @@ export const getFriends = (email) => {
                         user = item.friends
                     }
                 })
-
+                
                 dispatch({
                 type: GETFRIENDS,
                 friends: user
@@ -761,6 +762,54 @@ export const openPack = (email, packId, arrayofitems) => {
             alert('openpack')
 
             console.log('error addSession' + error.message);
+        }
+
+    }
+}
+export const buyPack = (email, packId, price) => {
+    return async dispatch => {
+        try {
+                const responseExtra = await fetch(`${URL_API}/users.json`, {
+                    method: 'GET',
+                    header: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const respuesta = await responseExtra.json()
+                const fecha = new Date()
+                const string = fecha.getDate().toString() + fecha.getMonth().toString() + fecha.getFullYear().toString() + fecha.getHours().toString() + fecha.getMinutes().toString() +fecha.getSeconds().toString()
+                let nuevoarray
+                let plata 
+                const arraydeusuarios = Object.keys(respuesta).map(function(clave) {
+                    return respuesta[clave];
+                  });
+                  const paquete = {id:string, pack:packId}
+
+                  arraydeusuarios.map(item => {if (item.email===email) {
+                    item.packs.push(paquete)
+                    item.money = item.money - price
+                    plata = item.money
+                    nuevoarray= item.packs
+
+                }})
+
+                const response = await fetch(`${URL_API}/users/.json`, {
+                    method: 'PUT',
+                    header: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(arraydeusuarios)
+                })
+                dispatch({
+                type: BUYPACK,
+                packs: nuevoarray,
+                money: plata 
+            })
+        }
+        catch (error) {
+            alert('buypack')
+
+            console.log('error buypack' + error.message);
         }
 
     }

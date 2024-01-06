@@ -62,7 +62,6 @@ const GiftOptions = () => {
             fontSize:fontPixel(0)
         }
     }
-    console.log(app.giftSelected);
   return (
     <View style={styles.GiftOptions}>
         <View style={styles.Header}>
@@ -78,7 +77,7 @@ const GiftOptions = () => {
         </View>
         <View style={styles.OptionsView}>
             <TouchableOpacity style={styles.TouchoPTION} onPress={()=>{sell()}} >
-                <Text style={{color:'white', fontSize:fontPixel(18)}}>Vender artículo</Text>
+                <Text style={{color:'white', fontSize:fontPixel(18)}}>Vender artículo ${app.giftSelected.sellPrice} </Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.TouchoPTION} onPress={()=>{sell()}} >
                 <Text style={{color:'white', fontSize:fontPixel(18)}}>Usar artículo</Text>

@@ -2,6 +2,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { uploadTask } from '../store/actions/tasks.actions'
+import { heightPixel, widthPixel } from '../../utils/normalize'
 
 const LoadTasks = () => {
   const dispatch = useDispatch()
@@ -35,13 +36,36 @@ const LoadTasks = () => {
   
 return (
   <View>
-      <TextInput value={title} onChangeText={setTitle} placeholder='Title' />    
-      <TextInput value={clase} onChangeText={setClass} placeholder='Clase' />    
+      <TextInput value={title} onChangeText={setTitle} placeholder='Title' />  
+      <Text>Clase:</Text>  
+      <View style={{display:'flex', flexDirection:'row', width:widthPixel(300)}} >
+      <TouchableOpacity style={styles.Tou} onPress={()=>{setClass('Fundamentos')}} >
+        <Text style={{color:'white'}} >Fundamentos</Text>
+        </TouchableOpacity> 
+        <TouchableOpacity style={styles.Tou} onPress={()=>{setClass('Epoca')}} >
+        <Text style={{color:'white'}} >De época</Text>
+        </TouchableOpacity>       
+        <TouchableOpacity style={styles.Tou} onPress={()=>{setClass('Especiales')}} >
+        <Text style={{color:'white'}} >Especiales</Text>
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity style={styles.Tou} onPress={()=>{setClass('Progreso')}} >
+        <Text style={{color:'white'}} >Progreso</Text>
+        </TouchableOpacity> 
       <TextInput value={description} onChangeText={setDescription} placeholder='Descripcion' />    
       <TextInput value={divisions} onChangeText={setdivisions} placeholder='divisions' keyboardType="numeric" />    
       <TextInput value={subclass} onChangeText={setsubclass} placeholder='subclass'/>    
       <TextInput value={task} onChangeText={settask} placeholder='task'  autoCapitalize="none" />    
-      <TextInput value={gifttype} onChangeText={setgifttype} placeholder='gifttype' autoCapitalize="none" />
+      <View style={{display:'flex', flexDirection:'row', width:widthPixel(300)}} >
+      <TouchableOpacity style={styles.Tou} onPress={()=>{setgifttype('packs')}} >
+        <Text style={{color:'white'}} >Packs</Text>
+        </TouchableOpacity> 
+        <TouchableOpacity style={styles.Tou} onPress={()=>{setgifttype('money')}} >
+        <Text style={{color:'white'}} >Money</Text>
+        </TouchableOpacity>       
+
+      </View>
+
       <TextInput value={value} onChangeText={(text)=>{changegiftvalue(text)}} placeholder='value' keyboardType="numeric" />
 
     <Text>LoadGifts</Text>
@@ -49,13 +73,10 @@ return (
           dispatch(uploadTask(objeto))
           console.log(objeto);
           setTitle(undefined)
-          setClass(undefined)
           setDescription(undefined)
           setdivisions(undefined)
-          setsubclass(undefined)
           settask(undefined)
           setgifttype(undefined)
-          setvalue(undefined)
 
       }} >
           <Text>DDD</Text>
@@ -66,4 +87,11 @@ return (
 
 export default LoadTasks
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    Tou:{
+            marginVertical:heightPixel(10), 
+            width:'40%',
+            backgroundColor:'blue',
+            marginHorizontal:5
+        }
+})

@@ -8,6 +8,9 @@ import { heightPixel } from '../../utils/normalize'
 
 export default () => {
     const [user, setUser] = useState(null)
+    user
+    ?console.log(user)
+    :''
 
     return (
         <NavigationContainer>

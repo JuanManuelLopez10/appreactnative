@@ -9,4 +9,4 @@ export default {
     headerBackground: '#18206f', 
     taskHeaderBackground: '#424389'
 }
-export const APPNAME = 'MeatApp' 
+export const APPNAME = 'TuApp' 

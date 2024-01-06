@@ -53,7 +53,22 @@ const TaskSubclassModalGiftImage = ({task}) => {
             <Text style={styles.Text} >{name}</Text>
                 </>
         )   
-        }
+        }else if (tipo==='silver') {
+            return(
+                <>
+                <Image style={styles.Image} source={require('../../assets/silver-pack.png')} />
+                <Text style={styles.Text} >{name}</Text>
+                    </>
+            )   
+            }else{
+                    return(
+                        <>
+                        <Image style={styles.Image} source={require('../../assets/gold-pack.png')} />
+                        <Text style={styles.Text} >{name}</Text>
+                            </>
+                    )   
+                    
+            }
     }
 }
 

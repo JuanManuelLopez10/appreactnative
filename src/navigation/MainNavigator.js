@@ -27,6 +27,10 @@ const MainNavigator = () => {
     
 // }
 // deleteu()
+
+  if (isAuth.token) {
+    console.log('    AAA',isAuth);
+  }
   return (
     <>
     <NavigationContainer>

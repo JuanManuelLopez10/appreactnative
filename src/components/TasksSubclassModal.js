@@ -71,6 +71,7 @@ const TasksSubclassModal = () => {
         <View style={styles.taskscontainer} >
         {
             arrayoftasks.map(task => {
+                console.log(task.title);
                 let isCompleted 
                 let isClaimed
                     user.tasks.map(item=>{
@@ -83,7 +84,7 @@ const TasksSubclassModal = () => {
                     })
                     if (isClaimed===true) {
                         return(
-                            <View key={task.title+task.id+'nonosss'} style={[styles.Tassk, {backgroundColor:isCompleted===true ? 'white' : 'none', borderTopColor: isCompleted===true ? 'black' : 'white', borderBottomColor: isCompleted===true ? 'black' : 'white'}]} >
+                            <View key={task.title} style={[styles.Tassk, {backgroundColor:isCompleted===true ? 'white' : 'none', borderTopColor: isCompleted===true ? 'black' : 'white', borderBottomColor: isCompleted===true ? 'black' : 'white'}]} >
                                 <Text style={[styles.TasskTitle,{color:isCompleted===true ? 'black' : 'white'}]} >{task.title}</Text>
                                 <Ionicons name={isClaimed===false ? 'gift' : 'checkmark-circle'} size={fontPixel(25)} style={{color: isCompleted===true ? 'green' : 'white'}}/>
                             </View>
@@ -93,7 +94,7 @@ const TasksSubclassModal = () => {
                         const [isopen, setIsOpen] = useState(false)
                         return(
                             <>
-                            <TouchableOpacity key={task.title+'nono'+task.id} onPress={()=>{isopen===false ? setIsOpen(true) : setIsOpen(false)}}  style={[styles.Tassk, {flexDirection:'column', alignItems:'flex-start',backgroundColor:isCompleted===true ? 'white' : 'none', borderTopColor: isCompleted===true ? 'black' : 'white', borderBottomColor: isCompleted===true ? 'black' : 'white'}]} >
+                            <TouchableOpacity key={task.title} onPress={()=>{isopen===false ? setIsOpen(true) : setIsOpen(false)}}  style={[styles.Tassk, {flexDirection:'column', alignItems:'flex-start',backgroundColor:isCompleted===true ? 'white' : 'none', borderTopColor: isCompleted===true ? 'black' : 'white', borderBottomColor: isCompleted===true ? 'black' : 'white'}]} >
                                 <View style={[styles.Tassk, {borderTopWidth:0, width:'100%', paddingHorizontal:0, borderBottomWidth:0}]} >
                                     <Text style={[styles.TasskTitle,{color:isCompleted===true ? 'black' : 'white'}]} >{task.title}</Text>
                                     <Ionicons name={isClaimed===false ? 'gift' : 'checkmark-circle'} size={fontPixel(25)} style={{color: isCompleted===true ? 'green' : 'white'}}/>
@@ -113,7 +114,7 @@ const TasksSubclassModal = () => {
                         )
                 }else{
                     return(
-                        <TouchableOpacity key={task.title+'seee'+task.id} onPress={()=>{
+                        <TouchableOpacity key={task.title} onPress={()=>{
                             selectClaim(task)
                         }} style={[styles.Tassk, {backgroundColor:isCompleted===true ? 'white' : 'none', borderTopColor: isCompleted===true ? 'black' : 'white', borderBottomColor: isCompleted===true ? 'black' : 'white'}]} >
                             <Text style={[styles.TasskTitle,{color:isCompleted===true ? 'black' : 'white'}]} >{task.title}</Text>

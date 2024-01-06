@@ -9,7 +9,7 @@ import { deleteUser, initUser } from './src/db';
 
 SplashScreen.preventAutoHideAsync()
 // deleteUser()
-initUser()
+//initUser()
 
 // initDarkMode()
 // const ya = async () => {
