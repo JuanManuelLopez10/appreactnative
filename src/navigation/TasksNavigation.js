@@ -76,6 +76,12 @@ const TasksNavigation = ({ navigation }) => {
               <TasksHeader navigation={navigation}/>
               </>
               )}}/>       
+                                        <Stack.Screen name="Facultad" component={TasksScreen} options={{headerShown:true, header: ()=>(
+              <>
+              <Header auth={auth} navigation={navigation}/>
+              <TasksHeader navigation={navigation}/>
+              </>
+              )}}/>      
         </Stack.Navigator>
         </ImageBackground>
         </View>

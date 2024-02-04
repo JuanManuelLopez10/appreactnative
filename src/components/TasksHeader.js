@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { heightPixel } from '../../utils/normalize'
 import TaskHeaderOption from './TaskHeaderOption'
@@ -25,13 +25,13 @@ const TasksHeader = ({navigation}) => {
     }
     const deletedDuplicates = deleteDuplicates(tasksOptions)
   return (
-    <View style={styles.TasksHeader}>
+    <ScrollView horizontal={true} contentContainerStyle={[styles.TasksHeader, {width:`${deletedDuplicates.length * 40}%`}]} >
         {
             deletedDuplicates.map(item=>(
                 <TaskHeaderOption navigation={navigation} key={item} class={item}/>
             ))
         }
-    </View>
+    </ScrollView>
   )
 }
 

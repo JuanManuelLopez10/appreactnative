@@ -13,9 +13,7 @@ const AuthNavigator = () => {
     const isAuth = useSelector(state=>state.auth)
     return(
     <Stack.Navigator screenOptions={{
-        headerStyle:{
-            backgroundColor: Platform.OS === 'android' ? Colors.primary : Colors.accent
-        }
+
     }}>
         {
             isAuth.token

@@ -4,18 +4,18 @@ import { heightPixel } from '../../utils/normalize'
 import TaskHeaderOption from './TaskHeaderOption'
 import { useSelector } from 'react-redux'
 import Colors from '../constants/Colors'
+import { ScrollView } from 'react-native'
 
 const PacksHeader = ({navigation}) => {
     const deletedDuplicates = ['Mis packs', 'Comprar packs', 'Mis items']
   return (
-    <View style={styles.TasksHeader}>
+    <ScrollView horizontal={true} contentContainerStyle={[styles.TasksHeader, {width:`${deletedDuplicates.length * 40}%`}]} >
         {
             deletedDuplicates.map(item=>(
                 <TaskHeaderOption navigation={navigation} key={item} class={item}/>
             ))
         }
-
-    </View>
+    </ScrollView>
   )
 }
 

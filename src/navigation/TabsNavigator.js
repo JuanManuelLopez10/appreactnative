@@ -90,7 +90,7 @@ const TabsNavigator = ({navigation}) => {
         headerShown: false,
         tabBarIcon: ({ focused }) => (
           <LinearGradient colors={focused ? [Colors.primary, Colors.darkBackground] : ['rgba(0,0,0,0)', 'rgba(0,0,0,0)']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={focused ? styles.TabbarOptionFocused : styles.TabbarOption}>
-            <Ionicons name='md-home' size={fontPixel(20)} color={'white'} />
+            {/* <Ionicons name='md-home' size={fontPixel(20)} color={'white'} /> */}
             <Text style={styles.Label}>Inicio</Text>
           </LinearGradient>
         )
@@ -110,22 +110,12 @@ const TabsNavigator = ({navigation}) => {
         headerShown: false,
         tabBarIcon: ({ focused }) => (
           <LinearGradient colors={focused ? [Colors.primary, Colors.darkBackground] : ['rgba(0,0,0,0)', 'rgba(0,0,0,0)']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={focused ? styles.TabbarOptionFocused : styles.TabbarOption}>
-            <Ionicons name='md-person' size={fontPixel(20)} color={'white'} />
+            {/* <Ionicons name='md-person' size={fontPixel(20)} color={'white'} /> */}
             <Text style={styles.Label}>Tienda</Text>
           </LinearGradient>
         )
       }} />
-            <BottomTabs.Screen name='Cuenta' component={SearchedUser} options={{
-        tabBarShowLabel: false,
-        
-        headerShown: false,
-        tabBarIcon: ({ focused }) => (
-          <LinearGradient colors={focused ? [Colors.primary, Colors.darkBackground] : ['rgba(0,0,0,0)', 'rgba(0,0,0,0)']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={focused ? styles.TabbarOptionFocused : styles.TabbarOption}>
-            <Ionicons name='md-person' size={fontPixel(20)} color={'white'} />
-            <Text style={styles.Label}>Cuenta</Text>
-          </LinearGradient>
-        )
-      }} />
+
       {
         user.email==='26lopez.jm@gmail.com'
         ?
@@ -134,12 +124,23 @@ const TabsNavigator = ({navigation}) => {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <LinearGradient colors={focused ? [Colors.primary, Colors.darkBackground] : ['rgba(0,0,0,0)', 'rgba(0,0,0,0)']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={focused ? styles.TabbarOptionFocused : styles.TabbarOption}>
-              <Ionicons name='md-person' size={fontPixel(20)} color={'white'} />
+              {/* <Ionicons name='md-person' size={fontPixel(20)} color={'white'} /> */}
               <Text style={styles.Label}>Hola</Text>
             </LinearGradient>
           )
         }} />
-       :''
+       :
+       <BottomTabs.Screen name='Cuenta' component={SearchedUser} options={{
+        tabBarShowLabel: false,
+        
+        headerShown: false,
+        tabBarIcon: ({ focused }) => (
+          <LinearGradient colors={focused ? [Colors.primary, Colors.darkBackground] : ['rgba(0,0,0,0)', 'rgba(0,0,0,0)']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={focused ? styles.TabbarOptionFocused : styles.TabbarOption}>
+            {/* <Ionicons name='md-person' size={fontPixel(20)} color={'white'} /> */}
+            <Text style={styles.Label}>Cuenta</Text>
+          </LinearGradient>
+        )
+      }} />
       }
 
     </BottomTabs.Navigator>

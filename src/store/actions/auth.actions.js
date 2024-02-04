@@ -210,7 +210,7 @@ export const addSession = (email) => {
             })
         }
         catch (error) {
-            alert('addSession')
+            alert('addSession'+ error.message)
 
             console.log('error addSession  ---' + error.message);
         }

@@ -70,11 +70,10 @@ const TasksSubclasses = (props) => {
                     const IndexInUserTask = auth.tasks.findIndex(item => item.id === task.id)
                     const cl = auth.tasks[IndexInUserTask]
                     const IndexInMetrics = auth.metrics.findIndex(item => item.class === task.task)
-                    let cantidad = auth.metrics[IndexInMetrics].value    //----------------------------HAY QUE CAMBIAR ESTO
                     if (IndexInUserTask!==-1) {
                         return(
                             <View key={task.id} style={[styles.Option, {backgroundColor:'white'}]}>
-                            <Text style={[styles.OptionText, {color:'black'}]} >{cantidad}/{task.divisions}  {task.title}</Text>
+                            <Text style={[styles.OptionText, {color:'black'}]} >{task.title}</Text>
                             <Ionicons name={cl.claimed===true ?'checkmark-circle' : 'gift'} size={fontPixel(25)} style={{color:'green'}}/>
                         </View>
                         )
@@ -82,7 +81,7 @@ const TasksSubclasses = (props) => {
                         return(
                         
                             <View key={task.id} style={styles.Option}>
-                                <Text style={styles.OptionText} >{cantidad}/{task.divisions}  {task.title}</Text>
+                                <Text style={styles.OptionText} >{task.title}</Text>
                                 <Ionicons name={'checkmark-circle'} size={fontPixel(25)} />
                             </View>
                             )
